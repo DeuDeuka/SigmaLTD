@@ -1,4 +1,4 @@
-// screens/PostDetailScreen.js
+// screens/CommentScreen.js
 
 import { StyleSheet } from 'react-native';
 

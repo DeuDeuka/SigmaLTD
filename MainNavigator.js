@@ -71,6 +71,7 @@ export function Menu({navigation, header, scrollToPage, activeScreen, setActiveS
                     <TouchableOpacity
                         onPress={() => {
                             closeMenu();
+                            navigation.navigate('Main');
                             navigation.navigate('ProfileSettings');
                         }}
                         style={{
@@ -91,6 +92,7 @@ export function Menu({navigation, header, scrollToPage, activeScreen, setActiveS
                     <TouchableOpacity
                         onPress={() => {
                             closeMenu();
+                            navigation.navigate('Main');
                             navigation.navigate('Profile');
                         }}
                         style={{

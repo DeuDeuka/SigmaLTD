@@ -58,8 +58,8 @@ const Post = ({navigation, post, refresher}) => {
                     setCreator(user || {displayedName: 'Unknown', pic: null});
                     setMyPost(me?.idUser === post.createdByIdUser);
                 }
-                const t = await Database.getPostComments(post.idPost);
-                setCommentsCount(t.length);
+                const t = await Database.getPostCommentsCount(post.idPost);
+                setCommentsCount(t.count);
                 if (post.content) {
                     const url1 = findURLs(post.content);
                     setUrls(url1);
@@ -90,8 +90,8 @@ const Post = ({navigation, post, refresher}) => {
     }, []);
 
     const updateCommentsCount = async () => {
-        const t = await Database.getPostComments(post.idPost);
-        setCommentsCount(t.length);
+        const t = await Database.getPostCommentsCount(post.idPost);
+        setCommentsCount(t.count);
     }
 
     const handleLike = async () => {

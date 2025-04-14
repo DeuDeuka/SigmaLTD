@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
     View,
     TextInput,
@@ -10,21 +10,20 @@ import {
     Platform,
     StyleSheet,
     KeyboardAvoidingView,
-    Switch,
-    TouchableOpacity,
+    Switch, Dimensions,
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import {useSelector} from 'react-redux';
-import Database, {BASE_URL} from '../database';
-import {Menu} from "../MainNavigator";
-import Comment from "../components/Comment";
+import { useSelector } from 'react-redux';
+import Database, { BASE_URL } from '../database';
+import { Menu } from '../MainNavigator';
+import Comment from '../components/Comment';
 
-export default function PostDetailScreen({route}) {
-    const {current, colors} = useSelector((state) => state.theme) || {
+export default function PostDetailScreen({ route }) {
+    const { current, colors } = useSelector((state) => state.theme) || {
         current: 'light',
-        colors: {light: {text: '#000', background: '#FFF'}},
+        colors: { light: { text: '#000', background: '#FFF' } },
     };
-    const theme = colors[current] || {text: '#000', background: '#FFF'};
+    const theme = colors[current] || { text: '#000', background: '#FFF' };
 
     const [post, setPost] = useState(null);
     const [comments, setComments] = useState([]);
@@ -35,28 +34,13 @@ export default function PostDetailScreen({route}) {
     const [currentUser, setCurrentUser] = useState(null);
     const flatListRef = useRef(null);
 
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            flatListRef.current?.scrollToEnd({animated: true});
-        }, 100);
-        return () => clearTimeout(timeout);
-    }, [comments]);
-
-    useEffect(() => {
-        const interval = setInterval(async () => {
-            await updateComments();
-        }, 1000)
-        return () => clearInterval(interval)
-    }, []);
-
+    // Fetch initial data
     useEffect(() => {
         const fetchData = async () => {
             try {
-                console.log(route.params.postId);
                 const postData = await Database.getPost(route.params.postId);
                 const loadedComments = await Database.getPostComments(route.params.postId);
                 const currentUse = await Database.getCurrentUser();
-                console.log(currentUse);
                 setPost(postData);
                 setComments(loadedComments);
                 setCurrentUser(currentUse);
@@ -69,10 +53,21 @@ export default function PostDetailScreen({route}) {
         fetchData();
     }, [route.params.postId]);
 
-    const updateComments = async () => {
-        const loadedComments = await Database.getPostComments(route.params.postId);
-        setComments(loadedComments);
-    }
+    // Scroll to end when comments update
+    useEffect(() => {
+        if (comments.length > 0) {
+            flatListRef.current?.scrollToEnd({ animated: true });
+        }
+    }, [comments.length]);
+
+    // Poll for new comments
+    useEffect(() => {
+        const interval = setInterval(async () => {
+            const loadedComments = await Database.getPostComments(route.params.postId);
+            setComments(loadedComments);
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [route.params.postId]);
 
     const pickImage = async () => {
         const result = await ImagePicker.launchImageLibraryAsync({
@@ -86,8 +81,7 @@ export default function PostDetailScreen({route}) {
             if (!asset || !asset.base64) return;
 
             const fullDataUri = `data:image/jpeg;base64,${asset.base64}`;
-            console.log('📸 Получили base64:', fullDataUri.slice(0, 100), '...');
-            setSelectedImages([{uri: fullDataUri}]);
+            setSelectedImages([{ uri: fullDataUri }]);
         }
     };
 
@@ -115,7 +109,6 @@ export default function PostDetailScreen({route}) {
 
     const toggleLike = async (item) => {
         try {
-            console.log(comments);
             const updatedComments = [...comments];
             const index = updatedComments.findIndex((c) => c.idComment === item.idComment);
             if (index === -1) return;
@@ -137,62 +130,63 @@ export default function PostDetailScreen({route}) {
         }
     };
 
-    const renderComment = ({item}) => {
-        return <Comment comment={item} currentUser={currentUser} toggleLike={toggleLike}/>
-    };
-
     if (loading) {
         return (
             <View style={[styles.container, styles.centered]}>
-                <ActivityIndicator size="large" color={theme.text}/>
+                <ActivityIndicator size="large" color={theme.text} />
             </View>
         );
     }
 
-    const Wrapper = Platform.OS === 'web' ? View : KeyboardAvoidingView;
+    const Wrapper = Platform.OS === 'ios' ? KeyboardAvoidingView : View;
 
     return (
-        <View style={styles.container}>
-            <Menu navigation={route.params.navigation} header={true}/>
-            <Wrapper style={{flex: 1}} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-                <FlatList
-                    ref={flatListRef}
-                    data={comments}
-                    renderItem={renderComment}
-                    keyExtractor={(item) => String(item.idComment)}
-                    contentContainerStyle={styles.commentsContainer}
-                />
-
-                {selectedImages.length > 0 && (
-                    <View style={{flexDirection: 'row', flexWrap: 'wrap', padding: 8}}>
-                        {selectedImages.map((img, i) => (
-                            <Image
-                                key={i}
-                                source={{uri: img.uri}}
-                                style={{width: 80, height: 80, margin: 4, borderRadius: 8}}
-                            />
-                        ))}
-                    </View>
+        <Wrapper
+            style={styles.container}
+            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+            keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}
+        >
+            <Menu navigation={route.params.navigation} header={true} />
+            <FlatList
+                ref={flatListRef}
+                data={comments}
+                keyExtractor={(item, index) => `${item.idComment || index}`}
+                renderItem={({ item }) => (
+                    <Comment comment={item} currentUser={currentUser} toggleLike={toggleLike} />
                 )}
-
-                <View style={styles.inputContainer}>
-                    <TextInput
-                        value={newComment}
-                        onChangeText={setNewComment}
-                        style={styles.textInput}
-                        placeholder="Ваш комментарий..."
-                        placeholderTextColor="#888"
-                    />
-                    <Text>Анонимно?</Text>
-                    <Switch
-                        value={isAnonymous}
-                        onValueChange={setIsAnonymous}
-                        style={{marginHorizontal: 10}}
-                    />
-                    <Button title="Отправить" onPress={sendComment}/>
+                style={styles.mediaScroll}
+                contentContainerStyle={{ paddingBottom: 20, maxHeight: Dimensions.get('window').height * 0.9 }}
+                ListEmptyComponent={<Text style={styles.emptyText}>No comments yet.</Text>}
+            />
+            {selectedImages.length > 0 && (
+                <View style={{ flexDirection: 'row', flexWrap: 'wrap', padding: 8 }}>
+                    {selectedImages.map((img, i) => (
+                        <Image
+                            key={i}
+                            source={{ uri: img.uri }}
+                            style={{ width: 80, height: 80, margin: 4, borderRadius: 8 }}
+                        />
+                    ))}
                 </View>
-            </Wrapper>
-        </View>
+            )}
+            <View style={styles.inputContainer}>
+                <TextInput
+                    value={newComment}
+                    onChangeText={setNewComment}
+                    style={styles.textInput}
+                    placeholder="Ваш комментарий..."
+                    placeholderTextColor="#888"
+                />
+                <Text>Анонимно?</Text>
+                <Switch
+                    value={isAnonymous}
+                    onValueChange={setIsAnonymous}
+                    style={{ marginHorizontal: 10 }}
+                />
+                <Button title="Медиа" onPress={pickImage} />
+                <Button title="Отправить" onPress={sendComment} />
+            </View>
+        </Wrapper>
     );
 }
 
@@ -200,46 +194,24 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
+        maxWidth: Dimensions.get('screen').width,
+        maxHeight: Dimensions.get('screen').height,
     },
     centered: {
         justifyContent: 'center',
         alignItems: 'center',
     },
-    commentsContainer: {
-        padding: 12,
-    },
-    commentBubble: {
-        marginBottom: 10,
-        padding: 12,
-        borderRadius: 12,
-        maxWidth: '90%',
-    },
-    myComment: {
-        alignSelf: 'flex-end',
-        backgroundColor: '#d0f0c0',
-    },
-    otherComment: {
-        alignSelf: 'flex-start',
-        backgroundColor: '#e6e6e6',
-    },
-    author: {
-        fontWeight: 'bold',
-        color: '#333',
-        marginBottom: 4,
-    },
-    commentText: {
-        color: '#000',
-        fontSize: 15,
-        marginBottom: 4,
+    mediaScroll: {
+        flex: 1,
     },
     inputContainer: {
         flexDirection: 'row',
         padding: 10,
+        marginBottom: 20,
         borderTopWidth: 1,
         borderColor: '#ccc',
         backgroundColor: '#f9f9f9',
         alignItems: 'center',
-        flexWrap: 'wrap',
     },
     textInput: {
         flex: 1,
@@ -252,5 +224,10 @@ const styles = StyleSheet.create({
         fontSize: 15,
         backgroundColor: '#fff',
         color: '#000',
+    },
+    emptyText: {
+        textAlign: 'center',
+        padding: 20,
+        color: '#888',
     },
 });

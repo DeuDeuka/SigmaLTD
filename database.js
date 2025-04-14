@@ -95,7 +95,6 @@ const Database = {
 	},
 
 	changeImage: async (payload) => {
-		console.log(JSON.stringify(payload));
 		const response = await fetch(`${API_URL}/current-user`, {
 			method: 'POST',
 			headers: await authHeaders(),
@@ -106,7 +105,6 @@ const Database = {
 	},
 
 	addPost: async (payload) => {
-		console.log('Sending JSON to server:', payload);
 		try {
 			const response = await fetch(`${API_URL}/posts`, {
 				method: 'POST',
@@ -116,7 +114,6 @@ const Database = {
 			});
 
 			const responseText = await response.text();
-			console.log('Raw response:', responseText);
 
 			if (!response.ok) {
 				console.error('Post error response:', responseText);
@@ -176,6 +173,14 @@ const Database = {
 
 	getPostComments: async (postId) => {
 		const response = await fetch(`${API_URL}/post/${postId}/comments`, {
+			headers: await authHeaders(),
+		});
+		if (!response.ok) throw new Error(await response.text());
+		return await response.json();
+	},
+
+	getPostCommentsCount: async (postId) => {
+		const response = await fetch(`${API_URL}/post/${postId}/comments-count`, {
 			headers: await authHeaders(),
 		});
 		if (!response.ok) throw new Error(await response.text());
@@ -289,8 +294,6 @@ const Database = {
 			imageBase64,
 		};
 
-		console.log('📤 Отправка комментария с base64:', payload);
-
 		const response = await fetch(`${API_URL}/comments`, {
 			method: 'POST',
 			headers: {
@@ -303,7 +306,6 @@ const Database = {
 		if (!response.ok) {throw new Error(await response.text());}
 
 		const result = await response.json();
-		console.log('✅ Ответ от сервера:', result);
 		return result;
 	},
 };

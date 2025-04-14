@@ -6,7 +6,7 @@ import {Provider} from 'react-redux';
 import {store} from './redux/store';
 import SettingsScreen from './screens/SettingsScreen';
 import LoginScreen from './screens/LoginScreen';
-import PostDetailScreen from './screens/PostDetailScreen';
+import PostDetailScreen from './screens/CommentScreen';
 import {CreatePostScreen} from './screens/CreatePostScreen';
 import MainNavigator from './MainNavigator';
 import SplashScreen from "./screens/SplashScreen";
