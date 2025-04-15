@@ -17,6 +17,7 @@ import { useSelector } from 'react-redux';
 import Database, { BASE_URL } from '../database';
 import { Menu } from '../MainNavigator';
 import Comment from '../components/Comment';
+import {Avatar} from "@rneui/base";
 
 export default function PostDetailScreen({ route }) {
     const { current, colors } = useSelector((state) => state.theme) || {
@@ -33,6 +34,7 @@ export default function PostDetailScreen({ route }) {
     const [selectedImages, setSelectedImages] = useState([]);
     const [currentUser, setCurrentUser] = useState(null);
     const flatListRef = useRef(null);
+    const [inputHeight, setInputHeight] = useState(40);
 
     // Fetch initial data
     useEffect(() => {
@@ -170,21 +172,26 @@ export default function PostDetailScreen({ route }) {
                 </View>
             )}
             <View style={styles.inputContainer}>
+                <Avatar activeOpacity={0.2} containerStyle={{ backgroundColor: "#20C0B0" }} icon={{ name: "upload" }} onPress={pickImage} rounded size="medium"/>
                 <TextInput
                     value={newComment}
                     onChangeText={setNewComment}
-                    style={styles.textInput}
+                    style={[styles.textInput, {height: inputHeight}]}
                     placeholder="Ваш комментарий..."
                     placeholderTextColor="#888"
+                    multiline={true}
+                    onContentSizeChange={(e) =>
+                        setInputHeight(Math.max(40, e.nativeEvent.contentSize.height))}
                 />
-                <Text>Анонимно?</Text>
+                <Text>Анон?</Text>
                 <Switch
                     value={isAnonymous}
                     onValueChange={setIsAnonymous}
-                    style={{ marginHorizontal: 10 }}
+                    style={{ marginHorizontal: 5 }}
                 />
-                <Button title="Медиа" onPress={pickImage} />
-                <Button title="Отправить" onPress={sendComment} />
+                {/*<Button title="Медиа" onPress={pickImage} />*/}
+                {/*<Button title="Отправить" onPress={sendComment} />*/}
+                <Avatar activeOpacity={0.2} containerStyle={{ backgroundColor: "#40E0D0" }} icon={{ name: "send" }} onPress={sendComment} rounded size="medium"/>
             </View>
         </Wrapper>
     );
