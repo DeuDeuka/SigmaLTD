@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { TouchableOpacity, Text } from 'react-native';
 import Database from '../database';
 
-export default function Tag({ tag, onRefresh }) {
+export default function Tag(tag: any, onRefresh: any) {
     const [isFollowed, setIsFollowed] = useState(false);
 
     useEffect(() => {
-        Database.getFollowedTags().then(tags => setIsFollowed(tags.includes(tag)));
+        Database.getFollowedTags().then((tags: any) => setIsFollowed(tags.includes(tag)));
     }, [tag]);
 
     const handleTagPress = async () => {

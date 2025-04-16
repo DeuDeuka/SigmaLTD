@@ -26,7 +26,7 @@ function findURLs(text: string) {
     return text.match(urlPattern) || [];
 }
 
-const Post = ({navigation, post, refresher}) => {
+const Post = (navigation: any, post: any, refresher: any) => {
     const [liked, setLiked] = useState(post.likedByCurrentUser || false);
     const [creator, setCreator] = useState({displayedName: 'Loading...', pic: null});
     const [myPost, setMyPost] = useState(false);
@@ -133,7 +133,7 @@ const Post = ({navigation, post, refresher}) => {
         </View>);
     }
 
-    const renderUrl = ({item}) => {
+    const renderUrl = (item: any) => {
         return (<View style={{width: 80, height: 25, backgroundColor: "#222", borderRadius: 5, alignSelf: 'center', alignItems: 'center'}}>
             <a href={item} style={{color:"#FFFFFF"}} target="_blank">{item.slice(8, 18)}</a>
         </View>);
@@ -157,7 +157,7 @@ const Post = ({navigation, post, refresher}) => {
                     size="medium"
                     containerStyle={styles.avatar}
                     onLongPress={() => setOpen(true)}
-                    onPressOut={()=> setOpen(false)}
+                    // onPressOut={()=> setOpen(false)}
                 />
                 <TouchableOpacity
                     style={styles.userInfo}
@@ -210,16 +210,17 @@ const Post = ({navigation, post, refresher}) => {
                 style={styles.mediaScroll}
                 contentContainerStyle={styles.mediaScrollContent}
             >
-                {mediaItems.map((item, index) => (<View key={`${item}-${index}`} style={styles.mediaContainer}>
-                    {/\.(mp4|mov|m4v)$/.test(item) ? (<Video
+                {mediaItems.map((item:any, index:any) => (<View key={`${item}-${index}`} style={styles.mediaContainer}>
+                    {/\.(mp4|mov|m4v)$/.test(item) ? (
+                        <Video
                         source={{uri: `${BASE_URL}${item}`}}
                         style={styles.media}
                         resizeMode="cover"
                         shouldPlay={currentIndex === index}
                         isLooping
                         useNativeControls={false}
-                        onError={(e) => console.error('Video error:', e)}
-                    />) : (<Image
+                        onError={(e) => console.error('Video error:', e)}/>
+                    ) : (<Image
                         source={{uri: `${BASE_URL}${item}`}}
                         style={styles.media}
                         resizeMode="cover"
@@ -229,7 +230,7 @@ const Post = ({navigation, post, refresher}) => {
                 </View>))}
             </ScrollView>
             {mediaItems.length > 1 && (<View style={styles.pagination}>
-                {mediaItems.map((_, i) => (<Pressable
+                {mediaItems.map((_:any, i:any) => (<Pressable
                     key={i}
                     onPress={() => {
                         flatListRef.current?.scrollTo({x: i * SCREEN_WIDTH, animated: true});
