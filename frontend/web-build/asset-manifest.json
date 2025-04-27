@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.js": "/static/js/main.9e3bcd5a.js",
+    "static/js/156.06db8302.js": "/static/js/156.06db8302.js",
+    "static/media/Ionicons.ttf": "/static/media/Ionicons.9b6b1954a5eb6efeaf11.ttf",
+    "static/media/default-avatar.png": "/static/media/default-avatar.00c7db454dde4d25ede0.png",
+    "static/media/logo-rb.png": "/static/media/logo-rb.00c7db454dde4d25ede0.png",
+    "favicon.ico": "/favicon.ico",
+    "index.html": "/index.html",
+    "static/media/rocket.png": "/static/media/rocket.d2f3bf41d5e4515c39a9.png",
+    "static/media/bell.png": "/static/media/bell.cf04af27d6a651c4b904.png",
+    "static/media/star.png": "/static/media/star.69c7138684828d68fe5a.png",
+    "static/media/heart.png": "/static/media/heart.23b5c2c0eb77d50ff1b4.png",
+    "favicon-32.png": "/favicon-32.png",
+    "favicon-16.png": "/favicon-16.png",
+    "manifest.json": "/manifest.json",
+    "serve.json": "/serve.json",
+    "main.9e3bcd5a.js.map": "/static/js/main.9e3bcd5a.js.map",
+    "156.06db8302.js.map": "/static/js/156.06db8302.js.map"
+  },
+  "entrypoints": [
+    "static/js/156.06db8302.js",
+    "static/js/main.9e3bcd5a.js"
+  ]
+}
