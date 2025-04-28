@@ -4,7 +4,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-RUN npx expo build:web
+RUN expo build:web
 
 # Serve stage
 FROM nginx:alpine
