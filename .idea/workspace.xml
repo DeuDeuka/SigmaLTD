@@ -5,18 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="80c2287e-a7d9-4686-9a78-77c3654e08a8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web-build/asset-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web-build/asset-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web-build/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web-build/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web-build/static/js/156.06db8302.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web-build/static/js/156.06db8302.js.LICENSE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web-build/static/js/156.06db8302.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web-build/static/js/main.9e3bcd5a.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web-build/static/js/main.9e3bcd5a.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nginx.conf" beforeDir="false" afterPath="$PROJECT_DIR$/nginx.conf" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,7 +136,7 @@
       <workItem from="1745511418051" duration="1815000" />
       <workItem from="1745513865532" duration="3038000" />
       <workItem from="1745778887817" duration="656000" />
-      <workItem from="1745870909260" duration="2875000" />
+      <workItem from="1745870909260" duration="3303000" />
     </task>
     <servers />
   </component>
