@@ -4,6 +4,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
+RUN npm -g install expo@latest
 RUN expo export:web
 
 # Serve stage
