@@ -71,8 +71,8 @@ const Database = {
 		return await response.json();
 	},
 
-	getUser: async (id) => {
-		const response = await fetch(`${API_URL}/user/${id}`, {
+	getUser: async (id, full) => {
+		const response = await fetch(`${API_URL}/user/${id}?full=${full}`, {
 			headers: await authHeaders(),
 		});
 		if (!response.ok) throw new Error(await response.text());
@@ -120,7 +120,6 @@ const Database = {
 				console.error('Post error response:', responseText);
 				throw new Error(responseText || 'Failed to upload post');
 			}
-
 			return JSON.parse(responseText);
 		} catch (error) {
 			console.error('Network error:', error);

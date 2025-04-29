@@ -51,7 +51,7 @@ const Post = ({navigation, post, refresher}) => {
             try {
                 setIsLoading(true);
                 const [user, me] = await Promise.all([Database.getUser(post.createdByIdUser), Database.getCurrentUser(),]);
-
+                console.log(user);
                 const likeStatus = await Database.getLikePost(Number(post.idPost));
                 setLiked(likeStatus);
                 if (mounted) {

@@ -11,7 +11,12 @@ const prisma = new PrismaClient();
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET;
 
-app.use(cors());
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'DELETE'],
+    allowedHeaders: ['Authorization', 'Content-Type'],
+}));
+
 app.use(express.json());
 
 // Middleware to authenticate JWT
@@ -42,21 +47,21 @@ app.post('/register', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         const nsuUser = await prisma.nsu.create({
             data: {
-                realName,
-                email,
-                group,
+                realName: realName,
+                email: email,
+                group: group,
                 hasLogined: false,
-                users: {
+                user: {
                     create: {
-                        displayedName,
+                        displayedName: displayedName,
                         password: hashedPassword,
                         pic: ''
                     }
                 }
             }
         });
-
-        res.status(201).json({ message: 'User registered successfully' });
+        const token = jwt.sign({ id: nsuUser.user.idUser }, JWT_SECRET, { expiresIn: '1h' });
+        res.status(201).json({ message: 'User registered successfully', token: token });
     } catch (error) {
         res.status(500).json({ error: 'Registration failed' });
     }
@@ -69,17 +74,17 @@ app.post('/login', async (req, res) => {
     try {
         const nsuUser = await prisma.nsu.findUnique({
             where: { email },
-            include: { users: true }
+            include: { user: true }
         });
+        if (!nsuUser || !nsuUser.user) return res.status(400).json({ error: 'Invalid credentials' });
 
-        if (!nsuUser || !nsuUser.users) return res.status(400).json({ error: 'Invalid credentials' });
-
-        const isValid = await bcrypt.compare(password, nsuUser.users.password);
+        const isValid = await bcrypt.compare(password, nsuUser.user.password);
         if (!isValid) return res.status(400).json({ error: 'Invalid credentials' });
 
-        const token = jwt.sign({ id: nsuUser.users.idUser }, JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ id: nsuUser.user.idUser }, JWT_SECRET, { expiresIn: '1h' });
         res.json({ token });
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: 'Login failed' });
     }
 });
@@ -93,7 +98,11 @@ app.post('/logout', (req, res) => {
 app.get('/current-user', authenticateToken, async (req, res) => {
     try {
         const user = await prisma.users.findUnique({
-            where: { idUser: req.user.idUser }
+            where: { idUser: req.user.idUser },
+            select: {
+                displayedName: true,
+                pic: true
+            }
         });
         res.json(user);
     } catch (error) {
@@ -108,7 +117,7 @@ app.post('/current-user', authenticateToken, async (req, res) => {
     try {
         const updateData = {};
         if (username) updateData.displayedName = username;
-        if (image) updateData.pic = image;base64;
+        if (image) updateData.pic = image.base64;
 
         await prisma.users.update({
             where: { idUser: req.user.idUser },
@@ -148,10 +157,11 @@ app.post('/posts', authenticateToken, async (req, res) => {
     const { content, tags, isAnonymous, images } = req.body;
 
     try {
+        console.log(images);
         const post = await prisma.post.create({
             data: {
                 content,
-                images: images ? JSON.stringify(images) : null,
+                images: images.length > 0 ? JSON.stringify(images) : null,
                 tags,
                 createdByIdUser: isAnonymous ? null : req.user.idUser
             }
@@ -260,6 +270,7 @@ app.get('/comments', async (req, res) => {
 
 // 14. Get user profile and posts
 app.get('/user/:id', async (req, res) => {
+    const full = !!(parseInt(req.params.full))
     const page = parseInt(req.query.page) || 1;
     const pageSize = Math.min(parseInt(req.query.pageSize) || 10, 100);
     const skip = (page - 1) * pageSize;
@@ -280,7 +291,7 @@ app.get('/user/:id', async (req, res) => {
         ]);
 
         if (!user) return res.status(404).json({ error: 'User not found' });
-        res.json({ user, posts, total, page, pageSize });
+        full ? res.json({ user, posts, total, page, pageSize }) : res.json(user);
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch user profile' });
     }

@@ -13,10 +13,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default class SuperScrollList extends React.Component {
     navigation = null;
     loader = null;
-    constructor(props, navigation, loader) {
+    constructor(props) {
         super(props);
-        this.navigation = navigation;
-        this.loader = loader;
+        this.navigation = props.navigation;
+        this.loader = props.loader;
         this.state = {
             data: [],
             page: 1,
@@ -27,7 +27,7 @@ export default class SuperScrollList extends React.Component {
     }
 
     componentDidMount() {
-        this.fetchData();
+        (this.loader && this.fetchData().then(() => console.log("Fetched data!")));
     }
 
     fetchData = async () => {
