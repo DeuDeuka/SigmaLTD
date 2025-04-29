@@ -5,7 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="80c2287e-a7d9-4686-9a78-77c3654e08a8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/nginx.conf" beforeDir="false" afterPath="$PROJECT_DIR$/nginx.conf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/instruction.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/database.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +69,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "preferences.lookFeel",
-    "ts.external.directory.path": "/Applications/IntelliJ IDEA.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
+    "ts.external.directory.path": "/Users/deu/SigmaLTD/frontend/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -134,7 +139,7 @@
       <workItem from="1745511418051" duration="1815000" />
       <workItem from="1745513865532" duration="3038000" />
       <workItem from="1745778887817" duration="656000" />
-      <workItem from="1745870909260" duration="8577000" />
+      <workItem from="1745870909260" duration="10629000" />
     </task>
     <servers />
   </component>
