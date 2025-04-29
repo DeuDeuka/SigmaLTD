@@ -60,7 +60,7 @@ app.post('/register', async (req, res) => {
                 }
             }
         });
-        const token = jwt.sign({ id: nsuUser.user.idUser }, JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ id: nsuUser.user.idUser }, JWT_SECRET, { expiresIn: 'never' });
         res.status(201).json({ message: 'User registered successfully', token: token });
     } catch (error) {
         res.status(500).json({ error: 'Registration failed' });

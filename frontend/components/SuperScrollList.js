@@ -46,7 +46,7 @@ export default class SuperScrollList extends React.Component {
         } catch (error) {
             console.error('Error fetching posts:', error);
             if (error.message === "{\"error\":\"Access denied, no valid Bearer token provided\"}") {
-                this.navigation.navigate('Login');
+                this.navigation.replace('Login');
                 await AsyncStorage.removeItem('token');
             }
             this.setState({isLoading: false});

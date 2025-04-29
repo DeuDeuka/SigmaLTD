@@ -12,6 +12,7 @@ import MainNavigator from './MainNavigator';
 import SplashScreen from "./screens/SplashScreen";
 import ProfileSettingsScreen from "./screens/ProfileSettingsScreen";
 import ProfileScreen from "./screens/ProfileScreen";
+import StaticSystemMessageScreen from "./screens/StaticSystemMessageScreen";
 
 const Stack = createStackNavigator();
 
@@ -23,7 +24,6 @@ export default function App() {
         <GestureHandlerRootView style={{flex: 1}}>
             <NavigationContainer ref={navigationRef}>
                 <Stack.Navigator initialRouteName="Splash">
-
                     <Stack.Screen
                         name="Splash"
                         component={SplashScreen}
@@ -31,6 +31,11 @@ export default function App() {
                     <Stack.Screen
                         name="Login"
                         component={LoginScreen}
+                        options={{headerShown: false}}
+                    />
+                    <Stack.Screen
+                        name="SystemMessage"
+                        component={StaticSystemMessageScreen}
                         options={{headerShown: false}}
                     />
                     <Stack.Screen
