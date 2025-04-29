@@ -78,12 +78,12 @@ const authenticateToken = async (req, res, next) => {
     }
 };
 
-app.get('/api/', async (req, res) => {
+app.get('/', async (req, res) => {
     respond(res, {data: "hello world!"});
 })
 
 // User Registration
-app.post('/api/register', async (req, res) => {
+app.post('/register', async (req, res) => {
     const { email, password, realName, group, displayedName } = req.body;
 
     // Validate input
@@ -123,7 +123,7 @@ app.post('/api/register', async (req, res) => {
 });
 
 // User Login
-app.post('/api/login', async (req, res) => {
+app.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     try {
@@ -145,18 +145,18 @@ app.post('/api/login', async (req, res) => {
 });
 
 // Logout (Client-side)
-app.post('/api/logout', (req, res) => {
+app.post('/logout', (req, res) => {
     respond(res, { success: true, message: 'Logout successful, discard token on client' });
 });
 
 // Current User
-app.get('/api/current-user', authenticateToken, (req, res) => {
+app.get('/current-user', authenticateToken, (req, res) => {
     respond(res, { idUser: req.user.idUser, displayedName: req.user.displayedName });
 });
 
 // Posts Endpoint
 // Get Posts with Pagination
-app.get('/api/posts', authenticateToken, async (req, res) => {
+app.get('/posts', authenticateToken, async (req, res) => {
     const page = Math.max(1, parseInt(req.query.page) || 1);
     const pageSize = Math.min(Math.max(1, parseInt(req.query.pageSize) || 10), 100);
     const offset = (page - 1) * pageSize;
@@ -179,7 +179,7 @@ app.get('/api/posts', authenticateToken, async (req, res) => {
 });
 
 // Delete Post
-app.delete('/api/posts', authenticateToken, async (req, res) => {
+app.delete('/posts', authenticateToken, async (req, res) => {
     const { postId } = req.body;
 
     if (!postId || postId <= 0) {
@@ -203,7 +203,7 @@ app.delete('/api/posts', authenticateToken, async (req, res) => {
 });
 
 // Create Post
-app.post('/api/posts', authenticateToken, async (req, res) => {
+app.post('/posts', authenticateToken, async (req, res) => {
     const { content, tags, isAnonymous, images } = req.body;
 
     if (!content && (!images || images.length === 0)) {
@@ -253,7 +253,7 @@ app.post('/api/posts', authenticateToken, async (req, res) => {
 });
 
 // Get Single Post
-app.get('/api/post/:id', authenticateToken, async (req, res) => {
+app.get('/post/:id', authenticateToken, async (req, res) => {
     const postId = parseInt(req.params.id);
 
     try {
@@ -273,7 +273,7 @@ app.get('/api/post/:id', authenticateToken, async (req, res) => {
 });
 
 // Get Post Comments
-app.get('/api/post/:id/comments', authenticateToken, async (req, res) => {
+app.get('/post/:id/comments', authenticateToken, async (req, res) => {
     const postId = parseInt(req.params.id);
 
     try {
@@ -288,7 +288,7 @@ app.get('/api/post/:id/comments', authenticateToken, async (req, res) => {
 });
 
 // Get Post Comments Count
-app.get('/api/post/:id/comments-count', authenticateToken, async (req, res) => {
+app.get('/post/:id/comments-count', authenticateToken, async (req, res) => {
     const postId = parseInt(req.params.id);
 
     try {
@@ -303,7 +303,7 @@ app.get('/api/post/:id/comments-count', authenticateToken, async (req, res) => {
 });
 
 // Add Comment
-app.post('/api/comments', authenticateToken, async (req, res) => {
+app.post('/comments', authenticateToken, async (req, res) => {
     const { postId, content, isAnonymous } = req.body;
     const userId = isAnonymous ? 2 : req.user.idUser;
 
@@ -322,7 +322,7 @@ app.post('/api/comments', authenticateToken, async (req, res) => {
 });
 
 // Get Comments with Pagination
-app.get('/api/comments', authenticateToken, async (req, res) => {
+app.get('/comments', authenticateToken, async (req, res) => {
     const page = Math.max(1, parseInt(req.query.page) || 1);
     const pageSize = Math.min(Math.max(1, parseInt(req.query.pageSize) || 10), 100);
     const offset = (page - 1) * pageSize;
@@ -345,7 +345,7 @@ app.get('/api/comments', authenticateToken, async (req, res) => {
 });
 
 // Update Username and Profile Picture
-app.post('/api/current-user', authenticateToken, async (req, res) => {
+app.post('/current-user', authenticateToken, async (req, res) => {
     const { username, image } = req.body;
 
     try {
@@ -371,7 +371,7 @@ app.post('/api/current-user', authenticateToken, async (req, res) => {
 });
 
 // Get User Profile
-app.get('/api/user/:id', authenticateToken, async (req, res) => {
+app.get('/user/:id', authenticateToken, async (req, res) => {
     const userId = parseInt(req.params.id);
     const page = Math.max(1, parseInt(req.query.page) || 1);
     const pageSize = Math.min(Math.max(1, parseInt(req.query.pageSize) || 10), 100);
@@ -409,7 +409,7 @@ app.get('/api/user/:id', authenticateToken, async (req, res) => {
 });
 
 // Following Posts
-app.get('/api/following-posts', authenticateToken, async (req, res) => {
+app.get('/following-posts', authenticateToken, async (req, res) => {
     const page = Math.max(1, parseInt(req.query.page) || 1);
     const pageSize = Math.min(Math.max(1, parseInt(req.query.pageSize) || 10), 100);
     const offset = (page - 1) * pageSize;
@@ -465,7 +465,7 @@ app.get('/api/following-posts', authenticateToken, async (req, res) => {
 });
 
 // Likes
-app.post('/api/like-post', authenticateToken, async (req, res) => {
+app.post('/like-post', authenticateToken, async (req, res) => {
     const { postId } = req.body;
 
     try {
@@ -481,7 +481,7 @@ app.post('/api/like-post', authenticateToken, async (req, res) => {
     }
 });
 
-app.post('/api/unlike-post', authenticateToken, async (req, res) => {
+app.post('/unlike-post', authenticateToken, async (req, res) => {
     const { postId } = req.body;
 
     try {
@@ -494,7 +494,7 @@ app.post('/api/unlike-post', authenticateToken, async (req, res) => {
     }
 });
 
-app.get('/api/like-post', authenticateToken, async (req, res) => {
+app.get('/like-post', authenticateToken, async (req, res) => {
     const postId = parseInt(req.query.idPost) || 0;
 
     try {
@@ -508,7 +508,7 @@ app.get('/api/like-post', authenticateToken, async (req, res) => {
     }
 });
 
-app.post('/api/like-comment', authenticateToken, async (req, res) => {
+app.post('/like-comment', authenticateToken, async (req, res) => {
     const { commentId } = req.body;
 
     try {
@@ -524,7 +524,7 @@ app.post('/api/like-comment', authenticateToken, async (req, res) => {
     }
 });
 
-app.post('/api/get-comment-likes', authenticateToken, async (req, res) => {
+app.post('/get-comment-likes', authenticateToken, async (req, res) => {
     const { commentId } = req.body;
 
     try {
@@ -535,7 +535,7 @@ app.post('/api/get-comment-likes', authenticateToken, async (req, res) => {
     }
 });
 
-app.post('/api/unlike-comment', authenticateToken, async (req, res) => {
+app.post('/unlike-comment', authenticateToken, async (req, res) => {
     const { commentId } = req.body;
 
     try {
@@ -549,7 +549,7 @@ app.post('/api/unlike-comment', authenticateToken, async (req, res) => {
 });
 
 // Tags
-app.post('/api/follow-tag', authenticateToken, async (req, res) => {
+app.post('/follow-tag', authenticateToken, async (req, res) => {
     const { tagName } = req.body;
 
     try {
@@ -570,7 +570,7 @@ app.post('/api/follow-tag', authenticateToken, async (req, res) => {
     }
 });
 
-app.post('/api/unfollow-tag', authenticateToken, async (req, res) => {
+app.post('/unfollow-tag', authenticateToken, async (req, res) => {
     const { tagName } = req.body;
 
     try {
@@ -587,7 +587,7 @@ app.post('/api/unfollow-tag', authenticateToken, async (req, res) => {
     }
 });
 
-app.get('/api/followed-tags', authenticateToken, async (req, res) => {
+app.get('/followed-tags', authenticateToken, async (req, res) => {
     try {
         const [rows] = await dbPool.execute(
             'SELECT t.name FROM UserFollowedTag uft JOIN Tag t ON uft.idTag = t.idTag WHERE uft.idUser = ?',
