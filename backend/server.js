@@ -116,7 +116,7 @@ app.post('/register', async (req, res) => {
         );
 
         const token = jwt.sign({ userId }, JWT_SECRET);
-        respond(res, { token, user: { idUser, displayedName } });
+        respond(res, { token, user: { userId, displayedName } });
     } catch (error) {
         respond(res, { error: 'Database error: ' + error.message }, 500);
     }
