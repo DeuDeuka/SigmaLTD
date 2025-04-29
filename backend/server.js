@@ -1,609 +1,503 @@
 const express = require('express');
+const { PrismaClient } = require('@prisma/client');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const mysql = require('mysql2/promise');
+const bcrypt = require('bcryptjs');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs').promises;
-const { promisify } = require('util');
 
 dotenv.config();
-
 const app = express();
-const upload = multer({ dest: 'uploads/' });
+const prisma = new PrismaClient();
+const PORT = process.env.PORT || 3000;
+const JWT_SECRET = process.env.JWT_SECRET;
 
-// Database connection pool
-const dbPool = mysql.createPool({
-    host: 'localhost',
-    user: 'u3079686_sigma',
-    password: 'yoursocialsecurityisexpiredpleaseenteritmanually',
-    database: 'u3079686_dev',
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0,
-});
-
-// JWT Secret
-const JWT_SECRET = process.env.JWT_SECRET || 'default-secret-key-please-change-me';
-
-// Middleware
-app.use(cors({
-    origin: '*',
-    methods: ['GET', 'POST', 'DELETE'],
-    allowedHeaders: ['Authorization', 'Content-Type'],
-}));
+app.use(cors());
 app.use(express.json());
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Ensure Uploads directory exists
-(async () => {
-    const uploadDir = path.join(__dirname, 'uploads');
-    try {
-        await fs.mkdir(uploadDir, { recursive: true });
-        await fs.chmod(uploadDir, 0o777);
-    } catch (error) {
-        console.error('Failed to create Uploads directory:', error);
-    }
-})();
-
-// Helper function to respond
-const respond = (res, data, status = 200) => {
-    res.status(status).json(data);
-};
-
-// Authentication middleware
+// Middleware to authenticate JWT
 const authenticateToken = async (req, res, next) => {
     const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.match(/^Bearer\s+(.+)$/i)?.[1];
+    const token = authHeader && authHeader.split(' ')[1];
 
-    if (!token) {
-        return respond(res, { error: 'Access denied, no valid Bearer token provided' }, 401);
-    }
+    if (!token) return res.status(401).json({ error: 'Access denied' });
 
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
-        const [rows] = await dbPool.execute('SELECT * FROM Users WHERE idUser = ?', [decoded.userId]);
-        const user = rows[0];
-
-        if (!user) {
-            return respond(res, { error: 'Invalid token: user not found' }, 401);
-        }
-
-        req.user = user;
+        req.user = await prisma.users.findUnique({ where: { idUser: decoded.id } });
+        if (!req.user) return res.status(401).json({ error: 'Invalid token' });
         next();
     } catch (error) {
-        return respond(res, { error: 'Invalid or expired token' }, 403);
+        res.status(401).json({ error: 'Invalid token' });
     }
 };
 
-app.get('/', async (req, res) => {
-    respond(res, {data: "hello world!"});
-})
-
-// User Registration
+// 1. Register
 app.post('/register', async (req, res) => {
     const { email, password, realName, group, displayedName } = req.body;
 
-    // Validate input
-    if (!email || !password || !realName || !group || !displayedName) {
-        return respond(res, { error: 'All fields are required' }, 400);
-    }
-    if (group.length > 10) {
-        return respond(res, { error: 'Group name must be 10 characters or fewer' }, 400);
-    }
-
     try {
-        // Check if email exists
-        const [existing] = await dbPool.execute('SELECT * FROM Nsu WHERE email = ?', [email]);
-        if (existing.length > 0) {
-            return respond(res, { error: 'Email already exists' }, 400);
-        }
+        const existingUser = await prisma.nsu.findUnique({ where: { email } });
+        if (existingUser) return res.status(400).json({ error: 'Email already exists' });
 
-        // Insert into Nsu
-        const [nsuResult] = await dbPool.execute(
-            'INSERT INTO Nsu (realName, email, `group`, hasLogined) VALUES (?, ?, ?, ?)',
-            [realName, email, group, false]
-        );
-        const userId = nsuResult.insertId;
-
-        // Insert into Users
         const hashedPassword = await bcrypt.hash(password, 10);
-        await dbPool.execute(
-            'INSERT INTO Users (idUser, displayedName, pic, password) VALUES (?, ?, ?, ?)',
-            [userId, displayedName, 'https://via.placeholder.com/150', hashedPassword]
-        );
+        const nsuUser = await prisma.nsu.create({
+            data: {
+                realName,
+                email,
+                group,
+                hasLogined: false,
+                users: {
+                    create: {
+                        displayedName,
+                        password: hashedPassword,
+                        pic: ''
+                    }
+                }
+            }
+        });
 
-        const token = jwt.sign({ userId }, JWT_SECRET);
-        respond(res, { token, user: { userId, displayedName } });
+        res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
-        respond(res, { error: 'Database error: ' + error.message }, 500);
+        res.status(500).json({ error: 'Registration failed' });
     }
 });
 
-// User Login
+// 2. Login
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        const [rows] = await dbPool.execute(
-            'SELECT n.*, u.* FROM Nsu n JOIN Users u ON n.idNsuUser = u.idUser WHERE n.email = ?',
-            [email]
-        );
-        const nsu = rows[0];
+        const nsuUser = await prisma.nsu.findUnique({
+            where: { email },
+            include: { users: true }
+        });
 
-        if (!nsu || !(await bcrypt.compare(password, nsu.password))) {
-            return respond(res, { error: 'Invalid email or password' }, 401);
-        }
+        if (!nsuUser || !nsuUser.users) return res.status(400).json({ error: 'Invalid credentials' });
 
-        const token = jwt.sign({ userId: nsu.idNsuUser }, JWT_SECRET);
-        respond(res, { token, user: nsu });
+        const isValid = await bcrypt.compare(password, nsuUser.users.password);
+        if (!isValid) return res.status(400).json({ error: 'Invalid credentials' });
+
+        const token = jwt.sign({ id: nsuUser.users.idUser }, JWT_SECRET, { expiresIn: '1h' });
+        res.json({ token });
     } catch (error) {
-        respond(res, { error: 'Database error: ' + error.message }, 500);
+        res.status(500).json({ error: 'Login failed' });
     }
 });
 
-// Logout (Client-side)
+// 3. Logout (client-side)
 app.post('/logout', (req, res) => {
-    respond(res, { success: true, message: 'Logout successful, discard token on client' });
+    res.json({ message: 'Logout successful (discard token client-side)' });
 });
 
-// Current User
-app.get('/current-user', authenticateToken, (req, res) => {
-    respond(res, { idUser: req.user.idUser, displayedName: req.user.displayedName });
-});
-
-// Posts Endpoint
-// Get Posts with Pagination
-app.get('/posts', authenticateToken, async (req, res) => {
-    const page = Math.max(1, parseInt(req.query.page) || 1);
-    const pageSize = Math.min(Math.max(1, parseInt(req.query.pageSize) || 10), 100);
-    const offset = (page - 1) * pageSize;
-
+// 4. Get current user
+app.get('/current-user', authenticateToken, async (req, res) => {
     try {
-        const [posts] = await dbPool.execute(
-            'SELECT * FROM Post ORDER BY idPost DESC LIMIT ? OFFSET ?',
-            [pageSize, offset]
-        );
-        const [[{ totalPosts }]] = await dbPool.execute('SELECT COUNT(*) as totalPosts FROM Post');
-        const totalPages = Math.ceil(totalPosts / pageSize);
-
-        respond(res, {
-            posts,
-            pagination: { currentPage: page, pageSize, totalPosts, totalPages },
+        const user = await prisma.users.findUnique({
+            where: { idUser: req.user.idUser }
         });
+        res.json(user);
     } catch (error) {
-        respond(res, { error: 'Database error: ' + error.message }, 500);
+        res.status(500).json({ error: 'Failed to fetch user' });
     }
 });
 
-// Delete Post
-app.delete('/posts', authenticateToken, async (req, res) => {
-    const { postId } = req.body;
-
-    if (!postId || postId <= 0) {
-        return respond(res, { error: 'Invalid post ID' }, 400);
-    }
-
-    try {
-        const [result] = await dbPool.execute(
-            'DELETE FROM Post WHERE createdByIdUser = ? AND idPost = ?',
-            [req.user.idUser, postId]
-        );
-
-        if (result.affectedRows > 0) {
-            respond(res, { success: true, message: 'Post deleted successfully' });
-        } else {
-            respond(res, { error: 'Post not found or not authorized to delete' }, 404);
-        }
-    } catch (error) {
-        respond(res, { error: 'Database error: ' + error.message }, 500);
-    }
-});
-
-// Create Post
-app.post('/posts', authenticateToken, async (req, res) => {
-    const { content, tags, isAnonymous, images } = req.body;
-
-    if (!content && (!images || images.length === 0)) {
-        return respond(res, { error: 'Content or media is required' }, 400);
-    }
-
-    try {
-        const uploadDir = path.join(__dirname, 'uploads');
-        const imagePaths = [];
-
-        if (images && Array.isArray(images)) {
-            for (const image of images) {
-                const { base64, name } = image;
-                if (!base64 || !name) continue;
-
-                const binaryData = Buffer.from(base64, 'base64');
-                const destination = path.join(uploadDir, name);
-                await fs.writeFile(destination, binaryData);
-                imagePaths.push(`/uploads/${name}`);
-            }
-        }
-
-        const tagsString = tags ? tags.split(',').map(tag => tag.trim()).join(',') : null;
-        const imageString = imagePaths.join(',');
-        const userId = isAnonymous ? 2 : req.user.idUser;
-
-        const [result] = await dbPool.execute(
-            'INSERT INTO Post (content, images, tags, createdByIdUser) VALUES (?, ?, ?, ?)',
-            [content, imageString, tagsString, userId]
-        );
-        const postId = result.insertId;
-
-        const post = {
-            idPost: postId,
-            content,
-            images: imagePaths,
-            tags: tagsString ? tagsString.split(',') : [],
-            createdByIdUser: userId,
-            isAnonymous,
-            comments: [],
-        };
-
-        respond(res, post, 201);
-    } catch (error) {
-        respond(res, { error: 'Database error: ' + error.message }, 500);
-    }
-});
-
-// Get Single Post
-app.get('/post/:id', authenticateToken, async (req, res) => {
-    const postId = parseInt(req.params.id);
-
-    try {
-        const [rows] = await dbPool.execute('SELECT * FROM Post WHERE idPost = ?', [postId]);
-        const post = rows[0];
-
-        if (!post) {
-            return respond(res, { error: 'Post not found' }, 404);
-        }
-
-        post.tags = post.tags ? post.tags.split(',') : [];
-        post.images = post.images ? post.images.split(',') : [];
-        respond(res, post);
-    } catch (error) {
-        respond(res, { error: 'Database error: ' + error.message }, 500);
-    }
-});
-
-// Get Post Comments
-app.get('/post/:id/comments', authenticateToken, async (req, res) => {
-    const postId = parseInt(req.params.id);
-
-    try {
-        const [comments] = await dbPool.execute(
-            'SELECT c.*, u.displayedName FROM Comment c JOIN Users u ON c.createdByIdUser = u.idUser WHERE c.commentIdPost = ? ORDER BY c.createdAt ASC',
-            [postId]
-        );
-        respond(res, comments);
-    } catch (error) {
-        respond(res, { error: 'Database error: ' + error.message }, 500);
-    }
-});
-
-// Get Post Comments Count
-app.get('/post/:id/comments-count', authenticateToken, async (req, res) => {
-    const postId = parseInt(req.params.id);
-
-    try {
-        const [rows] = await dbPool.execute(
-            'SELECT COUNT(*) as count FROM Comment WHERE commentIdPost = ?',
-            [postId]
-        );
-        respond(res, { count: rows[0].count });
-    } catch (error) {
-        respond(res, { error: 'Database error: ' + error.message }, 500);
-    }
-});
-
-// Add Comment
-app.post('/comments', authenticateToken, async (req, res) => {
-    const { postId, content, isAnonymous } = req.body;
-    const userId = isAnonymous ? 2 : req.user.idUser;
-
-    try {
-        const [result] = await dbPool.execute(
-            'INSERT INTO Comment (commentIdPost, text, createdByIdUser) VALUES (?, ?, ?)',
-            [postId, content, userId]
-        );
-        const commentId = result.insertId;
-
-        const comment = { idComment: commentId, commentIdPost: postId, text: content, createdByIdUser: userId };
-        respond(res, comment);
-    } catch (error) {
-        respond(res, { error: 'Database error: ' + error.message }, 500);
-    }
-});
-
-// Get Comments with Pagination
-app.get('/comments', authenticateToken, async (req, res) => {
-    const page = Math.max(1, parseInt(req.query.page) || 1);
-    const pageSize = Math.min(Math.max(1, parseInt(req.query.pageSize) || 10), 100);
-    const offset = (page - 1) * pageSize;
-
-    try {
-        const [comments] = await dbPool.execute(
-            'SELECT * FROM Comment ORDER BY idComment DESC LIMIT ? OFFSET ?',
-            [pageSize, offset]
-        );
-        const [[{ totalPosts }]] = await dbPool.execute('SELECT COUNT(*) as totalPosts FROM Comment');
-        const totalPages = Math.ceil(totalPosts / pageSize);
-
-        respond(res, {
-            comments,
-            pagination: { currentPage: page, pageSize, totalPosts, totalPages },
-        });
-    } catch (error) {
-        respond(res, { error: 'Database error: ' + error.message }, 500);
-    }
-});
-
-// Update Username and Profile Picture
+// 5. Update current user
 app.post('/current-user', authenticateToken, async (req, res) => {
     const { username, image } = req.body;
 
     try {
-        if (username) {
-            await dbPool.execute('UPDATE Users SET displayedName = ? WHERE idUser = ?', [username, req.user.idUser]);
-        }
+        const updateData = {};
+        if (username) updateData.displayedName = username;
+        if (image) updateData.pic = image;base64;
 
-        let imagePath = '';
-        if (image && image.base64 && image.name) {
-            const uploadDir = path.join(__dirname, 'uploads');
-            const binaryData = Buffer.from(image.base64, 'base64');
-            const destination = path.join(uploadDir, image.name);
-            await fs.writeFile(destination, binaryData);
-            imagePath = `http://localhost:3000/Uploads/${image.name}`;
+        await prisma.users.update({
+            where: { idUser: req.user.idUser },
+            data: updateData
+        });
 
-            await dbPool.execute('UPDATE Users SET pic = ? WHERE idUser = ?', [imagePath, req.user.idUser]);
-        }
-
-        respond(res, { displayedName: username, image: imagePath });
+        res.json({ message: 'User updated successfully' });
     } catch (error) {
-        respond(res, { error: 'Database error: ' + error.message }, 500);
+        res.status(500).json({ error: 'Failed to update user' });
     }
 });
 
-// Get User Profile
-app.get('/user/:id', authenticateToken, async (req, res) => {
-    const userId = parseInt(req.params.id);
-    const page = Math.max(1, parseInt(req.query.page) || 1);
-    const pageSize = Math.min(Math.max(1, parseInt(req.query.pageSize) || 10), 100);
-    const offset = (page - 1) * pageSize;
+// 6. Get posts
+app.get('/posts', async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = Math.min(parseInt(req.query.pageSize) || 10, 100);
+    const skip = (page - 1) * pageSize;
 
     try {
-        const [profileRows] = await dbPool.execute(
-            'SELECT displayedName, pic FROM Users WHERE idUser = ?',
-            [userId]
-        );
-        const profile = profileRows[0];
+        const [posts, total] = await Promise.all([
+            prisma.post.findMany({
+                orderBy: { idPost: 'desc' },
+                take: pageSize,
+                skip
+            }),
+            prisma.post.count()
+        ]);
 
-        if (!profile) {
-            return respond(res, { error: 'User not found' }, 404);
-        }
-
-        const [posts] = await dbPool.execute(
-            'SELECT * FROM Post WHERE createdByIdUser = ? ORDER BY createdAt DESC LIMIT ? OFFSET ?',
-            [req.user.idUser, pageSize, offset]
-        );
-        const [[{ totalPosts }]] = await dbPool.execute(
-            'SELECT COUNT(*) as totalPosts FROM Post WHERE createdByIdUser = ?',
-            [req.user.idUser]
-        );
-        const totalPages = Math.ceil(totalPosts / pageSize);
-
-        respond(res, {
-            user: profile,
-            posts,
-            pagination: { currentPage: page, pageSize, totalPosts, totalPages },
-        });
+        res.json({ posts, total, page, pageSize });
     } catch (error) {
-        respond(res, { error: 'Database error: ' + error.message }, 500);
+        res.status(500).json({ error: 'Failed to fetch posts' });
     }
 });
 
-// Following Posts
+// 7. Create post
+app.post('/posts', authenticateToken, async (req, res) => {
+    const { content, tags, isAnonymous, images } = req.body;
+
+    try {
+        const post = await prisma.post.create({
+            data: {
+                content,
+                images: images ? JSON.stringify(images) : null,
+                tags,
+                createdByIdUser: isAnonymous ? null : req.user.idUser
+            }
+        });
+        res.status(201).json(post);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to create post' });
+    }
+});
+
+// 8. Delete post
+app.delete('/posts', authenticateToken, async (req, res) => {
+    const { postId } = req.body;
+
+    try {
+        await prisma.post.delete({
+            where: {
+                idPost: postId,
+                createdByIdUser: req.user.idUser
+            }
+        });
+        res.json({ message: 'Post deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to delete post' });
+    }
+});
+
+// 9. Get single post
+app.get('/post/:id', async (req, res) => {
+    try {
+        const post = await prisma.post.findUnique({
+            where: { idPost: parseInt(req.params.id) }
+        });
+        if (!post) return res.status(404).json({ error: 'Post not found' });
+        res.json(post);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch post' });
+    }
+});
+
+// 10. Get post comments
+app.get('/post/:id/comments', async (req, res) => {
+    try {
+        const comments = await prisma.comment.findMany({
+            where: { commentIdPost: parseInt(req.params.id) },
+            include: { users: { select: { displayedName: true } } },
+            orderBy: { createdAt: 'asc' }
+        });
+        res.json(comments);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch comments' });
+    }
+});
+
+// 11. Get comments count
+app.get('/post/:id/comments-count', async (req, res) => {
+    try {
+        const count = await prisma.comment.count({
+            where: { commentIdPost: parseInt(req.params.id) }
+        });
+        res.json({ count });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch comments count' });
+    }
+});
+
+// 12. Add comment
+app.post('/comments', authenticateToken, async (req, res) => {
+    const { postId, content, isAnonymous } = req.body;
+
+    try {
+        const comment = await prisma.comment.create({
+            data: {
+                commentIdPost: postId,
+                text: content,
+                createdByIdUser: isAnonymous ? null : req.user.idUser
+            }
+        });
+        res.status(201).json(comment);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to create comment' });
+    }
+});
+
+// 13. Get paginated comments
+app.get('/comments', async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = Math.min(parseInt(req.query.pageSize) || 10, 100);
+    const skip = (page - 1) * pageSize;
+
+    try {
+        const [comments, total] = await Promise.all([
+            prisma.comment.findMany({
+                orderBy: { idComment: 'desc' },
+                take: pageSize,
+                skip
+            }),
+            prisma.comment.count()
+        ]);
+
+        res.json({ comments, total, page, pageSize });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch comments' });
+    }
+});
+
+// 14. Get user profile and posts
+app.get('/user/:id', async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = Math.min(parseInt(req.query.pageSize) || 10, 100);
+    const skip = (page - 1) * pageSize;
+
+    try {
+        const [user, posts, total] = await Promise.all([
+            prisma.users.findUnique({
+                where: { idUser: parseInt(req.params.id) },
+                select: { displayedName: true, pic: true }
+            }),
+            prisma.post.findMany({
+                where: { createdByIdUser: parseInt(req.params.id) },
+                orderBy: { createdAt: 'desc' },
+                take: pageSize,
+                skip
+            }),
+            prisma.post.count({ where: { createdByIdUser: parseInt(req.params.id) } })
+        ]);
+
+        if (!user) return res.status(404).json({ error: 'User not found' });
+        res.json({ user, posts, total, page, pageSize });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch user profile' });
+    }
+});
+
+// 15. Following posts
 app.get('/following-posts', authenticateToken, async (req, res) => {
-    const page = Math.max(1, parseInt(req.query.page) || 1);
-    const pageSize = Math.min(Math.max(1, parseInt(req.query.pageSize) || 10), 100);
-    const offset = (page - 1) * pageSize;
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = Math.min(parseInt(req.query.pageSize) || 10, 100);
+    const skip = (page - 1) * pageSize;
 
     try {
-        const [posts] = await dbPool.execute(
-            `SELECT DISTINCT p.*
-       FROM Post p
-       WHERE EXISTS (
-         SELECT 1
-         FROM UserFollowedTag uft
-         JOIN Tag t ON uft.idTag = t.idTag
-         WHERE uft.idUser = ?
-         AND (
-           p.tags = t.name
-           OR p.tags LIKE CONCAT(t.name, ',%')
-           OR p.tags LIKE CONCAT('%,', t.name)
-           OR p.tags LIKE CONCAT('%,', t.name, ',%')
-           OR (p.tags IS NULL AND t.name = '')
-         )
-       )
-       ORDER BY p.createdAt DESC LIMIT ? OFFSET ?`,
-            [req.user.idUser, pageSize, offset]
-        );
-
-        const [[{ totalPosts }]] = await dbPool.execute(
-            `SELECT COUNT(DISTINCT p.idPost) as totalPosts
-       FROM Post p
-       WHERE EXISTS (
-         SELECT 1
-         FROM UserFollowedTag uft
-         JOIN Tag t ON uft.idTag = t.idTag
-         WHERE uft.idUser = ?
-         AND (
-           p.tags = t.name
-           OR p.tags LIKE CONCAT(t.name, ',%')
-           OR p.tags LIKE CONCAT('%,', t.name)
-           OR p.tags LIKE CONCAT('%,', t.name, ',%')
-           OR (p.tags IS NULL AND t.name = '')
-         )
-       )`,
-            [req.user.idUser]
-        );
-        const totalPages = Math.ceil(totalPosts / pageSize);
-
-        respond(res, {
-            posts,
-            pagination: { currentPage: page, pageSize, totalPosts, totalPages },
+        const followedTags = await prisma.userFollowedTag.findMany({
+            where: { idUser: req.user.idUser },
+            select: { tag: { select: { name: true } } }
         });
+        const tagNames = followedTags.map(ft => ft.tag.name);
+
+        const [posts, total] = await Promise.all([
+            prisma.post.findMany({
+                where: { tags: { contains: tagNames.join(',') } },
+                orderBy: { createdAt: 'desc' },
+                take: pageSize,
+                skip,
+                distinct: ['idPost']
+            }),
+            prisma.post.count({ where: { tags: { contains: tagNames.join(',') } } })
+        ]);
+
+        res.json({ posts, total, page, pageSize });
     } catch (error) {
-        respond(res, { error: 'Database error: ' + error.message }, 500);
+        res.status(500).json({ error: 'Failed to fetch following posts' });
     }
 });
 
-// Likes
+// 16. Like post
 app.post('/like-post', authenticateToken, async (req, res) => {
     const { postId } = req.body;
 
     try {
-        await dbPool.execute(
-            'INSERT INTO UserLikedPost (idUser, idPost) VALUES (?, ?) ON DUPLICATE KEY UPDATE idUser = idUser',
-            [req.user.idUser, postId]
-        );
-        await dbPool.execute('UPDATE Post SET likes = likes + 1 WHERE idPost = ?', [postId]);
-        const [rows] = await dbPool.execute('SELECT * FROM Post WHERE idPost = ?', [postId]);
-        respond(res, rows[0]);
+        await prisma.$transaction([
+            prisma.userLikedPost.upsert({
+                where: {
+                    idUser_idPost: { idUser: req.user.idUser, idPost: postId }
+                },
+                update: {},
+                create: { idUser: req.user.idUser, idPost: postId }
+            }),
+            prisma.post.update({
+                where: { idPost: postId },
+                data: { likes: { increment: 1 } }
+            })
+        ]);
+
+        const post = await prisma.post.findUnique({ where: { idPost: postId } });
+        res.json(post);
     } catch (error) {
-        respond(res, { error: 'Database error: ' + error.message }, 500);
+        res.status(500).json({ error: 'Failed to like post' });
     }
 });
 
+// 17. Unlike post
 app.post('/unlike-post', authenticateToken, async (req, res) => {
     const { postId } = req.body;
 
     try {
-        await dbPool.execute('DELETE FROM UserLikedPost WHERE idUser = ? AND idPost = ?', [req.user.idUser, postId]);
-        await dbPool.execute('UPDATE Post SET likes = likes - 1 WHERE idPost = ?', [postId]);
-        const [rows] = await dbPool.execute('SELECT * FROM Post WHERE idPost = ?', [postId]);
-        respond(res, rows[0]);
+        await prisma.$transaction([
+            prisma.userLikedPost.deleteMany({
+                where: { idUser: req.user.idUser, idPost: postId }
+            }),
+            prisma.post.update({
+                where: { idPost: postId },
+                data: { likes: { decrement: 1 } }
+            })
+        ]);
+
+        const post = await prisma.post.findUnique({ where: { idPost: postId } });
+        res.json(post);
     } catch (error) {
-        respond(res, { error: 'Database error: ' + error.message }, 500);
+        res.status(500).json({ error: 'Failed to unlike post' });
     }
 });
 
+// 18. Check post like
 app.get('/like-post', authenticateToken, async (req, res) => {
-    const postId = parseInt(req.query.idPost) || 0;
+    const { idPost } = req.query;
 
     try {
-        const [rows] = await dbPool.execute(
-            'SELECT * FROM UserLikedPost WHERE idUser = ? AND idPost = ?',
-            [req.user.idUser, postId]
-        );
-        respond(res, rows[0] || {});
+        const like = await prisma.userLikedPost.findUnique({
+            where: {
+                idUser_idPost: { idUser: req.user.idUser, idPost: parseInt(idPost) }
+            }
+        });
+        res.json({ liked: !!like });
     } catch (error) {
-        respond(res, { error: 'Database error: ' + error.message }, 500);
+        res.status(500).json({ error: 'Failed to check like status' });
     }
 });
 
+// 19. Like comment
 app.post('/like-comment', authenticateToken, async (req, res) => {
     const { commentId } = req.body;
 
     try {
-        await dbPool.execute(
-            'INSERT INTO UserLikedComment (idUser, idComment) VALUES (?, ?) ON DUPLICATE KEY UPDATE idUser = idUser',
-            [req.user.idUser, commentId]
-        );
-        await dbPool.execute('UPDATE Comment SET likes = likes + 1 WHERE idComment = ?', [commentId]);
-        const [rows] = await dbPool.execute('SELECT * FROM Comment WHERE idComment = ?', [commentId]);
-        respond(res, rows[0]);
+        await prisma.$transaction([
+            prisma.userLikedComment.upsert({
+                where: {
+                    idUser_idComment: { idUser: req.user.idUser, idComment: commentId }
+                },
+                update: {},
+                create: { idUser: req.user.idUser, idComment: commentId }
+            }),
+            prisma.comment.update({
+                where: { idComment: commentId },
+                data: { likes: { increment: 1 } }
+            })
+        ]);
+
+        const comment = await prisma.comment.findUnique({ where: { idComment: commentId } });
+        res.json(comment);
     } catch (error) {
-        respond(res, { error: 'Database error: ' + error.message }, 500);
+        res.status(500).json({ error: 'Failed to like comment' });
     }
 });
 
-app.post('/get-comment-likes', authenticateToken, async (req, res) => {
+// 20. Get comment likes
+app.post('/get-comment-likes', async (req, res) => {
     const { commentId } = req.body;
 
     try {
-        const [rows] = await dbPool.execute('SELECT * FROM UserLikedComment WHERE idComment = ?', [commentId]);
-        respond(res, rows);
+        const likes = await prisma.userLikedComment.findMany({
+            where: { idComment: commentId }
+        });
+        res.json(likes);
     } catch (error) {
-        respond(res, { error: 'Database error: ' + error.message }, 500);
+        res.status(500).json({ error: 'Failed to fetch comment likes' });
     }
 });
 
+// 21. Unlike comment
 app.post('/unlike-comment', authenticateToken, async (req, res) => {
     const { commentId } = req.body;
 
     try {
-        await dbPool.execute('DELETE FROM UserLikedComment WHERE idUser = ? AND idComment = ?', [req.user.idUser, commentId]);
-        await dbPool.execute('UPDATE Comment SET likes = likes - 1 WHERE idComment = ?', [commentId]);
-        const [rows] = await dbPool.execute('SELECT * FROM Comment WHERE idComment = ?', [commentId]);
-        respond(res, rows[0]);
+        await prisma.$transaction([
+            prisma.userLikedComment.deleteMany({
+                where: { idUser: req.user.idUser, idComment: commentId }
+            }),
+            prisma.comment.update({
+                where: { idComment: commentId },
+                data: { likes: { decrement: 1 } }
+            })
+        ]);
+
+        const comment = await prisma.comment.findUnique({ where: { idComment: commentId } });
+        res.json(comment);
     } catch (error) {
-        respond(res, { error: 'Database error: ' + error.message }, 500);
+        res.status(500).json({ error: 'Failed to unlike comment' });
     }
 });
 
-// Tags
+// 22. Follow tag
 app.post('/follow-tag', authenticateToken, async (req, res) => {
     const { tagName } = req.body;
 
     try {
-        await dbPool.execute(
-            'INSERT INTO Tag (name) VALUES (?) ON DUPLICATE KEY UPDATE idTag = idTag',
-            [tagName]
-        );
-        const [rows] = await dbPool.execute('SELECT idTag FROM Tag WHERE name = ?', [tagName]);
-        const tagId = rows[0].idTag;
+        const tag = await prisma.tag.upsert({
+            where: { name: tagName },
+            update: {},
+            create: { name: tagName }
+        });
 
-        await dbPool.execute(
-            'INSERT INTO UserFollowedTag (idUser, idTag) VALUES (?, ?) ON DUPLICATE KEY UPDATE idUser = idUser',
-            [req.user.idUser, tagId]
-        );
-        respond(res, { success: true });
+        await prisma.userFollowedTag.upsert({
+            where: {
+                idUser_idTag: { idUser: req.user.idUser, idTag: tag.idTag }
+            },
+            update: {},
+            create: { idUser: req.user.idUser, idTag: tag.idTag }
+        });
+
+        res.json({ message: 'Tag followed successfully' });
     } catch (error) {
-        respond(res, { error: 'Database error: ' + error.message }, 500);
+        res.status(500).json({ error: 'Failed to follow tag' });
     }
 });
 
+// 23. Unfollow tag
 app.post('/unfollow-tag', authenticateToken, async (req, res) => {
     const { tagName } = req.body;
 
     try {
-        const [rows] = await dbPool.execute('SELECT idTag FROM Tag WHERE name = ?', [tagName]);
-        if (rows.length > 0) {
-            await dbPool.execute(
-                'DELETE FROM UserFollowedTag WHERE idUser = ? AND idTag = ?',
-                [req.user.idUser, rows[0].idTag]
-            );
-        }
-        respond(res, { success: true });
+        const tag = await prisma.tag.findUnique({ where: { name: tagName } });
+        if (!tag) return res.status(404).json({ error: 'Tag not found' });
+
+        await prisma.userFollowedTag.deleteMany({
+            where: { idUser: req.user.idUser, idTag: tag.idTag }
+        });
+
+        res.json({ message: 'Tag unfollowed successfully' });
     } catch (error) {
-        respond(res, { error: 'Database error: ' + error.message }, 500);
+        res.status(500).json({ error: 'Failed to unfollow tag' });
     }
 });
 
+// 24. Get followed tags
 app.get('/followed-tags', authenticateToken, async (req, res) => {
     try {
-        const [rows] = await dbPool.execute(
-            'SELECT t.name FROM UserFollowedTag uft JOIN Tag t ON uft.idTag = t.idTag WHERE uft.idUser = ?',
-            [req.user.idUser]
-        );
-        respond(res, rows.map(row => row.name));
+        const tags = await prisma.userFollowedTag.findMany({
+            where: { idUser: req.user.idUser },
+            select: { tag: { select: { name: true } } }
+        });
+        res.json(tags.map(t => t.tag.name));
     } catch (error) {
-        respond(res, { error: 'Database error: ' + error.message }, 500);
+        res.status(500).json({ error: 'Failed to fetch followed tags' });
     }
 });
 
-// 404 Handler
-app.use((req, res) => {
-    respond(res, { error: 'Not Found' }, 404);
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
-
-// Start server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
