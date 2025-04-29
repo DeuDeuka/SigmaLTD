@@ -1,6 +1,6 @@
 cd ~/SigmaLTD/backend
 
-pm2 delete sigma-backend
+pm2 delete sigmaltd-backend
 
 npm install
 
