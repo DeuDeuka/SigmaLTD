@@ -1,8 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-// export const BASE_URL = 'https://www.sigmaltd.space';
-export const BASE_URL = "http://localhost:3000";
-export const API_URL = BASE_URL ;//+ '/api';
+export const BASE_URL = 'https://www.sigmaltd.space';
+// export const BASE_URL = "http://localhost:3000";
+export const API_URL = BASE_URL + '/api';
 
 // Helper to get the token from AsyncStorage
 const getToken = async () => {
