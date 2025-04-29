@@ -293,26 +293,55 @@ app.get('/following-posts', authenticateToken, async (req, res) => {
     const skip = (page - 1) * pageSize;
 
     try {
+        console.log(`Fetching followed tags for user ${req.user.idUser}`);
         const followedTags = await prisma.userFollowedTag.findMany({
             where: { idUser: req.user.idUser },
-            select: { tag: { select: { name: true } } }
+            select: { tag: { select: { name: true } } },
         });
-        const tagNames = followedTags.map(ft => ft.tag.name);
+        const tagNames = followedTags.map((ft) => ft.tag.name);
+        console.log('Followed tags:', tagNames);
 
+        if (tagNames.length === 0) {
+            console.log('No followed tags, returning empty response');
+            return res.json({ posts: [], total: 0, page, pageSize });
+        }
+
+        const tagConditions = tagNames.map((tag) => ({
+            tags: { contains: tag, mode: 'insensitive' },
+        }));
+
+        console.log('Executing posts query with conditions:', tagConditions);
         const [posts, total] = await Promise.all([
             prisma.post.findMany({
-                where: { tags: { contains: tagNames.join(',') } },
+                where: {
+                    AND: [
+                        { tags: { not: null } }, // Ensure tags is not null
+                        { OR: tagConditions },
+                    ],
+                },
                 orderBy: { createdAt: 'desc' },
                 take: pageSize,
                 skip,
-                distinct: ['idPost']
+                distinct: ['idPost'],
+                include: {
+                    createdBy: { select: { displayedName: true } }, // Optional: Include creator info
+                },
             }),
-            prisma.post.count({ where: { tags: { contains: tagNames.join(',') } } })
+            prisma.post.count({
+                where: {
+                    AND: [
+                        { tags: { not: null } },
+                        { OR: tagConditions },
+                    ],
+                },
+            }),
         ]);
 
+        console.log(`Fetched ${posts.length} posts, total: ${total}`);
         res.json({ posts, total, page, pageSize });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch following posts' });
+        console.error('Error in /following-posts:', error);
+        res.status(500).json({ error: 'Failed to fetch following posts', details: error.message });
     }
 });
 
