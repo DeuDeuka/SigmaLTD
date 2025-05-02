@@ -6,6 +6,7 @@ import Modal from 'react-native-modal';
 import FeedScreen from './screens/FeedScreen';
 import FollowingScreen from './screens/FollowingScreen';
 import ProfileSettingsScreen from './screens/ProfileSettingsScreen';
+import Database from "./database";
 
 const screens = [{key: 'Feed', component: FeedScreen, title: 'Feed'}, {
     key: 'Following', component: FollowingScreen, title: 'Following'
@@ -204,7 +205,16 @@ function MainNavigator({navigation}) {
         navigation.addListener('focus', () => {
             setActiveScreen('Feed');
         })
+        checkAuth().then();
     })
+
+    const checkAuth = async () => {
+        try {
+            await Database.getAllPosts(1);
+        } catch (error) {
+            navigation.replace('Login');
+        }
+    }
 
     const scrollToPage = useCallback((index) => {
         if (flatListRef.current) {

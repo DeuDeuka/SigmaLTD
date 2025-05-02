@@ -5,6 +5,7 @@ import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
 
 import Database, {BASE_URL} from '../database';
 
+
 export default function Comment({ comment, currentUser, toggleLike }) {
 	const isMine = comment.createdByIdUser === currentUser.idUser;
 	const [likes, setLikes] = useState([]);

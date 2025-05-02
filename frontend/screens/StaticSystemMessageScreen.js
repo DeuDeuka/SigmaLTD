@@ -9,14 +9,15 @@ export default function StaticSystemMessageScreen({ navigation }) {
     });
 
     const isShown = async () => {
-        const value = await AsyncStorage.getItem('message');
+        await AsyncStorage.removeItem("message");
+        const value = await AsyncStorage.getItem('message1');
         if (value === "true"){
             navigation.replace("Main");
         }
     }
 
     const setShown = async () => {
-        await AsyncStorage.setItem('message', 'true');
+        await AsyncStorage.setItem('message1', 'true');
         navigation.replace('Main');
     }
 
@@ -32,6 +33,12 @@ export default function StaticSystemMessageScreen({ navigation }) {
                 В настоящий момент мы переносим сайт на другой сервер, поэтому некоторые функции могут не работать.
                 <br/>
                 Просим отнестись к этому с пониманием!
+            </Text>
+
+            <Text style={{color:'#CCC', textAlign: 'center', fontSize: 18, width:"70%", marginBottom: 50}}>
+                В настоящий момент была добалена поддержка картинок на постах и поддержка коментов
+                <br/>
+                (Процент переноса 20%)
             </Text>
             <Button onPress={setShown} title={"OK"}/>
         </View>

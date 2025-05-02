@@ -56,25 +56,19 @@ export function CreatePost({ navigation }) {
 		setShowReadMore(contentHeight > inputHeight);
 	};
 
-	const handleKeyDown = (e) => {
-		if (e.key === 'Enter' && !e.shiftKey) {
-			e.preventDefault();
-		}
-	};
-
 	const pickMedia = async () => {
 		const result = await ImagePicker.launchImageLibraryAsync({
-			mediaTypes: ImagePicker.MediaTypeOptions.All,
+			mediaTypes: ImagePicker.MediaTypeOptions.Images, // Restrict to images only
 			allowsMultipleSelection: true,
-			quality: 0.7,
+			quality: 0.7, // Compress to 70% quality
 			allowsEditing: true,
 		});
 
 		if (!result.canceled) {
 			const newMedia = result.assets.map((asset) => ({
 				uri: asset.uri,
-				type: asset.type === 'video' ? 'video' : 'image',
-				mimeType: asset.mimeType || (asset.type === 'image' ? 'image/jpeg' : 'video/mp4'),
+				type: 'image',
+				mimeType: asset.mimeType || 'image/jpeg',
 			}));
 			setMedia([...media, ...newMedia]);
 		}
@@ -84,14 +78,14 @@ export function CreatePost({ navigation }) {
 		setDisabled(true);
 		if (!content.trim() && media.length === 0) {
 			setError('Content or media is required');
+			setDisabled(false);
 			return;
 		}
 
 		try {
-			// Use the dynamic inputs array instead of the old tags string
 			const tagArray = inputs
-				.filter(tag => tag.trim()) // Remove empty tags
-				.map(tag => tag.trim());
+				.filter((tag) => tag.trim())
+				.map((tag) => tag.trim());
 
 			const mediaWithBase64 = await Promise.all(
 				media.map(async (item, index) => {
@@ -102,20 +96,22 @@ export function CreatePost({ navigation }) {
 						reader.onloadend = () => resolve(reader.result.split(',')[1]);
 						reader.readAsDataURL(blob);
 					});
+
 					const extension = item.mimeType?.split('/')[1] || 'jpg';
-					const fileName = `${item.type}-${Date.now()}-${index}.${extension}`;
+					const fileName = `image-${Date.now()}-${index}.${extension}`;
+
 					return {
 						name: fileName,
-						type: item.mimeType || 'application/octet-stream',
-						base64: base64,
+						type: item.mimeType || 'image/jpeg',
+						base64,
 					};
 				})
 			);
 
 			const payload = {
 				content: content.trim() || '',
-				tags: tagArray.join(','), // Join tags with commas for the payload
-				isAnonymous: isAnonymous,
+				tags: tagArray.join(','),
+				isAnonymous,
 				images: mediaWithBase64,
 			};
 
@@ -124,22 +120,18 @@ export function CreatePost({ navigation }) {
 			setPosts([newPost, ...posts]);
 			setContent('');
 			setMedia([]);
-			setInputs(['']); // Reset to one empty input
+			setInputs(['']);
 			setError(null);
 			navigation.navigate('Main');
+			setDisabled(false);
 
 			return newPost;
 		} catch (err) {
 			const errorMessage = err.message || 'Failed to submit post';
 			setError(errorMessage);
 			console.error('Error submitting post:', err);
+			setDisabled(false);
 		}
-	};
-
-	const uriToBlob = async (uri) => {
-		const response = await fetch(uri);
-		const blob = await response.blob();
-		return blob;
 	};
 
 	return (
@@ -174,9 +166,9 @@ export function CreatePost({ navigation }) {
 						]}
 						placeholder="What's on your mind?"
 						value={content}
-						onChangeText={(NewText) => {
-							if (NewText.length <= 10000) {
-								setContent(NewText);
+						onChangeText={(newText) => {
+							if (newText.length <= 10000) {
+								setContent(newText);
 							}
 						}}
 						onContentSizeChange={(e) => {
@@ -236,7 +228,6 @@ export function CreatePost({ navigation }) {
 							</Text>
 						</TouchableOpacity>
 					)}
-					{/* Dynamic Tags Inputs */}
 					{inputs.map((input, index) => (
 						<View
 							key={index}

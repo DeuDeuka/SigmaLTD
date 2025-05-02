@@ -101,7 +101,7 @@ export default function PostDetailScreen({ route }) {
                 imageBase64,
             });
 
-            setComments((prev) => [...prev, newC]);
+            setComments((prev) => [newC, ...prev]);
             setNewComment('');
             setSelectedImages([]);
         } catch (err) {

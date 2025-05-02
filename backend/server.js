@@ -1,108 +1,124 @@
 const express = require('express');
 const { PrismaClient } = require('@prisma/client');
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const dotenv = require('dotenv');
+const jwt = require('jsonwebtoken');
 const cors = require('cors');
+const dotenv = require('dotenv');
+const fs = require('fs').promises;
+const path = require('path');
 
 dotenv.config();
+
 const app = express();
 const prisma = new PrismaClient();
 const PORT = process.env.PORT || 3000;
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 
-app.use(cors({
-    origin: '*',
-    methods: ['GET', 'POST', 'DELETE'],
-    allowedHeaders: ['Authorization', 'Content-Type'],
-}));
+const uploadsDir = path.join(__dirname, 'uploads');
+fs.mkdir(uploadsDir, { recursive: true }).catch((err) => {
+    console.error('Failed to create uploads directory:', err);
+});
 
-app.use(express.json());
-
-// Middleware to authenticate JWT
+app.use(cors());
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
+// Middleware to verify JWT token
 const authenticateToken = async (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 
-    if (!token) return res.status(401).json({ error: 'Access denied' });
+    if (!token) return res.status(401).json({ error: 'Access token required' });
 
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
-        req.user = await prisma.users.findUnique({ where: { idUser: decoded.id } });
-        if (!req.user) return res.status(401).json({ error: 'Invalid token' });
+        const user = await prisma.users.findUnique({
+            where: { idUser: decoded.idUser },
+            include: { nsu: true },
+        });
+        if (!user) return res.status(401).json({ error: 'Invalid token' });
+        req.user = user;
         next();
     } catch (error) {
-        res.status(401).json({ error: 'Invalid token' });
+        return res.status(403).json({ error: 'Invalid or expired token' });
     }
 };
 
-// 1. Register
+app.use('/uploads', express.static(uploadsDir));
+
+
+// Register a new user
 app.post('/register', async (req, res) => {
     const { email, password, realName, group, displayedName } = req.body;
 
     try {
-        const existingUser = await prisma.nsu.findUnique({ where: { email } });
-        if (existingUser) return res.status(400).json({ error: 'Email already exists' });
+        const existingNsu = await prisma.nsu.findUnique({ where: { email } });
+        if (existingNsu) return res.status(400).json({ error: 'Email already exists' });
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const nsuUser = await prisma.nsu.create({
+
+        const nsu = await prisma.nsu.create({
             data: {
-                realName: realName,
-                email: email,
-                group: group,
-                hasLogined: false,
+                realName,
+                email,
+                group,
                 user: {
                     create: {
-                        displayedName: displayedName,
+                        displayedName,
                         password: hashedPassword,
-                        pic: ''
-                    }
-                }
-            }
+                    },
+                },
+            },
+            include: { user: true },
         });
-        const token = jwt.sign({ id: nsuUser.user.idUser }, JWT_SECRET, { expiresIn: 'never' });
-        res.status(201).json({ message: 'User registered successfully', token: token });
+
+        const token = jwt.sign({ idUser: nsu.idNsuUser }, JWT_SECRET, { expiresIn: '99999d' });
+
+        res.json({ user: nsu.user, token });
     } catch (error) {
-        res.status(500).json({ error: 'Registration failed' });
+        console.error(error);
+        res.status(500).json({ error: 'Failed to register user' });
     }
 });
 
-// 2. Login
+// Login a user
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        const nsuUser = await prisma.nsu.findUnique({
+        const nsu = await prisma.nsu.findUnique({
             where: { email },
-            include: { user: true }
+            include: { user: true },
         });
-        if (!nsuUser || !nsuUser.user) return res.status(400).json({ error: 'Invalid credentials' });
+        if (!nsu || !nsu.user) return res.status(401).json({ error: 'Invalid credentials' });
 
-        const isValid = await bcrypt.compare(password, nsuUser.user.password);
-        if (!isValid) return res.status(400).json({ error: 'Invalid credentials' });
+        const isValid = await bcrypt.compare(password, nsu.user.password);
+        if (!isValid) return res.status(401).json({ error: 'Invalid credentials' });
 
-        const token = jwt.sign({ id: nsuUser.user.idUser }, JWT_SECRET, { expiresIn: '1h' });
-        res.json({ token });
+        await prisma.nsu.update({
+            where: { idNsuUser: nsu.idNsuUser },
+            data: { hasLogined: true },
+        });
+
+        const token = jwt.sign({ idUser: nsu.idNsuUser }, JWT_SECRET, { expiresIn: '999999d' });
+
+        res.json({ user: nsu.user, token });
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: 'Login failed' });
+        console.error(error);
+        res.status(500).json({ error: 'Failed to login' });
     }
 });
 
-// 3. Logout (client-side)
+// Logout (client-side token removal is handled, server confirms)
 app.post('/logout', (req, res) => {
-    res.json({ message: 'Logout successful (discard token client-side)' });
+    res.json({ message: 'Logged out successfully' });
 });
 
-// 4. Get current user
+// Get current user
 app.get('/current-user', authenticateToken, async (req, res) => {
     try {
         const user = await prisma.users.findUnique({
             where: { idUser: req.user.idUser },
-            select: {
-                displayedName: true,
-                pic: true
-            }
+            include: { nsu: true },
         });
         res.json(user);
     } catch (error) {
@@ -110,78 +126,137 @@ app.get('/current-user', authenticateToken, async (req, res) => {
     }
 });
 
-// 5. Update current user
+// Update current user (username or image)
 app.post('/current-user', authenticateToken, async (req, res) => {
-    const { username, image } = req.body;
+    const { username, imageBase64 } = req.body;
 
     try {
         const updateData = {};
         if (username) updateData.displayedName = username;
-        if (image) updateData.pic = image.base64;
+        if (imageBase64) updateData.pic = imageBase64;
 
-        await prisma.users.update({
+        const user = await prisma.users.update({
             where: { idUser: req.user.idUser },
-            data: updateData
+            data: updateData,
         });
-
-        res.json({ message: 'User updated successfully' });
+        res.json(user);
     } catch (error) {
         res.status(500).json({ error: 'Failed to update user' });
     }
 });
 
-// 6. Get posts
-app.get('/posts', async (req, res) => {
-    const page = parseInt(req.query.page) || 1;
-    const pageSize = Math.min(parseInt(req.query.pageSize) || 10, 100);
-    const skip = (page - 1) * pageSize;
+// Get user by ID
+app.get('/user/:id', authenticateToken, async (req, res) => {
+    const { id } = req.params;
+    const { full } = req.query;
 
     try {
-        const [posts, total] = await Promise.all([
-            prisma.post.findMany({
-                orderBy: { idPost: 'desc' },
-                take: pageSize,
-                skip
-            }),
-            prisma.post.count()
-        ]);
+        const user = await prisma.users.findUnique({
+            where: { idUser: parseInt(id) },
+            include: { nsu: full === 'true' },
+        });
+        if (!user) return res.status(404).json({ error: 'User not found' });
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch user' });
+    }
+});
 
-        res.json({ posts, total, page, pageSize });
+// Create a post
+app.post('/posts', authenticateToken, async (req, res) => {
+    const { content, images, tags } = req.body;
+
+    try {
+        let imagePaths = [];
+        if (images && Array.isArray(images)) {
+            imagePaths = await Promise.all(
+                images.map(async (image) => {
+                    const { name, base64 } = image;
+                    const filePath = path.join(uploadsDir, name);
+                    // Remove base64 prefix if present (e.g., "data:image/jpeg;base64,")
+                    const base64Data = base64.replace(/^data:image\/\w+;base64,/, '');
+                    await fs.writeFile(filePath, base64Data, 'base64');
+                    return `/uploads/${name}`;
+                })
+            );
+        }
+        const post = await prisma.post.create({
+            data: {
+                content,
+                images: imagePaths.length > 0 ? imagePaths.join(',') : null,
+                tags,
+                createdByIdUser: req.user.idUser,
+            },
+        });
+        res.json(post);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to create post' });
+    }
+});
+
+// Get all posts
+app.get('/posts', authenticateToken, async (req, res) => {
+    const { page = 1, pageSize = 10 } = req.query;
+
+    try {
+        const posts = await prisma.post.findMany({
+            skip: (page - 1) * pageSize,
+            take: parseInt(pageSize),
+            orderBy: { createdAt: 'desc' },
+            include: { createdBy: true },
+        });
+        res.json({posts});
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch posts' });
     }
 });
 
-// 7. Create post
-app.post('/posts', authenticateToken, async (req, res) => {
-    const { content, tags, isAnonymous, images } = req.body;
+// Get a single post
+app.get('/post/:postId', authenticateToken, async (req, res) => {
+    const { postId } = req.params;
 
     try {
-        console.log(images);
-        const post = await prisma.post.create({
-            data: {
-                content,
-                images: images.length > 0 ? JSON.stringify(images) : null,
-                tags,
-                createdByIdUser: isAnonymous ? null : req.user.idUser
-            }
+        const post = await prisma.post.findUnique({
+            where: { idPost: parseInt(postId) },
+            include: { createdBy: true, comments: { include: { createdBy: true } } },
         });
-        res.status(201).json(post);
+        if (!post) return res.status(404).json({ error: 'Post not found' });
+
+        // Increment views
+        await prisma.post.update({
+            where: { idPost: parseInt(postId) },
+            data: { views: { increment: 1 } },
+        });
+
+        // Record view
+        await prisma.userViewedPost.upsert({
+            where: { idUser_idPost: { idUser: req.user.idUser, idPost: parseInt(postId) } },
+            update: {},
+            create: { idUser: req.user.idUser, idPost: parseInt(postId) },
+        });
+
+        res.json(post);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to create post' });
+        res.status(500).json({ error: 'Failed to fetch post' });
     }
 });
 
-// 8. Delete post
+// Delete a post
 app.delete('/posts', authenticateToken, async (req, res) => {
     const { postId } = req.body;
 
     try {
+        const post = await prisma.post.findUnique({
+            where: { idPost: postId },
+        });
+        if (!post) return res.status(404).json({ error: 'Post not found' });
+        if (post.createdByIdUser !== req.user.idUser) {
+            return res.status(403).json({ error: 'Unauthorized' });
+        }
+
         await prisma.post.delete({
-            where: {
-                idPost: postId,
-                createdByIdUser: req.user.idUser
-            }
+            where: { idPost: postId },
         });
         res.json({ message: 'Post deleted successfully' });
     } catch (error) {
@@ -189,26 +264,42 @@ app.delete('/posts', authenticateToken, async (req, res) => {
     }
 });
 
-// 9. Get single post
-app.get('/post/:id', async (req, res) => {
+// Get posts from followed tags
+app.get('/following-posts', authenticateToken, async (req, res) => {
+    const { page = 1, pageSize = 10 } = req.query;
+
     try {
-        const post = await prisma.post.findUnique({
-            where: { idPost: parseInt(req.params.id) }
+        const followedTags = await prisma.userFollowedTag.findMany({
+            where: { idUser: req.user.idUser },
+            include: { tag: true },
         });
-        if (!post) return res.status(404).json({ error: 'Post not found' });
-        res.json(post);
+        const tagNames = followedTags.map((ft) => ft.tag.name);
+
+        const posts = await prisma.post.findMany({
+            where: {
+                tags: { contains: tagNames.join(',') },
+            },
+            skip: (page - 1) * pageSize,
+            take: parseInt(pageSize),
+            orderBy: { createdAt: 'desc' },
+            include: { createdBy: true },
+        });
+        res.json(posts);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch post' });
+        res.status(500).json({ error: 'Failed to fetch following posts' });
     }
 });
 
-// 10. Get post comments
-app.get('/post/:id/comments', async (req, res) => {
+// Get all comments
+app.get('/comments', authenticateToken, async (req, res) => {
+    const { page = 1, pageSize = 10 } = req.query;
+
     try {
         const comments = await prisma.comment.findMany({
-            where: { commentIdPost: parseInt(req.params.id) },
-            include: { users: { select: { displayedName: true } } },
-            orderBy: { createdAt: 'asc' }
+            skip: (page - 1) * pageSize,
+            take: parseInt(pageSize),
+            orderBy: { createdAt: 'desc' },
+            include: { createdBy: true, post: true },
         });
         res.json(comments);
     } catch (error) {
@@ -216,243 +307,120 @@ app.get('/post/:id/comments', async (req, res) => {
     }
 });
 
-// 11. Get comments count
-app.get('/post/:id/comments-count', async (req, res) => {
+// Get comments for a post
+app.get('/post/:postId/comments', authenticateToken, async (req, res) => {
+    const { postId } = req.params;
+
     try {
-        const count = await prisma.comment.count({
-            where: { commentIdPost: parseInt(req.params.id) }
+        const comments = await prisma.comment.findMany({
+            where: { commentIdPost: parseInt(postId) },
+            orderBy: { createdAt: 'desc' },
+            include: { createdBy: true },
         });
-        res.json({ count });
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch comments count' });
-    }
-});
-
-// 12. Add comment
-app.post('/comments', authenticateToken, async (req, res) => {
-    const { postId, content, isAnonymous } = req.body;
-
-    try {
-        const comment = await prisma.comment.create({
-            data: {
-                commentIdPost: postId,
-                text: content,
-                createdByIdUser: isAnonymous ? null : req.user.idUser
-            }
-        });
-        res.status(201).json(comment);
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to create comment' });
-    }
-});
-
-// 13. Get paginated comments
-app.get('/comments', async (req, res) => {
-    const page = parseInt(req.query.page) || 1;
-    const pageSize = Math.min(parseInt(req.query.pageSize) || 10, 100);
-    const skip = (page - 1) * pageSize;
-
-    try {
-        const [comments, total] = await Promise.all([
-            prisma.comment.findMany({
-                orderBy: { idComment: 'desc' },
-                take: pageSize,
-                skip
-            }),
-            prisma.comment.count()
-        ]);
-
-        res.json({ comments, total, page, pageSize });
+        res.json(comments);
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch comments' });
     }
 });
 
-// 14. Get user profile and posts
-app.get('/user/:id', async (req, res) => {
-    const full = !!(parseInt(req.params.full))
-    const page = parseInt(req.query.page) || 1;
-    const pageSize = Math.min(parseInt(req.query.pageSize) || 10, 100);
-    const skip = (page - 1) * pageSize;
+// Get comment count for a post
+app.get('/post/:postId/comments-count', authenticateToken, async (req, res) => {
+    const { postId } = req.params;
 
     try {
-        const [user, posts, total] = await Promise.all([
-            prisma.users.findUnique({
-                where: { idUser: parseInt(req.params.id) },
-                select: { displayedName: true, pic: true }
-            }),
-            prisma.post.findMany({
-                where: { createdByIdUser: parseInt(req.params.id) },
-                orderBy: { createdAt: 'desc' },
-                take: pageSize,
-                skip
-            }),
-            prisma.post.count({ where: { createdByIdUser: parseInt(req.params.id) } })
-        ]);
-
-        if (!user) return res.status(404).json({ error: 'User not found' });
-        full ? res.json({ user, posts, total, page, pageSize }) : res.json(user);
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch user profile' });
-    }
-});
-
-// 15. Following posts
-app.get('/following-posts', authenticateToken, async (req, res) => {
-    const page = parseInt(req.query.page) || 1;
-    const pageSize = Math.min(parseInt(req.query.pageSize) || 10, 100);
-    const skip = (page - 1) * pageSize;
-
-    try {
-        console.log(`Fetching followed tags for user ${req.user.idUser}`);
-        const followedTags = await prisma.userFollowedTag.findMany({
-            where: { idUser: req.user.idUser },
-            select: { tag: { select: { name: true } } },
+        const count = await prisma.comment.count({
+            where: { commentIdPost: parseInt(postId) },
         });
-        const tagNames = followedTags.map((ft) => ft.tag.name);
-        console.log('Followed tags:', tagNames);
-
-        if (tagNames.length === 0) {
-            console.log('No followed tags, returning empty response');
-            return res.json({ posts: [], total: 0, page, pageSize });
-        }
-
-        const tagConditions = tagNames.map((tag) => ({
-            tags: { contains: tag, mode: 'insensitive' },
-        }));
-
-        console.log('Executing posts query with conditions:', tagConditions);
-        const [posts, total] = await Promise.all([
-            prisma.post.findMany({
-                where: {
-                    AND: [
-                        { tags: { not: null } }, // Ensure tags is not null
-                        { OR: tagConditions },
-                    ],
-                },
-                orderBy: { createdAt: 'desc' },
-                take: pageSize,
-                skip,
-                distinct: ['idPost'],
-                include: {
-                    createdBy: { select: { displayedName: true } }, // Optional: Include creator info
-                },
-            }),
-            prisma.post.count({
-                where: {
-                    AND: [
-                        { tags: { not: null } },
-                        { OR: tagConditions },
-                    ],
-                },
-            }),
-        ]);
-
-        console.log(`Fetched ${posts.length} posts, total: ${total}`);
-        res.json({ posts, total, page, pageSize });
+        res.json({ count });
     } catch (error) {
-        console.error('Error in /following-posts:', error);
-        res.status(500).json({ error: 'Failed to fetch following posts', details: error.message });
+        res.status(500).json({ error: 'Failed to fetch comment count' });
     }
 });
 
-// 16. Like post
+// Add a comment
+app.post('/comments', authenticateToken, async (req, res) => {
+    const { postId, content, isAnonymous, imageBase64 } = req.body;
+
+    try {
+        const comment = await prisma.comment.create({
+            data: {
+                commentIdPost: parseInt(postId),
+                text: content,
+                images: imageBase64,
+                createdByIdUser: isAnonymous ? 2 : req.user.idUser,
+            },
+        });
+        res.json(comment);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to add comment', message: error.message });
+    }
+});
+
+// Like a post
 app.post('/like-post', authenticateToken, async (req, res) => {
     const { postId } = req.body;
 
     try {
-        await prisma.$transaction([
-            prisma.userLikedPost.upsert({
-                where: {
-                    idUser_idPost: { idUser: req.user.idUser, idPost: postId }
-                },
-                update: {},
-                create: { idUser: req.user.idUser, idPost: postId }
-            }),
-            prisma.post.update({
-                where: { idPost: postId },
-                data: { likes: { increment: 1 } }
-            })
-        ]);
+        const like = await prisma.userLikedPost.upsert({
+            where: { idUser_idPost: { idUser: req.user.idUser, idPost: parseInt(postId) } },
+            update: {},
+            create: { idUser: req.user.idUser, idPost: parseInt(postId) },
+        });
 
-        const post = await prisma.post.findUnique({ where: { idPost: postId } });
-        res.json(post);
+        await prisma.post.update({
+            where: { idPost: parseInt(postId) },
+            data: { likes: { increment: 1 } },
+        });
+
+        res.json(like);
     } catch (error) {
         res.status(500).json({ error: 'Failed to like post' });
     }
 });
 
-// 17. Unlike post
-app.post('/unlike-post', authenticateToken, async (req, res) => {
-    const { postId } = req.body;
-
-    try {
-        await prisma.$transaction([
-            prisma.userLikedPost.deleteMany({
-                where: { idUser: req.user.idUser, idPost: postId }
-            }),
-            prisma.post.update({
-                where: { idPost: postId },
-                data: { likes: { decrement: 1 } }
-            })
-        ]);
-
-        const post = await prisma.post.findUnique({ where: { idPost: postId } });
-        res.json(post);
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to unlike post' });
-    }
-});
-
-// 18. Check post like
+// Get like status for a post
 app.get('/like-post', authenticateToken, async (req, res) => {
     const { idPost } = req.query;
 
     try {
         const like = await prisma.userLikedPost.findUnique({
-            where: {
-                idUser_idPost: { idUser: req.user.idUser, idPost: parseInt(idPost) }
-            }
+            where: { idUser_idPost: { idUser: req.user.idUser, idPost: parseInt(idPost) } },
         });
-        res.json({ liked: !!like });
+        res.json(!!like);
+        console.log()
     } catch (error) {
-        res.status(500).json({ error: 'Failed to check like status' });
+        res.status(500).json({ error: 'Failed to fetch like status' });
     }
 });
 
-// 19. Like comment
-app.post('/like-comment', authenticateToken, async (req, res) => {
-    const { commentId } = req.body;
+// Unlike a post
+app.post('/unlike-post', authenticateToken, async (req, res) => {
+    const { postId } = req.body;
 
     try {
-        await prisma.$transaction([
-            prisma.userLikedComment.upsert({
-                where: {
-                    idUser_idComment: { idUser: req.user.idUser, idComment: commentId }
-                },
-                update: {},
-                create: { idUser: req.user.idUser, idComment: commentId }
-            }),
-            prisma.comment.update({
-                where: { idComment: commentId },
-                data: { likes: { increment: 1 } }
-            })
-        ]);
+        await prisma.userLikedPost.delete({
+            where: { idUser_idPost: { idUser: req.user.idUser, idPost: parseInt(postId) } },
+        });
 
-        const comment = await prisma.comment.findUnique({ where: { idComment: commentId } });
-        res.json(comment);
+        await prisma.post.update({
+            where: { idPost: parseInt(postId) },
+            data: { likes: { decrement: 1 } },
+        });
+
+        res.json({ message: 'Post unliked successfully' });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to like comment' });
+        res.status(500).json({ error: 'Failed to unlike post' });
     }
 });
 
-// 20. Get comment likes
-app.post('/get-comment-likes', async (req, res) => {
+// Get comment likes
+app.post('/get-comment-likes', authenticateToken, async (req, res) => {
     const { commentId } = req.body;
 
     try {
         const likes = await prisma.userLikedComment.findMany({
-            where: { idComment: commentId }
+            where: { idComment: parseInt(commentId) },
         });
         res.json(likes);
     } catch (error) {
@@ -460,29 +428,49 @@ app.post('/get-comment-likes', async (req, res) => {
     }
 });
 
-// 21. Unlike comment
+// Like a comment
+app.post('/like-comment', authenticateToken, async (req, res) => {
+    const { commentId } = req.body;
+
+    try {
+        const like = await prisma.userLikedComment.upsert({
+            where: { idUser_idComment: { idUser: req.user.idUser, idComment: parseInt(commentId) } },
+            update: {},
+            create: { idUser: req.user.idUser, idComment: parseInt(commentId) },
+        });
+
+        await prisma.comment.update({
+            where: { idComment: parseInt(commentId) },
+            data: { likes: { increment: 1 } },
+        });
+
+        res.json(like);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to like comment' });
+    }
+});
+
+// Unlike a comment
 app.post('/unlike-comment', authenticateToken, async (req, res) => {
     const { commentId } = req.body;
 
     try {
-        await prisma.$transaction([
-            prisma.userLikedComment.deleteMany({
-                where: { idUser: req.user.idUser, idComment: commentId }
-            }),
-            prisma.comment.update({
-                where: { idComment: commentId },
-                data: { likes: { decrement: 1 } }
-            })
-        ]);
+        await prisma.userLikedComment.delete({
+            where: { idUser_idComment: { idUser: req.user.idUser, idComment: parseInt(commentId) } },
+        });
 
-        const comment = await prisma.comment.findUnique({ where: { idComment: commentId } });
-        res.json(comment);
+        await prisma.comment.update({
+            where: { idComment: parseInt(commentId) },
+            data: { likes: { decrement: 1 } },
+        });
+
+        res.json({ message: 'Comment unliked successfully' });
     } catch (error) {
         res.status(500).json({ error: 'Failed to unlike comment' });
     }
 });
 
-// 22. Follow tag
+// Follow a tag
 app.post('/follow-tag', authenticateToken, async (req, res) => {
     const { tagName } = req.body;
 
@@ -490,24 +478,22 @@ app.post('/follow-tag', authenticateToken, async (req, res) => {
         const tag = await prisma.tag.upsert({
             where: { name: tagName },
             update: {},
-            create: { name: tagName }
+            create: { name: tagName },
         });
 
-        await prisma.userFollowedTag.upsert({
-            where: {
-                idUser_idTag: { idUser: req.user.idUser, idTag: tag.idTag }
-            },
+        const follow = await prisma.userFollowedTag.upsert({
+            where: { idUser_idTag: { idUser: req.user.idUser, idTag: tag.idTag } },
             update: {},
-            create: { idUser: req.user.idUser, idTag: tag.idTag }
+            create: { idUser: req.user.idUser, idTag: tag.idTag },
         });
 
-        res.json({ message: 'Tag followed successfully' });
+        res.json(follow);
     } catch (error) {
         res.status(500).json({ error: 'Failed to follow tag' });
     }
 });
 
-// 23. Unfollow tag
+// Unfollow a tag
 app.post('/unfollow-tag', authenticateToken, async (req, res) => {
     const { tagName } = req.body;
 
@@ -515,8 +501,8 @@ app.post('/unfollow-tag', authenticateToken, async (req, res) => {
         const tag = await prisma.tag.findUnique({ where: { name: tagName } });
         if (!tag) return res.status(404).json({ error: 'Tag not found' });
 
-        await prisma.userFollowedTag.deleteMany({
-            where: { idUser: req.user.idUser, idTag: tag.idTag }
+        await prisma.userFollowedTag.delete({
+            where: { idUser_idTag: { idUser: req.user.idUser, idTag: tag.idTag } },
         });
 
         res.json({ message: 'Tag unfollowed successfully' });
@@ -525,14 +511,14 @@ app.post('/unfollow-tag', authenticateToken, async (req, res) => {
     }
 });
 
-// 24. Get followed tags
+// Get followed tags
 app.get('/followed-tags', authenticateToken, async (req, res) => {
     try {
-        const tags = await prisma.userFollowedTag.findMany({
+        const followedTags = await prisma.userFollowedTag.findMany({
             where: { idUser: req.user.idUser },
-            select: { tag: { select: { name: true } } }
+            include: { tag: true },
         });
-        res.json(tags.map(t => t.tag.name));
+        res.json(followedTags.map((ft) => ft.tag));
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch followed tags' });
     }
