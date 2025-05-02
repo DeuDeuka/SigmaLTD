@@ -5,29 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="80c2287e-a7d9-4686-9a78-77c3654e08a8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/MainNavigator.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/MainNavigator.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/components/Comment.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/Comment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/components/CreatePost.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/CreatePost.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/database.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/public/service-worker.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/screens/CommentScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/screens/CommentScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/screens/StaticSystemMessageScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/screens/StaticSystemMessageScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web-build/asset-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web-build/asset-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web-build/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web-build/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web-build/static/js/718.7bf02200.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web-build/static/js/718.7bf02200.js.LICENSE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web-build/static/js/718.7bf02200.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web-build/static/js/main.6cff9e6c.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web-build/static/js/main.6cff9e6c.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
