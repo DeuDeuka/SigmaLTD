@@ -208,6 +208,7 @@ app.get('/posts', authenticateToken, async (req, res) => {
             orderBy: { createdAt: 'desc' },
             include: { createdBy: true },
         });
+        console.log(posts);
         res.json({posts});
     } catch (error) {
         console.error('Error fetching posts:', error);

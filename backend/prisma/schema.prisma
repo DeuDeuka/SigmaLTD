@@ -34,7 +34,7 @@ model Users {
 model Post {
   idPost          Int              @id @default(autoincrement())
   content         String           @db.Text
-  iframe          String?          @db.Text // <-- Add this line
+  iframe          String?          @db.Text
   images          String?          @db.Text
   tags            String?          @db.VarChar(255)
   createdAt       DateTime         @default(now())
