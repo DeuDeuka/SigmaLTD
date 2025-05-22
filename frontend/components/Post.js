@@ -1,15 +1,6 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {
-    View,
-    Text,
-    FlatList,
-    TouchableOpacity,
-    ActivityIndicator,
-    Dimensions,
-    Image,
-    StyleSheet,
-    ScrollView,
-    Pressable,
+    View, Text, FlatList, TouchableOpacity, ActivityIndicator, Dimensions, Image, StyleSheet, ScrollView, Pressable,
 } from 'react-native';
 import {Video} from 'react-native-video';
 import {Avatar} from 'react-native-elements';
@@ -18,7 +9,6 @@ import {useSelector} from 'react-redux';
 import Database, {BASE_URL} from '../database';
 import Tag from "./Tag";
 import Modal from "react-native-modal";
-import WebView from "react-native-webview";
 
 const {width: SCREEN_WIDTH} = Dimensions.get('window');
 
@@ -31,6 +21,17 @@ function findURLs(text) {
 
     return urls;
 }
+
+import {Platform} from 'react-native';
+
+let WebView;
+
+if (Platform.OS === 'web') {
+    WebView = require('react-native-web-webview').default;
+} else {
+    WebView = require('react-native-webview').default;
+}
+
 
 const Post = ({navigation, post, refresher}) => {
     const theme = useSelector((state) => state.theme);
@@ -142,12 +143,7 @@ const Post = ({navigation, post, refresher}) => {
 
     const renderUrl = ({item}) => {
         return (<View style={{
-            width: 80,
-            height: 25,
-            backgroundColor: "#222",
-            borderRadius: 5,
-            alignSelf: 'center',
-            alignItems: 'center'
+            width: 80, height: 25, backgroundColor: "#222", borderRadius: 5, alignSelf: 'center', alignItems: 'center'
         }}>
             <a href={item} style={{color: "#FFFFFF"}} target="_blank">{item.slice(8, 18)}</a>
         </View>);
@@ -262,16 +258,37 @@ const Post = ({navigation, post, refresher}) => {
                 showsHorizontalScrollIndicator={false}
             />
         </View>)}
-        {post.iframe && (
-            <View style={{height: 200, width: '100%', marginBottom: 12}}>
+        {post.iframe && (<View style={{width: '100%', alignSelf: 'center'}}>
                 <WebView
                     originWhitelist={['*']}
-                    source={{html: post.iframe}}
+                    source={{
+                        html: `
+    <html>
+        <head>
+            <style>
+                html, body {
+                    margin: 0;
+                    padding: 0;
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: transparent;
+                }
+            </style>
+        </head>
+        <body>
+            ${post.iframe}
+        </body>
+    </html>
+`
+                    }}
                     javaScriptEnabled
-                    style={{flex: 1}}
+                    style={{
+                        flex: 1, alignSelf: 'center', backgroundColor: 'transparent',
+                    }}
                 />
             </View>
-
 
         )}
 

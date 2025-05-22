@@ -289,9 +289,7 @@ export function CreatePost({navigation}) {
                             {
                                 borderColor: theme.border,
                                 color: theme.text,
-                                height: isExpanded ? contentHeight : 80,
-                                minHeight: 80,
-                                borderRadius: 20,
+                                flex: 1,
                             },
                         ]}
                         placeholder="iframe?"

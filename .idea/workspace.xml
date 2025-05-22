@@ -6,8 +6,41 @@
   <component name="ChangeListManager">
     <list default="true" id="80c2287e-a7d9-4686-9a78-77c3654e08a8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/backend/prisma/schema.prisma" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/components/CreatePost.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/CreatePost.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/components/Post.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/Post.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/database.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/asset-manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/favicon-16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/favicon-32.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/pwa/apple-touch-icon/apple-touch-icon-180.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/pwa/apple-touch-startup-image/apple-touch-startup-image-1125x2436.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/pwa/apple-touch-startup-image/apple-touch-startup-image-1242x2208.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/pwa/apple-touch-startup-image/apple-touch-startup-image-1242x2688.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/pwa/apple-touch-startup-image/apple-touch-startup-image-1536x2048.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/pwa/apple-touch-startup-image/apple-touch-startup-image-1668x2224.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/pwa/apple-touch-startup-image/apple-touch-startup-image-1668x2388.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/pwa/apple-touch-startup-image/apple-touch-startup-image-2048x2732.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/pwa/apple-touch-startup-image/apple-touch-startup-image-640x1136.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/pwa/apple-touch-startup-image/apple-touch-startup-image-750x1334.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/pwa/apple-touch-startup-image/apple-touch-startup-image-828x1792.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/serve.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/static/js/333.3617b38e.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/static/js/333.3617b38e.js.LICENSE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/static/js/333.3617b38e.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/static/js/main.21ed5363.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/static/js/main.21ed5363.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/static/media/Ionicons.9b6b1954a5eb6efeaf11.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/static/media/bell.cf04af27d6a651c4b904.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/static/media/default-avatar.00c7db454dde4d25ede0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/static/media/heart.23b5c2c0eb77d50ff1b4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/static/media/logo-rb.00c7db454dde4d25ede0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/static/media/rocket.d2f3bf41d5e4515c39a9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web-build/static/media/star.69c7138684828d68fe5a.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,7 +178,7 @@
       <workItem from="1747071727682" duration="8000" />
       <workItem from="1747113845264" duration="92000" />
       <workItem from="1747169197646" duration="52000" />
-      <workItem from="1747937463710" duration="2806000" />
+      <workItem from="1747937463710" duration="4435000" />
     </task>
     <servers />
   </component>
