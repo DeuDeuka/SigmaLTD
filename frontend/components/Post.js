@@ -18,6 +18,7 @@ import {useSelector} from 'react-redux';
 import Database, {BASE_URL} from '../database';
 import Tag from "./Tag";
 import Modal from "react-native-modal";
+import WebView from "react-native-webview";
 
 const {width: SCREEN_WIDTH} = Dimensions.get('window');
 
@@ -135,147 +136,165 @@ const Post = ({navigation, post, refresher}) => {
 
     if (isLoading) {
         return (<View style={styles.container}>
-                <ActivityIndicator size="large" color={theme.colors.primary}/>
-            </View>);
+            <ActivityIndicator size="large" color={theme.colors.primary}/>
+        </View>);
     }
 
     const renderUrl = ({item}) => {
-        return (<View style={{width: 80, height: 25, backgroundColor: "#222", borderRadius: 5, alignSelf: 'center', alignItems: 'center'}}>
-                <a href={item} style={{color:"#FFFFFF"}} target="_blank">{item.slice(8, 18)}</a>
-            </View>);
+        return (<View style={{
+            width: 80,
+            height: 25,
+            backgroundColor: "#222",
+            borderRadius: 5,
+            alignSelf: 'center',
+            alignItems: 'center'
+        }}>
+            <a href={item} style={{color: "#FFFFFF"}} target="_blank">{item.slice(8, 18)}</a>
+        </View>);
     }
 
     const mediaItems = Array.isArray(post.images) ? post.images : post.images?.split(',').filter(Boolean) || [];
 
     return (<View style={[styles.container, {backgroundColor: theme.colors.background}]}>
-            <Modal isVisible={open}>
-                <Image
-                    style={{width: "100%", height: "100%", resizeMode: "center"}}
-                    source={creator.pic ? {uri: creator.pic} : require('../assets/default-avatar.png')}/>
+        <Modal isVisible={open}>
+            <Image
+                style={{width: "100%", height: "100%", resizeMode: "center"}}
+                source={creator.pic ? {uri: creator.pic} : require('../assets/default-avatar.png')}/>
 
-            </Modal>
-            {/* Header */}
-            <View style={styles.header}>
-                <View style={{flexDirection: 'row', alignItems: 'flex-start'}}>
-                    <Avatar
-                        source={creator.pic ? {uri: creator.pic} : require('../assets/default-avatar.png')}
-                        rounded
-                        size="medium"
-                        containerStyle={styles.avatar}
-                        onLongPress={() => setOpen(true)}
-                        onPressOut={() => setOpen(false)}
-                    />
-                    <TouchableOpacity
-                        style={styles.userInfo}
-                        onPress={() => navigation.navigate('UserProfile', {userId: post.createdByIdUser})}
-                    >
-                        <View>
-                            <Text style={styles.username}>
-                                {post.isAnonymous ? 'Anonymous' : creator.displayedName}
-                            </Text>
-                            <Text style={styles.timestamp}>
-                                {new Date(post.createdAt).toLocaleDateString()}
-                            </Text>
-                        </View>
-
-                    </TouchableOpacity>
-                </View>
-                {/* Tags */}
-                {post.tags?.length > 0 && (<View style={styles.tagsContainer && {flex: 1}}>
-                        <FlatList
-                            style={{flexDirection: 'row-reverse'}}
-                            data={Array.isArray(post.tags) ? post.tags.slice(0, 4).reverse() : post.tags.split(',').slice(0, 4).reverse()}
-                            renderItem={({item}) => (<Tag tag={item}/>)}
-                            horizontal
-                            showsHorizontalScrollIndicator={false}
-                            keyExtractor={(item, index) => `${item}-${index}`}
-                        />
-                    </View>)}
-                {myPost && (<TouchableOpacity onPress={deletePost}>
-                        <Ionicons name="trash-outline" size={24} color="#ff4444"/>
-                    </TouchableOpacity>)}
-            </View>
-            {/* Content */}
-            {content && (<View style={styles.contentContainer}>
-                    <Text style={styles.content}>{content}</Text>
-                </View>)}
-            {}
-
-            {/* Media */}
-            {mediaItems.length > 0 && (<View>
-                    <ScrollView
-                        ref={flatListRef}
-                        horizontal
-                        pagingEnabled
-                        showsHorizontalScrollIndicator={false}
-                        scrollEventThrottle={1}
-                        onScroll={(e) => {
-                            const newIndex = Math.round((e.nativeEvent.contentOffset.x + 100) / SCREEN_WIDTH);
-                            setCurrentIndex(newIndex);
-                        }}
-                        style={styles.mediaScroll}
-                        contentContainerStyle={styles.mediaScrollContent}
-                    >
-                        {mediaItems.map((item, index) => (<View key={`${item}-${index}`} style={styles.mediaContainer}>
-                                {/\.(mp4|mov|m4v)$/.test(item) ? (<Video
-                                        source={{uri: `${BASE_URL}${item}`}}
-                                        style={styles.media}
-                                        resizeMode="cover"
-                                        shouldPlay={currentIndex === index}
-                                        isLooping
-                                        useNativeControls={false}
-                                        onError={(e) => console.error('Video error:', e)}
-                                    />) : (<Image
-                                        source={{uri: `${BASE_URL}${item}`}}
-                                        style={styles.media}
-                                        resizeMode="cover"
-                                        onError={(e) => console.error('Image error:', e)}
-                                    />)}
-
-                            </View>))}
-                    </ScrollView>
-                    {mediaItems.length > 1 && (<View style={styles.pagination}>
-                            {mediaItems.map((_, i) => (<Pressable
-                                    key={i}
-                                    onPress={() => {
-                                        flatListRef.current?.scrollTo({x: i * SCREEN_WIDTH, animated: true});
-                                        setCurrentIndex(i);
-                                    }}
-                                    style={[styles.dot, {backgroundColor: i === currentIndex ? '#fff' : 'rgba(255,255,255,0.5)'},]}
-                                />))}
-                        </View>)}
-                </View>)}
-
-            {urls.length > 0 && (<View style={styles.actions}>
-                    <FlatList
-                        data={urls}
-                        renderItem={renderUrl}
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                    />
-                </View>)}
-
-            {/* Actions */}
-            <View style={styles.actions}>
-                <TouchableOpacity onPress={handleLike} style={styles.actionButton}>
-                    <Ionicons
-                        name={liked ? 'heart' : 'heart-outline'}
-                        size={28}
-                        color={liked ? '#ff4444' : '#666'}
-                    />
-                    <Text style={styles.actionText}>{post.likes}</Text>
-                </TouchableOpacity>
+        </Modal>
+        {/* Header */}
+        <View style={styles.header}>
+            <View style={{flexDirection: 'row', alignItems: 'flex-start'}}>
+                <Avatar
+                    source={creator.pic ? {uri: creator.pic} : require('../assets/default-avatar.png')}
+                    rounded
+                    size="medium"
+                    containerStyle={styles.avatar}
+                    onLongPress={() => setOpen(true)}
+                    onPressOut={() => setOpen(false)}
+                />
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('PostDetail', {postId: post.idPost, navigation: navigation})}
-                    style={styles.actionButton}
+                    style={styles.userInfo}
+                    onPress={() => navigation.navigate('UserProfile', {userId: post.createdByIdUser})}
                 >
-                    <Ionicons name="chatbubble-outline" size={28} color="#666"/>
-                    <Text style={styles.actionText}>{commentsCount}</Text>
+                    <View>
+                        <Text style={styles.username}>
+                            {post.isAnonymous ? 'Anonymous' : creator.displayedName}
+                        </Text>
+                        <Text style={styles.timestamp}>
+                            {new Date(post.createdAt).toLocaleDateString()}
+                        </Text>
+                    </View>
+
                 </TouchableOpacity>
             </View>
+            {/* Tags */}
+            {post.tags?.length > 0 && (<View style={styles.tagsContainer && {flex: 1}}>
+                <FlatList
+                    style={{flexDirection: 'row-reverse'}}
+                    data={Array.isArray(post.tags) ? post.tags.slice(0, 4).reverse() : post.tags.split(',').slice(0, 4).reverse()}
+                    renderItem={({item}) => (<Tag tag={item}/>)}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    keyExtractor={(item, index) => `${item}-${index}`}
+                />
+            </View>)}
+            {myPost && (<TouchableOpacity onPress={deletePost}>
+                <Ionicons name="trash-outline" size={24} color="#ff4444"/>
+            </TouchableOpacity>)}
+        </View>
+        {/* Content */}
+        {content && (<View style={styles.contentContainer}>
+            <Text style={styles.content}>{content}</Text>
+        </View>)}
+        {}
+
+        {/* Media */}
+        {mediaItems.length > 0 && (<View>
+            <ScrollView
+                ref={flatListRef}
+                horizontal
+                pagingEnabled
+                showsHorizontalScrollIndicator={false}
+                scrollEventThrottle={1}
+                onScroll={(e) => {
+                    const newIndex = Math.round((e.nativeEvent.contentOffset.x + 100) / SCREEN_WIDTH);
+                    setCurrentIndex(newIndex);
+                }}
+                style={styles.mediaScroll}
+                contentContainerStyle={styles.mediaScrollContent}
+            >
+                {mediaItems.map((item, index) => (<View key={`${item}-${index}`} style={styles.mediaContainer}>
+                    {/\.(mp4|mov|m4v)$/.test(item) ? (<Video
+                        source={{uri: `${BASE_URL}${item}`}}
+                        style={styles.media}
+                        resizeMode="cover"
+                        shouldPlay={currentIndex === index}
+                        isLooping
+                        useNativeControls={false}
+                        onError={(e) => console.error('Video error:', e)}
+                    />) : (<Image
+                        source={{uri: `${BASE_URL}${item}`}}
+                        style={styles.media}
+                        resizeMode="cover"
+                        onError={(e) => console.error('Image error:', e)}
+                    />)}
+
+                </View>))}
+            </ScrollView>
+            {mediaItems.length > 1 && (<View style={styles.pagination}>
+                {mediaItems.map((_, i) => (<Pressable
+                    key={i}
+                    onPress={() => {
+                        flatListRef.current?.scrollTo({x: i * SCREEN_WIDTH, animated: true});
+                        setCurrentIndex(i);
+                    }}
+                    style={[styles.dot, {backgroundColor: i === currentIndex ? '#fff' : 'rgba(255,255,255,0.5)'},]}
+                />))}
+            </View>)}
+        </View>)}
+
+        {urls.length > 0 && (<View style={styles.actions}>
+            <FlatList
+                data={urls}
+                renderItem={renderUrl}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+            />
+        </View>)}
+        {post.iframe && (
+            <View style={{height: 200, width: '100%', marginBottom: 12}}>
+                <WebView
+                    originWhitelist={['*']}
+                    source={{html: post.iframe}}
+                    javaScriptEnabled
+                    style={{flex: 1}}
+                />
+            </View>
+
+        )}
+
+        {/* Actions */}
+        <View style={styles.actions}>
+            <TouchableOpacity onPress={handleLike} style={styles.actionButton}>
+                <Ionicons
+                    name={liked ? 'heart' : 'heart-outline'}
+                    size={28}
+                    color={liked ? '#ff4444' : '#666'}
+                />
+                <Text style={styles.actionText}>{post.likes}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => navigation.navigate('PostDetail', {postId: post.idPost, navigation: navigation})}
+                style={styles.actionButton}
+            >
+                <Ionicons name="chatbubble-outline" size={28} color="#666"/>
+                <Text style={styles.actionText}>{commentsCount}</Text>
+            </TouchableOpacity>
+        </View>
 
 
-        </View>);
+    </View>);
 };
 
 const styles = StyleSheet.create({

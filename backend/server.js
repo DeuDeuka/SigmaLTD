@@ -164,7 +164,7 @@ app.get('/user/:id', authenticateToken, async (req, res) => {
 
 // Create a post
 app.post('/posts', authenticateToken, async (req, res) => {
-    const { content, images, tags } = req.body;
+    const { content, images, tags, iframe } = req.body;
 
     try {
         let imagePaths = [];
@@ -173,21 +173,23 @@ app.post('/posts', authenticateToken, async (req, res) => {
                 images.map(async (image) => {
                     const { name, base64 } = image;
                     const filePath = path.join(uploadsDir, name);
-                    // Remove base64 prefix if present (e.g., "data:image/jpeg;base64,")
                     const base64Data = base64.replace(/^data:image\/\w+;base64,/, '');
                     await fs.writeFile(filePath, base64Data, 'base64');
                     return `/uploads/${name}`;
                 })
             );
         }
+
         const post = await prisma.post.create({
             data: {
                 content,
+                iframe: iframe || null,
                 images: imagePaths.length > 0 ? imagePaths.join(',') : null,
                 tags,
                 createdByIdUser: req.user.idUser,
             },
         });
+
         res.json(post);
     } catch (error) {
         console.error(error);
@@ -204,10 +206,29 @@ app.get('/posts', authenticateToken, async (req, res) => {
             skip: (page - 1) * pageSize,
             take: parseInt(pageSize),
             orderBy: { createdAt: 'desc' },
-            include: { createdBy: true },
+            include: {
+                createdBy: true,
+            },
+            select: {
+                id: true,
+                content: true,
+                createdAt: true,
+                iframe: true, // Include iframeHtml field
+                createdById: true,
+                createdBy: {
+                    select: {
+                        id: true,
+                        username: true,
+                        displayedName: true,
+                        pic: true,
+                    }
+                }
+            }
         });
-        res.json({posts});
+
+        res.json({ posts });
     } catch (error) {
+        console.error('Error fetching posts:', error);
         res.status(500).json({ error: 'Failed to fetch posts' });
     }
 });
