@@ -206,27 +206,9 @@ app.get('/posts', authenticateToken, async (req, res) => {
             skip: (page - 1) * pageSize,
             take: parseInt(pageSize),
             orderBy: { createdAt: 'desc' },
-            include: {
-                createdBy: true,
-            },
-            select: {
-                id: true,
-                content: true,
-                createdAt: true,
-                iframe: true, // Include iframeHtml field
-                createdById: true,
-                createdBy: {
-                    select: {
-                        id: true,
-                        username: true,
-                        displayedName: true,
-                        pic: true,
-                    }
-                }
-            }
+            include: { createdBy: true },
         });
-
-        res.json(posts);
+        res.json({posts});
     } catch (error) {
         console.error('Error fetching posts:', error);
         res.status(500).json({ error: 'Failed to fetch posts' });
