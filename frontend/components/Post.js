@@ -263,25 +263,12 @@ const Post = ({navigation, post, refresher}) => {
                     originWhitelist={['*']}
                     source={{
                         html: `
-    <html>
-        <head>
-            <style>
-                html, body {
-                    margin: 0;
-                    padding: 0;
-                    height: 100%;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    background-color: transparent;
-                }
-            </style>
-        </head>
-        <body>
-            ${post.iframe}
-        </body>
-    </html>
-`
+                            <html>
+                            <body style="margin:0;padding:0;display:flex;justify-content:center;align-items:center;height:100vh;">
+                            ${post.iframe}
+                            </body>
+                            </html>
+                        `
                     }}
                     javaScriptEnabled
                     style={{
