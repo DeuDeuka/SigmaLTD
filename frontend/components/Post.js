@@ -272,6 +272,7 @@ const Post = ({navigation, post, refresher}) => {
                 />
             </View>
 
+
         )}
 
         {/* Actions */}
