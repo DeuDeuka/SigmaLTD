@@ -4,42 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="80c2287e-a7d9-4686-9a78-77c3654e08a8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/screens/LudoScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/prisma/migrations/20250424170921_init/migration.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/prisma/migrations/20250522190926_add_iframe_html/migration.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/backend/prisma/schema.prisma" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/backend/yarn.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/MainNavigator.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/MainNavigator.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/ThemeContext.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/components/Comment.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/Comment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/components/CreatePost.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/CreatePost.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/components/MusicAlbum.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/MusicAlbum.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/components/Post.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/Post.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/components/ProfileModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/ProfileModal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/components/SuperScrollList.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/SuperScrollList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/components/Tag.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/Tag.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/database.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/redux/store.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/screens/CommentScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/screens/CommentScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/screens/FeedScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/screens/FeedScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/screens/FollowingScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/screens/FollowingScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/screens/LoginScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/screens/LoginScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/screens/ProfileScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/screens/ProfileScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/screens/ProfileSettingsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/screens/ProfileSettingsScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/screens/SettingsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/screens/SettingsScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/screens/SplashScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/screens/SplashScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/styles/screens/FeedScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/styles/screens/FeedScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/styles/screens/ProfileScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/styles/screens/ProfileScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/yarn.lock" afterDir="false" />
-    </list>
+    <list default="true" id="80c2287e-a7d9-4686-9a78-77c3654e08a8" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -189,7 +154,7 @@
       <workItem from="1753714222738" duration="965000" />
       <workItem from="1755194525079" duration="829000" />
       <workItem from="1755195728496" duration="7511000" />
-      <workItem from="1755380966908" duration="664000" />
+      <workItem from="1755380966908" duration="983000" />
     </task>
     <servers />
   </component>
