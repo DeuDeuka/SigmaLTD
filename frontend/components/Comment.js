@@ -1,31 +1,114 @@
-// components/Comment.js
-
 import React, {useEffect, useState} from 'react';
 import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
-
 import Database, {BASE_URL} from '../database';
+
+// Компонент для отображения ошибки
+const CommentError = ({ error }) => (
+	<View style={[styles.commentBubble, styles.errorComment]}>
+		<Text style={styles.errorText}>Ошибка загрузки комментария</Text>
+		<Text style={styles.errorDetails}>{error?.message || 'Неизвестная ошибка'}</Text>
+	</View>
+);
 
 
 export default function Comment({ comment, currentUser, toggleLike }) {
+	// Проверяем, что comment и currentUser существуют
+	if (!comment || !currentUser) {
+		console.log('Comment or currentUser is missing:', { comment, currentUser });
+		return <CommentError error={{ message: 'Отсутствуют данные комментария или пользователя' }} />;
+	}
+
 	const isMine = comment.createdByIdUser === currentUser.idUser;
 	const [likes, setLikes] = useState([]);
 	const [likedByMe , setLikedByMe] = useState(false);
+	const [hasError, setHasError] = useState(false);
+	const [error, setError] = useState(null);
+	
+	// Debug logs
+	console.log('Comment data:', {
+		id: comment.idComment,
+		text: comment.text,
+		displayedName: comment.displayedName,
+		username: comment.username,
+		images: comment.images,
+		createdByIdUser: comment.createdByIdUser,
+		currentUserId: currentUser.idUser
+	});
+	
 	useEffect(() => {
-		getLikes();
-	})
+		if (comment.idComment) {
+			getLikes();
+		}
+	}, [comment.idComment]);
+
 	const getLikes = async () => {
-		const data = await Database.getCommentLikes(Number(comment.idComment));
-		setLikes(data);
-		let tested = true;
-		data.forEach((item) => {
-			if (item.idUser === currentUser.idUser){
-				setLikedByMe(true);
-				tested = false;
+		try {
+			const data = await Database.getCommentLikes(Number(comment.idComment));
+			setLikes(data || []);
+			let tested = true;
+			if (data && Array.isArray(data)) {
+				data.forEach((item) => {
+					if (item.idUser === currentUser.idUser){
+						setLikedByMe(true);
+						tested = false;
+					}
+				})
 			}
-		})
-		if (tested) {
+			if (tested) {
+				setLikedByMe(false);
+			}
+		} catch (error) {
+			console.error('Error getting likes:', error);
+			setLikes([]);
 			setLikedByMe(false);
 		}
+	}
+
+	// Безопасная обработка изображений
+	const renderImages = () => {
+		try {
+			// Проверяем, что images существует и является массивом
+			if (!comment.images || !Array.isArray(comment.images)) {
+				return null;
+			}
+
+			// Фильтруем только валидные строки
+			const validImages = comment.images.filter(img => 
+				img && typeof img === 'string' && img.trim().length > 0
+			);
+
+			if (validImages.length === 0) {
+				return null;
+			}
+
+			return validImages.map((src, i) => {
+				const imageUrl = BASE_URL + src;
+				console.log('Rendering image:', imageUrl);
+				
+				return (
+					<Image
+						key={`image-${comment.idComment}-${i}`}
+						source={{uri: imageUrl}}
+						style={{width: 200, height: 200, marginTop: 6, borderRadius: 8}}
+						resizeMode="cover"
+						onError={(error) => {
+							console.log('Image load error:', error.nativeEvent.error, 'URL:', imageUrl);
+							setError({ message: `Ошибка загрузки изображения: ${imageUrl}` });
+						}}
+						onLoad={() => console.log('Image loaded successfully:', imageUrl)}
+					/>
+				);
+			});
+		} catch (error) {
+			console.error('Error rendering images:', error);
+			setError(error);
+			return null;
+		}
+	};
+
+	// Если произошла ошибка, показываем компонент ошибки
+	if (hasError || error) {
+		return <CommentError error={error} />;
 	}
 
 	return (
@@ -35,17 +118,13 @@ export default function Comment({ comment, currentUser, toggleLike }) {
 				isMine ? styles.myComment : styles.otherComment,
 			]}
 		>
-			<Text style={styles.author}>{comment.displayedName}</Text>
-			<Text style={styles.commentText}>{comment.text}</Text>
-
-			{comment.images?.map((src, i) => (
-				<Image
-					key={i}
-					source={{uri: BASE_URL + src}}
-					style={{width: 200, height: 200, marginTop: 6, borderRadius: 8}}
-					resizeMode="cover"
-				/>
-			))}
+			<Text style={styles.author}>
+				{comment.displayedName || comment.username || 'Аноним'}
+			</Text>
+			<Text style={styles.commentText}>
+				{comment.text || ''}
+			</Text>
+			{renderImages()}
 
 			<TouchableOpacity onPress={() => toggleLike(comment)}>
 				<Text style={{color: likedByMe ? 'red' : '#555'}}>
@@ -112,5 +191,19 @@ const styles = StyleSheet.create({
 		fontSize: 15,
 		backgroundColor: '#fff',
 		color: '#000',
+	},
+	errorComment: {
+		backgroundColor: '#ffebee',
+		borderColor: '#f44336',
+		borderWidth: 1,
+	},
+	errorText: {
+		color: '#d32f2f',
+		fontWeight: 'bold',
+		marginBottom: 4,
+	},
+	errorDetails: {
+		color: '#d32f2f',
+		fontSize: 12,
 	},
 });

@@ -12,14 +12,16 @@ import {
 // import Audio from 'react-native-audio';
 import { Avatar } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
-import { useSelector } from 'react-redux';
 import Database, { BASE_URL } from '../database';
 import Modal from 'react-native-modal';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 const MusicAlbum = ({ navigation, album, refresher }) => {
-    const theme = useSelector((state) => state.theme);
+    const theme =  {
+        current: 'light',
+        colors: { light: { text: '#000', background: '#FFF' } },
+    };
     const [liked, setLiked] = useState(album.likedByCurrentUser || false);
     const [artist, setArtist] = useState({ displayedName: 'Loading...', pic: null });
     const [myAlbum, setMyAlbum] = useState(false);

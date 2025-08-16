@@ -1,15 +1,17 @@
 // screens/LoginScreen.js
 
 import React, {useState, useEffect} from 'react';
-import {View, Text, TextInput, Button, Alert, Keyboard, Vibration, Platform} from 'react-native'; // Ensure StyleSheet is included
-import {useSelector} from 'react-redux';
+import {View, Text, TextInput, Button} from 'react-native';
 import Database from '../database';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {styles} from '../styles/screens/LoginScreen';
 import Modal from "react-native-modal";
 
 export default function LoginScreen({navigation}) {
-    const {current, colors} = useSelector((state) => state.theme);
+    const { current, colors } =  {
+        current: 'light',
+        colors: { light: { text: '#FFF', background: '#000' } },
+    };
     const theme = colors[current];
     const [isLogin, setIsLogin] = useState(true);
     const [email, setEmail] = useState('');
@@ -29,7 +31,6 @@ export default function LoginScreen({navigation}) {
         }
 
         check();
-        // Check if running on iOS in a browser (not standalone mode)
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         const isStandalone = "standalone" in window.navigator && window.navigator.standalone;
@@ -38,7 +39,7 @@ export default function LoginScreen({navigation}) {
             setShowPrompt(true);
         }
     }, []);
-    ;
+
     const handleSubmit = async () => {
         setError(null);
         try {

@@ -1,8 +1,7 @@
 // components/ProfileModal.js
 
 import React, {useEffect, useState} from 'react';
-import {Text, TouchableOpacity, SafeAreaView, TextInput, Alert, Platform, Image} from 'react-native';
-import {useSelector} from 'react-redux';
+import {Text, TouchableOpacity, SafeAreaView, TextInput, Alert, Platform,} from 'react-native';
 import Database from '../database';
 import {styles} from '../styles/components/ProfileModal';
 import * as ImagePicker from "expo-image-picker";
@@ -10,7 +9,10 @@ import database from "../database";
 import {Avatar} from "react-native-elements";
 
 export default function ProfileModal({navigation}) {
-    const theme = useSelector((state) => state.theme);
+    const theme =  {
+        current: 'light',
+        colors: { light: { text: '#000', background: '#FFF' } },
+    };
     const [editMode, setEditMode] = useState(false);
     const [imageEditMode, setImageEditMode] = useState(false);
     const [media, setMedia] = useState([]);

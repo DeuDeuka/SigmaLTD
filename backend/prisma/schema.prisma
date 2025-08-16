@@ -51,7 +51,7 @@ model Comment {
   idComment       Int                @id @default(autoincrement())
   commentIdPost   Int
   text            String             @db.Text
-  images          String?            @db.Text
+  images          String?            @db.LongText
   likes           Int                @default(0)
   createdAt       DateTime           @default(now())
   createdByIdUser Int

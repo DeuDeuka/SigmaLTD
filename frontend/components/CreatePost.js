@@ -9,7 +9,6 @@ import {
     ScrollView,
     KeyboardAvoidingView,
 } from 'react-native';
-import {useSelector} from 'react-redux';
 import * as ImagePicker from 'expo-image-picker';
 import {useRef, useState} from 'react';
 import Database from '../database';
@@ -18,7 +17,10 @@ import {styles} from '../styles/components/CreatePost';
 export function CreatePost({navigation}) {
     const [content, setContent] = useState('');
     const [posts, setPosts] = useState([]);
-    const {current, colors} = useSelector((state) => state.theme);
+    const { current, colors } =  {
+        current: 'light',
+        colors: { light: { text: '#FFF', background: '#000' } },
+    };
     const theme = colors[current];
     const [media, setMedia] = useState([]);
     const [inputs, setInputs] = useState(['']); // Dynamic tags inputs
@@ -60,9 +62,9 @@ export function CreatePost({navigation}) {
 
     const pickMedia = async () => {
         const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images, // Restrict to images only
+            // mediaTypes: ImagePicker.MediaTypeOptions.Images, // Restrict to images only
             allowsMultipleSelection: true,
-            quality: 0.7, // Compress to 70% quality
+            quality: 1, // Compress to 70% quality
             allowsEditing: true,
         });
 
@@ -160,7 +162,6 @@ export function CreatePost({navigation}) {
                     <TextInput
                         ref={textInputRef}
                         style={[
-                            styles.input,
                             {
                                 borderColor: theme.border,
                                 color: theme.text,
@@ -168,6 +169,7 @@ export function CreatePost({navigation}) {
                                 minHeight: 80,
                                 borderRadius: 20,
                             },
+                            styles.input,
                         ]}
                         placeholder="What's on your mind?"
                         value={content}

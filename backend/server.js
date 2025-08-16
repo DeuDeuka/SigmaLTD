@@ -208,7 +208,6 @@ app.get('/posts', authenticateToken, async (req, res) => {
             orderBy: { createdAt: 'desc' },
             include: { createdBy: true },
         });
-        console.log(posts);
         res.json({posts});
     } catch (error) {
         console.error('Error fetching posts:', error);
@@ -259,11 +258,52 @@ app.delete('/posts', authenticateToken, async (req, res) => {
             return res.status(403).json({ error: 'Unauthorized' });
         }
 
+        // Удаляем изображения поста, если они есть
+        if (post.images) {
+            try {
+                const imagePaths = post.images.split(',').filter(img => img.trim().length > 0);
+                for (const imagePath of imagePaths) {
+                    const fullPath = path.join(__dirname, imagePath);
+                    await fs.unlink(fullPath).catch(err => {
+                        console.log(`Failed to delete image ${fullPath}:`, err.message);
+                    });
+                }
+                console.log('Post images deleted successfully');
+            } catch (imageError) {
+                console.error('Error deleting post images:', imageError);
+                // Продолжаем удаление поста даже если не удалось удалить изображения
+            }
+        }
+
+        // Удаляем комментарии и их изображения
+        const comments = await prisma.comment.findMany({
+            where: { commentIdPost: postId }
+        });
+
+        for (const comment of comments) {
+            if (comment.images) {
+                try {
+                    const imagePaths = comment.images.split(',').filter(img => img.trim().length > 0);
+                    for (const imagePath of imagePaths) {
+                        const fullPath = path.join(__dirname, imagePath);
+                        await fs.unlink(fullPath).catch(err => {
+                            console.log(`Failed to delete comment image ${fullPath}:`, err.message);
+                        });
+                    }
+                } catch (imageError) {
+                    console.error('Error deleting comment images:', imageError);
+                }
+            }
+        }
+
+        console.log(`Deleted ${comments.length} comments and their images`);
+
         await prisma.post.delete({
             where: { idPost: postId },
         });
         res.json({ message: 'Post deleted successfully' });
     } catch (error) {
+        console.error('Error deleting post:', error);
         res.status(500).json({ error: 'Failed to delete post' });
     }
 });
@@ -278,19 +318,120 @@ app.get('/following-posts', authenticateToken, async (req, res) => {
             include: { tag: true },
         });
         const tagNames = followedTags.map((ft) => ft.tag.name);
+        
+        console.log('User', req.user.idUser, 'followed tags:', tagNames);
 
+        let posts = [];
+        if (tagNames.length > 0) {
+            // Создаем условия для поиска постов, содержащих любой из подписанных тегов
+            const tagConditions = tagNames.map(tagName => ({
+                tags: { contains: tagName }
+            }));
+
+            posts = await prisma.post.findMany({
+                where: {
+                    OR: tagConditions
+                },
+                skip: (page - 1) * pageSize,
+                take: parseInt(pageSize),
+                orderBy: { createdAt: 'desc' },
+                include: { createdBy: true },
+            });
+        }
+        
+        console.log(`Found ${posts.length} posts for followed tags`);
+        res.json({ posts });
+    } catch (error) {
+        console.error('Error fetching following posts:', error);
+        res.status(500).json({ error: 'Failed to fetch following posts' });
+    }
+});
+
+// Get posts by specific user
+app.get('/user/:userId/posts', authenticateToken, async (req, res) => {
+    const { userId } = req.params;
+    const { page = 1, pageSize = 10 } = req.query;
+
+    console.log('Fetching posts for user:', userId, 'page:', page, 'pageSize:', pageSize);
+
+    try {
         const posts = await prisma.post.findMany({
             where: {
-                tags: { contains: tagNames.join(',') },
+                createdByIdUser: parseInt(userId),
             },
             skip: (page - 1) * pageSize,
             take: parseInt(pageSize),
             orderBy: { createdAt: 'desc' },
             include: { createdBy: true },
         });
-        res.json(posts);
+        
+        console.log(`Found ${posts.length} posts for user ${userId}`);
+        res.json({ posts });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch following posts' });
+        console.error('Error fetching user posts:', error);
+        res.status(500).json({ error: 'Failed to fetch user posts' });
+    }
+});
+
+// Get user statistics
+app.get('/user/:userId/stats', authenticateToken, async (req, res) => {
+    const { userId } = req.params;
+
+    try {
+        const [postsCount, commentsCount] = await Promise.all([
+            prisma.post.count({
+                where: { createdByIdUser: parseInt(userId) },
+            }),
+            prisma.comment.count({
+                where: { createdByIdUser: parseInt(userId) },
+            }),
+        ]);
+
+        // Получаем все теги пользователя
+        const userPosts = await prisma.post.findMany({
+            where: { createdByIdUser: parseInt(userId) },
+            select: { tags: true },
+        });
+
+        // Извлекаем все уникальные теги пользователя
+        const userTags = new Set();
+        userPosts.forEach(post => {
+            if (post.tags) {
+                const tags = post.tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
+                tags.forEach(tag => userTags.add(tag));
+            }
+        });
+
+        // Подсчитываем количество уникальных подписчиков на теги пользователя
+        let uniqueFollowers = 0;
+        if (userTags.size > 0) {
+            const tagArray = Array.from(userTags);
+            const followersPromises = tagArray.map(async (tag) => {
+                const followers = await prisma.userFollowedTag.findMany({
+                    where: { 
+                        tag: { 
+                            name: tag 
+                        } 
+                    },
+                    select: { idUser: true },
+                });
+                return followers.map(f => f.idUser);
+            });
+
+            const allFollowers = await Promise.all(followersPromises);
+            const uniqueFollowerIds = new Set(allFollowers.flat());
+            uniqueFollowers = uniqueFollowerIds.size;
+        }
+
+        res.json({
+            postsCount,
+            commentsCount,
+            followersCount: uniqueFollowers, // Количество уникальных подписчиков на теги
+            followingCount: 0, // В будущем можно добавить подписки пользователя
+        });
+    } catch (error) {
+        console.error('Error fetching user stats:', error);
+        res.status(500).json({ error: 'Failed to fetch user stats' });
     }
 });
 
@@ -321,8 +462,25 @@ app.get('/post/:postId/comments', authenticateToken, async (req, res) => {
             orderBy: { createdAt: 'desc' },
             include: { createdBy: true },
         });
-        res.json(comments);
+        
+        // Обрабатываем изображения для каждого комментария
+        const processedComments = comments.map(comment => {
+            let images = [];
+            if (comment.images) {
+                // Разделяем строку изображений на массив
+                images = comment.images.split(',').filter(img => img.trim().length > 0);
+            }
+            
+            return {
+                ...comment,
+                images: images
+            };
+        });
+        
+        res.json(processedComments);
+        console.log('Processed comments:', processedComments);
     } catch (error) {
+        console.error('Error fetching comments:', error);
         res.status(500).json({ error: 'Failed to fetch comments' });
     }
 });
@@ -346,17 +504,62 @@ app.post('/comments', authenticateToken, async (req, res) => {
     const { postId, content, isAnonymous, imageBase64 } = req.body;
 
     try {
+        let imagePaths = [];
+        
+        // Обработка изображения, если оно есть
+        if (imageBase64) {
+            try {
+                // Генерируем уникальное имя файла
+                const timestamp = Date.now();
+                const randomString = Math.random().toString(36).substring(2, 15);
+                const fileName = `comment_${timestamp}_${randomString}.jpg`;
+                const filePath = path.join(uploadsDir, fileName);
+                
+                // Убираем префикс data:image/jpeg;base64, из base64 строки
+                const base64Data = imageBase64.replace(/^data:image\/\w+;base64,/, '');
+                
+                // Сохраняем файл
+                await fs.writeFile(filePath, base64Data, 'base64');
+                
+                // Добавляем путь к файлу в массив
+                imagePaths.push(`/uploads/${fileName}`);
+                
+                console.log('Comment image saved:', `/uploads/${fileName}`);
+            } catch (imageError) {
+                console.error('Error saving comment image:', imageError);
+                // Продолжаем без изображения, если произошла ошибка
+            }
+        }
+
         const comment = await prisma.comment.create({
             data: {
                 commentIdPost: parseInt(postId),
                 text: content,
-                images: imageBase64,
+                images: imagePaths.length > 0 ? imagePaths.join(',') : null,
                 createdByIdUser: isAnonymous ? 2 : req.user.idUser,
             },
         });
-        res.json(comment);
+        
+        // Включаем информацию о создателе комментария
+        const commentWithUser = await prisma.comment.findUnique({
+            where: { idComment: comment.idComment },
+            include: { createdBy: true }
+        });
+        
+        // Обрабатываем изображения для возвращаемого комментария
+        let images = [];
+        if (commentWithUser.images) {
+            images = commentWithUser.images.split(',').filter(img => img.trim().length > 0);
+        }
+        
+        const processedComment = {
+            ...commentWithUser,
+            images: images
+        };
+        
+        res.json(processedComment);
     } catch (error) {
-        console.error(error);
+        console.error('Error creating comment:', error);
         res.status(500).json({ error: 'Failed to add comment', message: error.message });
     }
 });
@@ -392,7 +595,6 @@ app.get('/like-post', authenticateToken, async (req, res) => {
             where: { idUser_idPost: { idUser: req.user.idUser, idPost: parseInt(idPost) } },
         });
         res.json(!!like);
-        console.log()
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch like status' });
     }
@@ -478,6 +680,8 @@ app.post('/unlike-comment', authenticateToken, async (req, res) => {
 app.post('/follow-tag', authenticateToken, async (req, res) => {
     const { tagName } = req.body;
 
+    console.log('User', req.user.idUser, 'following tag:', tagName);
+
     try {
         const tag = await prisma.tag.upsert({
             where: { name: tagName },
@@ -491,8 +695,10 @@ app.post('/follow-tag', authenticateToken, async (req, res) => {
             create: { idUser: req.user.idUser, idTag: tag.idTag },
         });
 
+        console.log('Successfully followed tag:', tagName);
         res.json(follow);
     } catch (error) {
+        console.error('Error following tag:', error);
         res.status(500).json({ error: 'Failed to follow tag' });
     }
 });
@@ -500,6 +706,8 @@ app.post('/follow-tag', authenticateToken, async (req, res) => {
 // Unfollow a tag
 app.post('/unfollow-tag', authenticateToken, async (req, res) => {
     const { tagName } = req.body;
+
+    console.log('User', req.user.idUser, 'unfollowing tag:', tagName);
 
     try {
         const tag = await prisma.tag.findUnique({ where: { name: tagName } });
@@ -509,8 +717,10 @@ app.post('/unfollow-tag', authenticateToken, async (req, res) => {
             where: { idUser_idTag: { idUser: req.user.idUser, idTag: tag.idTag } },
         });
 
+        console.log('Successfully unfollowed tag:', tagName);
         res.json({ message: 'Tag unfollowed successfully' });
     } catch (error) {
+        console.error('Error unfollowing tag:', error);
         res.status(500).json({ error: 'Failed to unfollow tag' });
     }
 });
@@ -522,8 +732,12 @@ app.get('/followed-tags', authenticateToken, async (req, res) => {
             where: { idUser: req.user.idUser },
             include: { tag: true },
         });
-        res.json(followedTags.map((ft) => ft.tag));
+        // Возвращаем массив имен тегов вместо объектов
+        const tagNames = followedTags.map((ft) => ft.tag.name);
+        console.log('Followed tags for user', req.user.idUser, ':', tagNames);
+        res.json(tagNames);
     } catch (error) {
+        console.error('Error fetching followed tags:', error);
         res.status(500).json({ error: 'Failed to fetch followed tags' });
     }
 });

@@ -1,18 +1,18 @@
 // screens/SettingsScreen.js
 
 import React from 'react';
-import { View, Text, Button } from 'react-native'; // Ensure StyleSheet is included
-import { useSelector, useDispatch } from 'react-redux';
-import { setTheme } from '../redux/store';
+import { View, Text, Button } from 'react-native';
 import { styles } from '../styles/screens/SettingsScreen';
 
 export default function SettingsScreen({ navigation }) {
-    const dispatch = useDispatch();
-    const { current, colors } = useSelector((state) => state.theme);
+    const { current, colors } =  {
+        current: 'light',
+        colors: { light: { text: '#FFF', background: '#000' } },
+    };
     const theme = colors[current];
 
     const handleThemeChange = (selectedTheme) => {
-        dispatch(setTheme(selectedTheme));
+        console.log("nope");
     };
 
     return (

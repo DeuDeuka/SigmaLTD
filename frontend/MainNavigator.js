@@ -5,7 +5,6 @@ import {
 import Modal from 'react-native-modal';
 import FeedScreen from './screens/FeedScreen';
 import FollowingScreen from './screens/FollowingScreen';
-import ProfileSettingsScreen from './screens/ProfileSettingsScreen';
 import Database from "./database";
 
 const screens = [{key: 'Feed', component: FeedScreen, title: 'Feed'}, {
@@ -94,7 +93,7 @@ export function Menu({navigation, header, scrollToPage, activeScreen, setActiveS
                         onPress={() => {
                             closeMenu();
                             navigation.navigate('Main');
-                            navigation.navigate('Profile');
+                            navigation.navigate('Profile', { userId: null }); // null означает профиль текущего пользователя
                         }}
                         style={{
                             marginTop: 5,

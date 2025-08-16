@@ -1,0 +1,1183 @@
+An unhandled rejection has occurred inside Forge:
+Error: Compilation errors in the preload: group_0:
+  asset main_window/preload.js 397 KiB [emitted] (name: main_window)
+  runtime modules 26.2 KiB 12 modules
+  cacheable modules 116 KiB
+    modules by path ./node_modules/.pnpm/webpack-dev-server@4.15.2_debug@4.4.1_webpack@5.99.9/node_m...(truncated) 71.8 KiB 16 modules
+    modules by path ./node_modules/.pnpm/webpack@5.99.9/node_modules/webpack/hot/*.js 5.17 KiB
+      ./node_modules/.pnpm/webpack@5.99.9/node_modules/webpack/hot/dev-server.js 1.94 KiB [built] [code generated]
+      ./node_modules/.pnpm/webpack@5.99.9/node_modules/webpack/hot/log.js 1.73 KiB [built] [code generated]
+      + 2 modules
+    modules by path ./node_modules/.pnpm/html-entities@2.6.0/node_modules/html-entities...(truncated) 33.5 KiB
+      ./node_modules/.pnpm/html-entities@2.6.0/node_modules/html-entities/dis...(truncated) 4.98 KiB [built] [code generated]
+      ./node_modules/.pnpm/html-entities@2.6.0/node_modules/html-entities/dist/esm/nam...(truncated) 27.3 KiB [built] [code generated]
+      + 2 modules
+    ./node_modules/.pnpm/react-native-electron@0.20.2_electron@35.5.1_react-native-w...(truncated) 911 bytes [built] [code generated]
+    ./node_modules/.pnpm/ansi-html-community@0.0.8/node_modules/ansi-html-comm...(truncated) 4.16 KiB [built] [code generated]
+  external "electron" 42 bytes [built] [code generated]
+  external "events" 42 bytes [built] [code generated]
+  group_0 (webpack 5.99.9) compiled successfully in 1870 ms
+
+group_0:
+  asset main_window/index.js 14.1 MiB [emitted] (name: main_window)
+  asset main_window/index.html 326 bytes [emitted]
+  orphan modules 102 KiB [orphan] 48 modules
+  runtime modules 26.5 KiB 14 modules
+  modules by path ./node_modules/.pnpm/ 4.33 MiB
+    javascript modules 4 MiB 1038 modules
+    json modules 342 KiB
+      ./node_modules/.pnpm/react-native@0.76.9_@babel+core@7.27.4_@babel+preset-env@7....(truncated) 3.59 KiB [built] [code generated]
+      ./node_modules/.pnpm/react-native-vector-icons@10.2.0/node_modules/react-native-...(truncated) 1.58 KiB [built] [code generated]
+      + 14 modules
+  modules by path ./src/ 321 KiB 31 modules
+  ./util.inspect (ignored) 15 bytes [built] [code generated]
+
+  WARNING in ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/components/GestureComponents.js 46:55-76
+  export 'DrawerLayoutAndroid' (imported as 'RNDrawerLayoutAndroid') was not found in 'react-native' (possible exports: AccessibilityInfo, ActivityIndicator, Alert, Animated, AppRegistry, AppState, Appearance, BackHandler, Button, CheckBox, Clipboard, DeviceEventEmitter, Dimensions, Easing, FlatList, I18nManager, Image, ImageBackground, InteractionManager, Keyboard, KeyboardAvoidingView, LayoutAnimation, Linking, LogBox, Modal, NativeEventEmitter, NativeModules, PanResponder, Picker, PixelRatio, Platform, Pressable, ProgressBar, RefreshControl, SafeAreaView, ScrollView, SectionList, Share, StatusBar, StyleSheet, Switch, Text, TextInput, Touchable, TouchableHighlight, TouchableNativeFeedback, TouchableOpacity, TouchableWithoutFeedback, UIManager, Vibration, View, VirtualizedList, YellowBox, findNodeHandle, processColor, render, unmountComponentAtNode, unstable_createElement, useColorScheme, useLocaleContext, useWindowDimensions)
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/index.js 21:0-126 21:0-126 21:0-126 21:0-126 21:0-126 21:0-126 21:0-126
+   @ ./src/App.js 4:0-70 22:38-60
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  WARNING in ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/specs/NativeRNGestureHandlerModule.js 2:15-47
+  export 'TurboModuleRegistry' (imported as 'TurboModuleRegistry') was not found in 'react-native' (possible exports: AccessibilityInfo, ActivityIndicator, Alert, Animated, AppRegistry, AppState, Appearance, BackHandler, Button, CheckBox, Clipboard, DeviceEventEmitter, Dimensions, Easing, FlatList, I18nManager, Image, ImageBackground, InteractionManager, Keyboard, KeyboardAvoidingView, LayoutAnimation, Linking, LogBox, Modal, NativeEventEmitter, NativeModules, PanResponder, Picker, PixelRatio, Platform, Pressable, ProgressBar, RefreshControl, SafeAreaView, ScrollView, SectionList, Share, StatusBar, StyleSheet, Switch, Text, TextInput, Touchable, TouchableHighlight, TouchableNativeFeedback, TouchableOpacity, TouchableWithoutFeedback, UIManager, Vibration, View, VirtualizedList, YellowBox, findNodeHandle, processColor, render, unmountComponentAtNode, unstable_createElement, useColorScheme, useLocaleContext, useWindowDimensions)
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/RNGestureHandlerModule.js 3:0-58 4:15-21
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/init.js 2:0-62 12:4-34
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/index.js 1:0-36 27:0-10
+   @ ./src/App.js 4:0-70 22:38-60
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  WARNING in ./node_modules/.pnpm/react-native-reanimated@3.16.7_@babel+core@7.27.4_react-native@0.76.9_@babel+core@7.27._550fad6563e307263111f68e25bd0d4f/node_modules/react-native-reanimated/lib/module/jestUtils.js 167:35-42
+  Critical dependency: require function is used in a way in which dependencies cannot be statically extracted
+   @ ./node_modules/.pnpm/react-native-reanimated@3.16.7_@babel+core@7.27.4_react-native@0.76.9_@babel+core@7.27._550fad6563e307263111f68e25bd0d4f/node_modules/react-native-reanimated/lib/module/index.js 46:0-129 46:0-129 46:0-129 46:0-129 46:0-129 46:0-129
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/handlers/gestures/reanimatedWrapper.js 7:15-49
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/handlers/gestures/GestureDetector/useAnimatedGesture.js 2:0-50 91:7-17 98:34-59 100:26-51 161:16-35
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/handlers/gestures/GestureDetector/index.js 6:0-58 80:2-20
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/index.js 16:0-70 16:0-70
+   @ ./src/App.js 4:0-70 22:38-60
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  WARNING in ./node_modules/.pnpm/react-native-reanimated@3.16.7_@babel+core@7.27.4_react-native@0.76.9_@babel+core@7.27._550fad6563e307263111f68e25bd0d4f/node_modules/react-native-reanimated/lib/module/specs/NativeReanimatedModule.js 4:15-38
+  export 'TurboModuleRegistry' (imported as 'TurboModuleRegistry') was not found in 'react-native' (possible exports: AccessibilityInfo, ActivityIndicator, Alert, Animated, AppRegistry, AppState, Appearance, BackHandler, Button, CheckBox, Clipboard, DeviceEventEmitter, Dimensions, Easing, FlatList, I18nManager, Image, ImageBackground, InteractionManager, Keyboard, KeyboardAvoidingView, LayoutAnimation, Linking, LogBox, Modal, NativeEventEmitter, NativeModules, PanResponder, Picker, PixelRatio, Platform, Pressable, ProgressBar, RefreshControl, SafeAreaView, ScrollView, SectionList, Share, StatusBar, StyleSheet, Switch, Text, TextInput, Touchable, TouchableHighlight, TouchableNativeFeedback, TouchableOpacity, TouchableWithoutFeedback, UIManager, Vibration, View, VirtualizedList, YellowBox, findNodeHandle, processColor, render, unmountComponentAtNode, unstable_createElement, useColorScheme, useLocaleContext, useWindowDimensions)
+   @ ./node_modules/.pnpm/react-native-reanimated@3.16.7_@babel+core@7.27.4_react-native@0.76.9_@babel+core@7.27._550fad6563e307263111f68e25bd0d4f/node_modules/react-native-reanimated/lib/module/NativeReanimated/NativeReanimated.js 8:0-66 28:6-22
+   @ ./node_modules/.pnpm/react-native-reanimated@3.16.7_@babel+core@7.27.4_react-native@0.76.9_@babel+core@7.27._550fad6563e307263111f68e25bd0d4f/node_modules/react-native-reanimated/lib/module/NativeReanimated/index.js 5:0-57 6:53-69
+   @ ./node_modules/.pnpm/react-native-reanimated@3.16.7_@babel+core@7.27.4_react-native@0.76.9_@babel+core@7.27._550fad6563e307263111f68e25bd0d4f/node_modules/react-native-reanimated/lib/module/core.js 3:0-56 35:11-45 59:9-52 62:9-54 76:9-58 79:9-61 106:4-49 109:4-49 113:2-54 116:2-54 120:4-41
+   @ ./node_modules/.pnpm/react-native-reanimated@3.16.7_@babel+core@7.27.4_react-native@0.76.9_@babel+core@7.27._550fad6563e307263111f68e25bd0d4f/node_modules/react-native-reanimated/lib/module/index.js 8:0-213 8:0-213 8:0-213 8:0-213 8:0-213 8:0-213 8:0-213 8:0-213 8:0-213 8:0-213 8:0-213 8:0-213
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/handlers/gestures/reanimatedWrapper.js 7:15-49
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/handlers/gestures/GestureDetector/useAnimatedGesture.js 2:0-50 91:7-17 98:34-59 100:26-51 161:16-35
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/handlers/gestures/GestureDetector/index.js 6:0-58 80:2-20
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/index.js 16:0-70 16:0-70
+   @ ./src/App.js 4:0-70 22:38-60
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  1 warning has detailed information that is not shown.
+  Use 'stats.errorDetails: true' resp. '--stats-error-details' to show it.
+
+  ERROR in ./node_modules/.pnpm/@react-native+assets-registry@0.76.9/node_modules/@react-native/assets-registry/registry.js 13:7
+  Module parse failed: Unexpected token (13:7)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  | 'use strict';
+  | 
+  > export type AssetDestPathResolver = 'android' | 'generic';
+  | 
+  | export type PackagerAsset = {
+   @ ./node_modules/.pnpm/expo-asset@11.0.5_expo@52.0.46_@babel+core@7.27.4_@babel+preset-env@7.27.2_@babel+core@_20af43ae61d499a305a0f2fff56cb039/node_modules/expo-asset/build/Asset.js 1:0-70 125:21-33
+   @ ./node_modules/.pnpm/expo-asset@11.0.5_expo@52.0.46_@babel+core@7.27.4_@babel+preset-env@7.27.2_@babel+core@_20af43ae61d499a305a0f2fff56cb039/node_modules/expo-asset/build/index.js 2:0-24 2:0-24
+   @ ./node_modules/.pnpm/expo-av@15.1.6_expo@52.0.46_@babel+core@7.27.4_@babel+preset-env@7.27.2_@babel+core@7.2_44a9c0ef75c335fa86a526a3c5652bb5/node_modules/expo-av/build/AV.js 1:0-35 94:16-32 96:31-36
+   @ ./node_modules/.pnpm/expo-av@15.1.6_expo@52.0.46_@babel+core@7.27.4_@babel+preset-env@7.27.2_@babel+core@7.2_44a9c0ef75c335fa86a526a3c5652bb5/node_modules/expo-av/build/Audio.js 6:0-46 6:0-46
+   @ ./node_modules/.pnpm/expo-av@15.1.6_expo@52.0.46_@babel+core@7.27.4_@babel+preset-env@7.27.2_@babel+core@7.2_44a9c0ef75c335fa86a526a3c5652bb5/node_modules/expo-av/build/index.js 1:0-33 2:0-17
+   @ ./src/screens/LudoScreen.js 15:0-32
+   @ ./src/App.js 16:0-46 44:15-25
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/@react-navigation+elements@2.5.0_@react-navigation+native@7.1.14_react-native@0.76.9_@b_cecdf66b7bc70540c5fb88b215c5bba1/node_modules/@react-navigation/elements/lib/module/assets/back-icon-mask.png 1:0
+  Module parse failed: Unexpected character '�' (1:0)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  (Source code omitted for this binary file)
+   @ ./node_modules/.pnpm/@react-navigation+elements@2.5.0_@react-navigation+native@7.1.14_react-native@0.76.9_@b_cecdf66b7bc70540c5fb88b215c5bba1/node_modules/@react-navigation/elements/lib/module/index.js 4:0-55 31:33-45
+   @ ./node_modules/.pnpm/@react-navigation+stack@7.4.0_@react-navigation+native@7.1.14_react-native@0.76.9_@babe_90a1502b61df6e3d9f112c3ee7139c16/node_modules/@react-navigation/stack/lib/module/views/Stack/StackView.js 3:0-88 302:34-56 305:57-84
+   @ ./node_modules/.pnpm/@react-navigation+stack@7.4.0_@react-navigation+native@7.1.14_react-native@0.76.9_@babe_90a1502b61df6e3d9f112c3ee7139c16/node_modules/@react-navigation/stack/lib/module/index.js 17:0-55 17:0-55
+   @ ./src/App.js 3:0-63 17:12-32
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/@react-navigation+elements@2.5.0_@react-navigation+native@7.1.14_react-native@0.76.9_@b_cecdf66b7bc70540c5fb88b215c5bba1/node_modules/@react-navigation/elements/lib/module/assets/back-icon.png 1:0
+  Module parse failed: Unexpected character '�' (1:0)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  (Source code omitted for this binary file)
+   @ ./node_modules/.pnpm/@react-navigation+elements@2.5.0_@react-navigation+native@7.1.14_react-native@0.76.9_@b_cecdf66b7bc70540c5fb88b215c5bba1/node_modules/@react-navigation/elements/lib/module/index.js 3:0-46 31:23-31
+   @ ./node_modules/.pnpm/@react-navigation+stack@7.4.0_@react-navigation+native@7.1.14_react-native@0.76.9_@babe_90a1502b61df6e3d9f112c3ee7139c16/node_modules/@react-navigation/stack/lib/module/views/Stack/StackView.js 3:0-88 302:34-56 305:57-84
+   @ ./node_modules/.pnpm/@react-navigation+stack@7.4.0_@react-navigation+native@7.1.14_react-native@0.76.9_@babe_90a1502b61df6e3d9f112c3ee7139c16/node_modules/@react-navigation/stack/lib/module/index.js 17:0-55 17:0-55
+   @ ./src/App.js 3:0-63 17:12-32
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/@react-navigation+elements@2.5.0_@react-navigation+native@7.1.14_react-native@0.76.9_@b_cecdf66b7bc70540c5fb88b215c5bba1/node_modules/@react-navigation/elements/lib/module/assets/clear-icon.png 1:0
+  Module parse failed: Unexpected character '�' (1:0)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  (Source code omitted for this binary file)
+   @ ./node_modules/.pnpm/@react-navigation+elements@2.5.0_@react-navigation+native@7.1.14_react-native@0.76.9_@b_cecdf66b7bc70540c5fb88b215c5bba1/node_modules/@react-navigation/elements/lib/module/index.js 5:0-48 31:70-79
+   @ ./node_modules/.pnpm/@react-navigation+stack@7.4.0_@react-navigation+native@7.1.14_react-native@0.76.9_@babe_90a1502b61df6e3d9f112c3ee7139c16/node_modules/@react-navigation/stack/lib/module/views/Stack/StackView.js 3:0-88 302:34-56 305:57-84
+   @ ./node_modules/.pnpm/@react-navigation+stack@7.4.0_@react-navigation+native@7.1.14_react-native@0.76.9_@babe_90a1502b61df6e3d9f112c3ee7139c16/node_modules/@react-navigation/stack/lib/module/index.js 17:0-55 17:0-55
+   @ ./src/App.js 3:0-63 17:12-32
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/@react-navigation+elements@2.5.0_@react-navigation+native@7.1.14_react-native@0.76.9_@b_cecdf66b7bc70540c5fb88b215c5bba1/node_modules/@react-navigation/elements/lib/module/assets/close-icon.png 1:0
+  Module parse failed: Unexpected character '�' (1:0)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  (Source code omitted for this binary file)
+   @ ./node_modules/.pnpm/@react-navigation+elements@2.5.0_@react-navigation+native@7.1.14_react-native@0.76.9_@b_cecdf66b7bc70540c5fb88b215c5bba1/node_modules/@react-navigation/elements/lib/module/index.js 6:0-48 31:59-68
+   @ ./node_modules/.pnpm/@react-navigation+stack@7.4.0_@react-navigation+native@7.1.14_react-native@0.76.9_@babe_90a1502b61df6e3d9f112c3ee7139c16/node_modules/@react-navigation/stack/lib/module/views/Stack/StackView.js 3:0-88 302:34-56 305:57-84
+   @ ./node_modules/.pnpm/@react-navigation+stack@7.4.0_@react-navigation+native@7.1.14_react-native@0.76.9_@babe_90a1502b61df6e3d9f112c3ee7139c16/node_modules/@react-navigation/stack/lib/module/index.js 17:0-55 17:0-55
+   @ ./src/App.js 3:0-63 17:12-32
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/@react-navigation+elements@2.5.0_@react-navigation+native@7.1.14_react-native@0.76.9_@b_cecdf66b7bc70540c5fb88b215c5bba1/node_modules/@react-navigation/elements/lib/module/assets/search-icon.png 1:0
+  Module parse failed: Unexpected character '�' (1:0)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  (Source code omitted for this binary file)
+   @ ./node_modules/.pnpm/@react-navigation+elements@2.5.0_@react-navigation+native@7.1.14_react-native@0.76.9_@b_cecdf66b7bc70540c5fb88b215c5bba1/node_modules/@react-navigation/elements/lib/module/index.js 7:0-50 31:47-57
+   @ ./node_modules/.pnpm/@react-navigation+stack@7.4.0_@react-navigation+native@7.1.14_react-native@0.76.9_@babe_90a1502b61df6e3d9f112c3ee7139c16/node_modules/@react-navigation/stack/lib/module/views/Stack/StackView.js 3:0-88 302:34-56 305:57-84
+   @ ./node_modules/.pnpm/@react-navigation+stack@7.4.0_@react-navigation+native@7.1.14_react-native@0.76.9_@babe_90a1502b61df6e3d9f112c3ee7139c16/node_modules/@react-navigation/stack/lib/module/index.js 17:0-55 17:0-55
+   @ ./src/App.js 3:0-63 17:12-32
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./src/components/Post.js 15:0-46
+  Module not found: Error: Can't resolve '@expo/vector-icons' in '/Users/deu/my-electron-app/src/components'
+   @ ./src/components/SuperScrollList.js 29:0-26 108:47-51
+   @ ./src/screens/FollowingScreen.js 19:0-60 38:42-57
+   @ ./src/MainNavigator.js 15:0-56 24:13-28
+   @ ./src/App.js 11:0-44 56:15-28
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./src/redux/store.js 9:0-53
+  Module not found: Error: Can't resolve 'redux' in '/Users/deu/my-electron-app/src/redux'
+   @ ./src/App.js 6:0-38 21:11-16
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/expo-av@15.1.6_expo@52.0.46_@babel+core@7.27.4_@babel+preset-env@7.27.2_@babel+core@7.2_44a9c0ef75c335fa86a526a3c5652bb5/node_modules/expo-av/build/Video.js 220:64
+  Module parse failed: Unexpected token (220:64)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |     _renderPoster = () => {
+  |         const PosterComponent = this.props.PosterComponent ?? Image;
+  >         return this.props.usePoster && this.state.showPoster ? (<PosterComponent style={[_STYLES.poster, this.props.posterStyle]} source={this.props.posterSource}/>) : null;
+  |     };
+  |     render() {
+   @ ./node_modules/.pnpm/expo-av@15.1.6_expo@52.0.46_@babel+core@7.27.4_@babel+preset-env@7.27.2_@babel+core@7.2_44a9c0ef75c335fa86a526a3c5652bb5/node_modules/expo-av/build/index.js 3:0-43 3:0-43
+   @ ./src/screens/LudoScreen.js 15:0-32
+   @ ./src/App.js 16:0-46 44:15-25
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/expo-modules-core@2.2.3/node_modules/expo-modules-core/src/index.ts 1:28
+  Module parse failed: Unexpected token (1:28)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  > import EventEmitter, { type EventSubscription } from './EventEmitter';
+  | import { LegacyEventEmitter } from './LegacyEventEmitter';
+  | import NativeModule from './NativeModule';
+   @ ./node_modules/.pnpm/expo-image-picker@16.1.4_expo@52.0.46_@babel+core@7.27.4_@babel+preset-env@7.27.2_@babe_9e5d0b363d9040d091bab44d8fbffb35/node_modules/expo-image-picker/build/ImagePicker.js 1:0-109 9:22-32 13:18-28 16:18-28 66:42-62 81:36-56 121:18-37 150:18-37 160:0-28
+   @ ./src/screens/CommentScreen.js 17:0-49 160:19-54 161:26-61
+   @ ./src/App.js 9:0-55 80:15-31
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-animatable@1.4.0/node_modules/react-native-animatable/createAnimatableComponent.js 595:8
+  Module parse failed: Unexpected token (595:8)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  | 
+  |       return (
+  >         <Animatable
+  |           ref={this.handleRef}
+  |           style={[
+   @ ./node_modules/.pnpm/react-native-animatable@1.4.0/node_modules/react-native-animatable/index.js 6:0-58 12:41-56 13:20-35 14:20-35 15:21-36
+   @ ./node_modules/.pnpm/react-native-modal@14.0.0-rc.1_react-native@0.76.9_@babel+core@7.27.4_@babel+preset-env_de3cf644f8889ef30dd3a73dd4a79af3/node_modules/react-native-modal/dist/modal.js 3:0-54 489:53-68 530:59-74 531:51-66
+   @ ./node_modules/.pnpm/react-native-modal@14.0.0-rc.1_react-native@0.76.9_@babel+core@7.27.4_@babel+preset-env_de3cf644f8889ef30dd3a73dd4a79af3/node_modules/react-native-modal/dist/index.js 1:0-43 2:0-43 2:0-43 3:15-31
+   @ ./src/MainNavigator.js 13:0-39 47:87-92
+   @ ./src/App.js 11:0-44 56:15-28
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/avatar/Accessory.js 19:12
+  Module parse failed: Unexpected token (19:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  | const Accessory = (_a) => {
+  |     var { size = 10, style, underlayColor = '#000', onPress, onLongPress, source } = _a, props = __rest(_a, ["size", "style", "underlayColor", "onPress", "onLongPress", "source"]);
+  >     return (<TouchableHighlight style={[
+  |             styles.accessory,
+  |             {
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 29:0-43 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/avatar/Avatar.js 35:19
+  Module parse failed: Unexpected token (35:19)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |     const PlaceholderContent = (renderPlaceholderContent &&
+  |         renderNode(undefined, renderPlaceholderContent)) ||
+  >         (title && (<Text style={StyleSheet.flatten([
+  |                 styles.title,
+  |                 { fontSize: titleSize },
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 28:0-37 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/badge/Badge.js 20:12
+  Module parse failed: Unexpected token (20:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |     const { containerStyle, textStyle, textProps, badgeStyle, onPress, Component = onPress ? TouchableOpacity : View, value, theme, status = 'primary' } = props, attributes = __rest(props, ["containerStyle", "textStyle", "textProps", "badgeStyle", "onPress", "Component", "value", "theme", "status"]);
+  |     const element = renderNode(Text, value, Object.assign({ style: StyleSheet.flatten([styles.text, textStyle && textStyle]) }, textProps));
+  >     return (<View style={StyleSheet.flatten([containerStyle && containerStyle])}>
+  |       <Component {...attributes} style={StyleSheet.flatten([
+  |             {
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 15:0-34 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/badge/withBadge.js 24:16
+  Module parse failed: Unexpected token (24:16)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |         }
+  |         const badgeValue = typeof value === 'function' ? value(props) : value;
+  >         return (<View style={StyleSheet.flatten([styles.container, containerStyle])}>
+  |         <WrappedComponent {...props}/>
+  | 
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 16:0-42 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/bottomSheet/BottomSheet.js 18:12
+  Module parse failed: Unexpected token (18:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  | const BottomSheet = (_a) => {
+  |     var { containerStyle, isVisible = false, modalProps = {}, children } = _a, props = __rest(_a, ["containerStyle", "isVisible", "modalProps", "children"]);
+  >     return (<Modal animationType="slide" transparent={true} visible={isVisible} {...modalProps}>
+  |       <SafeAreaView style={StyleSheet.flatten([
+  |             styles.safeAreaView,
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 33:0-52 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/buttons/Button.js 69:12
+  Module parse failed: Unexpected token (69:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |         right: 'row-reverse',
+  |     };
+  >     return (<View style={[
+  |             styles.container,
+  |             {
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 6:0-38 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/buttons/ButtonGroup.js 29:12
+  Module parse failed: Unexpected token (29:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |         innerBorderWidth = innerBorderStyle.width;
+  |     }
+  >     return (<View {...attributes} style={StyleSheet.flatten([
+  |             styles.container,
+  |             vertical && styles.verticalContainer,
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 20:0-48 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/buttons/Chip.js 18:12
+  Module parse failed: Unexpected token (18:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  | const Chip = (props) => {
+  |     const { titleStyle, buttonStyle } = props, rest = __rest(props, ["titleStyle", "buttonStyle"]);
+  >     return (<Button titleStyle={StyleSheet.flatten([
+  |             { fontSize: 14, paddingHorizontal: 2 },
+  |             titleStyle,
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 7:0-34 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/buttons/FAB.js 27:12
+  Module parse failed: Unexpected token (27:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |         }).start();
+  |     }, [animation, visible]);
+  >     return (<Animated.View style={[
+  |             {
+  |                 opacity: animation,
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 22:0-32 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/buttons/SpeedDial.js 19:12
+  Module parse failed: Unexpected token (19:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  | const SpeedDialAction = withTheme((_a) => {
+  |     var { title, titleStyle } = _a, actionProps = __rest(_a, ["title", "titleStyle"]);
+  >     return (<View style={styles.action}>
+  |         {title && <Text style={[styles.title, titleStyle]}>{title}</Text>}
+  |         <FAB {...actionProps} size="small" style={[actionProps.style]}/>
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 23:0-44 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/card/Card.js 23:12
+  Module parse failed: Unexpected token (23:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |     var _a, _b;
+  |     const { children, containerStyle, wrapperStyle, theme } = props, attributes = __rest(props, ["children", "containerStyle", "wrapperStyle", "theme"]);
+  >     return (<View {...attributes} style={StyleSheet.flatten([
+  |             Object.assign({ backgroundColor: (_a = theme === null || theme === void 0 ? void 0 : theme.colors) === null || _a === void 0 ? void 0 : _a.white, borderWidth: 1, padding: 15, margin: 15, marginBottom: 0, borderColor: (_b = theme === null || theme === void 0 ? void 0 : theme.colors) === null || _b === void 0 ? void 0 : _b.grey5 }, Platform.select({
+  |                 android: {
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 25:0-31 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/checkbox/CheckBox.js 24:12
+  Module parse failed: Unexpected token (24:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |         checked: !!checked,
+  |     };
+  >     return (<Component accessibilityRole="checkbox" accessibilityState={accessibilityState} testID="checkbox" {...attributes} onLongPress={onLongPress} onPress={onPress} style={StyleSheet.flatten([
+  |             styles.container,
+  |             title && styles.containerHasTitle,
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 17:0-43 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/config/ThemeProvider.js 53:16
+  Module parse failed: Unexpected token (53:16)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |     }
+  |     render() {
+  >         return (<ThemeContext.Provider value={{
+  |                 theme: this.state.theme,
+  |                 updateTheme: this.updateTheme,
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/config/index.js 5:0-78 8:0-132 8:0-132 8:0-132
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 41:0-112 44:21-30 45:15-24 46:0-442 46:0-442 46:0-442 46:0-442 46:0-442 46:0-442 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/config/withTheme.js 21:16
+  Module parse failed: Unexpected token (21:16)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |     return Object.assign((props, forwardedRef) => {
+  |         const { children } = props, rest = __rest(props, ["children"]);
+  >         return (<ThemeConsumer>
+  |           {(context) => {
+  |                 // If user isn't using ThemeProvider
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/config/index.js 6:0-36 8:0-132
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 41:0-112 44:21-30 45:15-24 46:0-442 46:0-442 46:0-442 46:0-442 46:0-442 46:0-442 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/dialog/Dialog.js 22:12
+  Module parse failed: Unexpected token (22:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  | const Dialog = Object.assign((_a) => {
+  |     var { children, theme, overlayStyle, onBackdropPress, isVisible } = _a, rest = __rest(_a, ["children", "theme", "overlayStyle", "onBackdropPress", "isVisible"]);
+  >     return (<Overlay isVisible={isVisible} onBackdropPress={onBackdropPress} overlayStyle={StyleSheet.flatten([styles.dialog, overlayStyle])} testID="Internal__Overlay" {...rest}>
+  |         <View style={styles.childrenContainer}>{children}</View>
+  |       </Overlay>);
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 26:0-37 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/divider/Divider.js 19:12
+  Module parse failed: Unexpected token (19:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  | const Divider = (_a) => {
+  |     var { color, inset = false, insetType = 'left', orientation = 'horizontal', style, subHeader, subHeaderStyle, theme, width } = _a, rest = __rest(_a, ["color", "inset", "insetType", "orientation", "style", "subHeader", "subHeaderStyle", "theme", "width"]);
+  >     return (<>
+  |     <View style={StyleSheet.flatten([
+  |             styles.divider,
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 18:0-40 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/header/Header.js 24:54
+  Module parse failed: Unexpected token (24:54)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |     center: 'center',
+  | };
+  > const Children = ({ style, placement, children }) => (<View style={StyleSheet.flatten([{ alignItems: ALIGN_STYLE[placement] }, style])}>
+  |     {children == null || children === false
+  |         ? null
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 30:0-37 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/icons/Icon.js 47:12
+  Module parse failed: Unexpected token (47:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |         }
+  |     }
+  >     return (<View style={StyleSheet.flatten([
+  |             styles.container,
+  |             (reverse || raised) && styles.button,
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 9:0-32 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/image/Image.js 39:16
+  Module parse failed: Unexpected token (39:16)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |         const hasImage = Boolean(attributes.source);
+  |         const _b = StyleSheet.flatten(style), { width, height } = _b, styleProps = __rest(_b, ["width", "height"]);
+  >         return (<Component onPress={onPress} onLongPress={onLongPress} accessibilityIgnoresInvertColors={true} style={StyleSheet.flatten([styles.container, containerStyle])}>
+  |         <ImageComponent testID="RNE__Image" transition={true} transitionDuration={360} {...attributes} onLoad={this.onLoad} style={StyleSheet.flatten([
+  |                 StyleSheet.absoluteFill,
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 21:0-34 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/input/Input.js 58:16
+  Module parse failed: Unexpected token (58:16)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |         });
+  |         const hideErrorMessage = !renderErrorMessage && !errorMessage;
+  >         return (<View style={StyleSheet.flatten([styles.container, containerStyle])}>
+  |         {renderText(label, Object.assign({ style: labelStyle }, labelProps), Object.assign({ fontSize: 16, color: (_a = theme === null || theme === void 0 ? void 0 : theme.colors) === null || _a === void 0 ? void 0 : _a.grey3 }, Platform.select({
+  |                 android: Object.assign({}, fonts.android.bold),
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 8:0-34 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/linearProgress/LinearProgress.js 48:12
+  Module parse failed: Unexpected token (48:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |         startAnimation();
+  |     }, [startAnimation, value]);
+  >     return (<View accessible accessibilityRole="progressbar" accessibilityValue={{
+  |             now: value,
+  |             min: 0,
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/linearProgress/index.js 2:0-46 3:25-39
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 34:0-46 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/list/ListItemAccordion.js 42:12
+  Module parse failed: Unexpected token (42:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |             outputRange: ['0deg', '-180deg'],
+  |         });
+  >     return (<>
+  |       <ListItemBase {...props}>
+  |         {React.isValidElement(content) ? content : <ListItemContent />}
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/list/ListItem.js 11:0-52 15:15-32
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 10:0-39 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/list/ListItemBase.js 21:12
+  Module parse failed: Unexpected token (21:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |         console.error("You need to pass a ViewComponent to use linearGradientProps !\nExample: ViewComponent={require('react-native-linear-gradient')}");
+  |     }
+  >     return (<Component {...attributes} onPress={onPress} onLongPress={onLongPress} disabled={disabled}>
+  |       <PadView Component={ViewComponent} {...linearGradientProps} style={StyleSheet.flatten([
+  |             Object.assign(Object.assign({}, Platform.select({
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/list/ListItem.js 2:0-46 12:31-43
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 10:0-39 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/list/ListItemButtonGroup.js 18:12
+  Module parse failed: Unexpected token (18:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  | const ListItemButtonGroup = (_a) => {
+  |     var { containerStyle } = _a, props = __rest(_a, ["containerStyle"]);
+  >     return (<ButtonGroup {...props} containerStyle={StyleSheet.flatten([styles.container, containerStyle])}/>);
+  | };
+  | const styles = StyleSheet.create({
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/list/ListItem.js 7:0-56 23:17-36
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 10:0-39 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/list/ListItemCheckBox.js 18:12
+  Module parse failed: Unexpected token (18:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  | const ListItemCheckBox = (_a) => {
+  |     var { containerStyle } = _a, props = __rest(_a, ["containerStyle"]);
+  >     return (<CheckBox {...props} containerStyle={StyleSheet.flatten([styles.container, containerStyle])}/>);
+  | };
+  | const styles = StyleSheet.create({
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/list/ListItem.js 6:0-50 22:14-30
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 10:0-39 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/list/ListItemChevron.js 18:12
+  Module parse failed: Unexpected token (18:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  | const ListItemChevron = (_a) => {
+  |     var { containerStyle } = _a, props = __rest(_a, ["containerStyle"]);
+  >     return (<Icon type={Platform.OS === 'ios' ? 'ionicon' : 'material'} color="#D1D1D6" name={Platform.OS === 'ios'
+  |             ? 'chevron-forward-outline'
+  |             : 'keyboard-arrow-right'} size={16} containerStyle={StyleSheet.flatten([
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/list/ListItem.js 4:0-48 16:13-28
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 10:0-39 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/list/ListItemContent.js 18:12
+  Module parse failed: Unexpected token (18:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |     var { style, right, children } = _a, props = __rest(_a, ["style", "right", "children"]);
+  |     const containerStyle = right ? styles.rightContainer : styles.container;
+  >     return (<View style={[containerStyle, style]} {...props}>
+  |       {children}
+  |     </View>);
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/list/ListItem.js 3:0-48 17:13-28
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 10:0-39 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/list/ListItemInput.js 18:12
+  Module parse failed: Unexpected token (18:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  | const ListItemInput = (_a) => {
+  |     var { inputStyle, inputContainerStyle, containerStyle } = _a, props = __rest(_a, ["inputStyle", "inputContainerStyle", "containerStyle"]);
+  >     return (<Input renderErrorMessage={false} {...props} inputStyle={StyleSheet.flatten([styles.input, inputStyle])} inputContainerStyle={StyleSheet.flatten([
+  |             styles.inputContainer,
+  |             inputContainerStyle,
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/list/ListItem.js 5:0-44 18:11-24
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 10:0-39 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/list/ListItemSubtitle.js 19:12
+  Module parse failed: Unexpected token (19:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  | const ListItemSubtitle = (_a) => {
+  |     var { style, right, children } = _a, props = __rest(_a, ["style", "right", "children"]);
+  >     return (<Text testID="listItemTitle" style={StyleSheet.flatten([
+  |             styles.subtitle,
+  |             right && styles.rightSubtitle,
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/list/ListItem.js 9:0-50 20:14-30
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 10:0-39 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/list/ListItemSwipeable.js 65:12
+  Module parse failed: Unexpected token (65:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |         onPanResponderRelease,
+  |     }));
+  >     return (<View style={{
+  |             justifyContent: 'center',
+  |         }}>
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/list/ListItem.js 10:0-52 21:15-32
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 10:0-39 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/list/ListItemTitle.js 19:12
+  Module parse failed: Unexpected token (19:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  | const ListItemTitle = (_a) => {
+  |     var { style, right, children } = _a, props = __rest(_a, ["style", "right", "children"]);
+  >     return (<Text testID="listItemTitle" style={StyleSheet.flatten([
+  |             styles.title,
+  |             right && styles.rightTitle,
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/list/ListItem.js 8:0-44 19:11-24
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 10:0-39 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/overlay/Overlay.js 17:12
+  Module parse failed: Unexpected token (17:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  | const Overlay = (_a) => {
+  |     var { children, backdropStyle, overlayStyle, onBackdropPress, fullScreen, ModalComponent = Modal, isVisible } = _a, rest = __rest(_a, ["children", "backdropStyle", "overlayStyle", "onBackdropPress", "fullScreen", "ModalComponent", "isVisible"]);
+  >     return (<ModalComponent visible={isVisible} onRequestClose={onBackdropPress} transparent {...rest}>
+  |     <TouchableWithoutFeedback onPress={onBackdropPress} testID="RNE__Overlay__backdrop">
+  |       <View testID="backdrop" style={StyleSheet.flatten([styles.backdrop, backdropStyle])}/>
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 12:0-40 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/pricing/PricingCard.js 23:12
+  Module parse failed: Unexpected token (23:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |     const { theme } = props, rest = __rest(props, ["theme"]);
+  |     const { containerStyle, wrapperStyle, title, price, info, button, color = (_a = theme === null || theme === void 0 ? void 0 : theme.colors) === null || _a === void 0 ? void 0 : _a.primary, titleStyle, pricingStyle, infoStyle, onButtonPress } = rest, attributes = __rest(rest, ["containerStyle", "wrapperStyle", "title", "price", "info", "button", "color", "titleStyle", "pricingStyle", "infoStyle", "onButtonPress"]);
+  >     return (<View {...attributes} style={StyleSheet.flatten([
+  |             Object.assign({ margin: 15, marginBottom: 15, backgroundColor: (_b = theme === null || theme === void 0 ? void 0 : theme.colors) === null || _b === void 0 ? void 0 : _b.white, borderWidth: 1, padding: 15, borderColor: (_c = theme === null || theme === void 0 ? void 0 : theme.colors) === null || _c === void 0 ? void 0 : _c.grey5 }, Platform.select({
+  |                 android: {
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 31:0-48 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/searchbar/SearchBar.js 29:16
+  Module parse failed: Unexpected token (29:16)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |     render() {
+  |         const Component = SEARCHBAR_COMPONENTS[this.props.platform] || DefaultSearchBar;
+  >         return (<Component ref={(ref) => {
+  |                 this.searchbar = ref;
+  |             }} {...this.props}/>);
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 14:0-46 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/slider/Slider.js 266:15
+  Module parse failed: Unexpected token (266:15)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |             height: thumbTouchRect.height,
+  |         };
+  >         return <Animated.View style={positionStyle} pointerEvents="none"/>;
+  |     };
+  |     const getMinimumTrackStyles = (thumbStart) => {
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 19:0-37 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/social/SocialIcon.js 56:12
+  Module parse failed: Unexpected token (56:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |     var { activityIndicatorStyle, button = false, disabled, fontFamily, fontStyle, fontWeight, iconType = 'font-awesome', iconColor = 'white', iconSize = 24, iconStyle, light, loading, onLongPress, onPress, Component = onPress || onLongPress ? TouchableHighlight : View, raised = true, small, style, title, type, underlayColor } = _a, attributes = __rest(_a, ["activityIndicatorStyle", "button", "disabled", "fontFamily", "fontStyle", "fontWeight", "iconType", "iconColor", "iconSize", "iconStyle", "light", "loading", "onLongPress", "onPress", "Component", "raised", "small", "style", "title", "type", "underlayColor"]);
+  |     const shouldShowExpandedButton = button && title;
+  >     return (<Component {...attributes} underlayColor={light ? 'white' : underlayColor || (type && colors[type])} onLongPress={disabled ? null : onLongPress} onPress={disabled ? null : onPress} disabled={disabled} style={StyleSheet.flatten([
+  |             raised && styles.raised,
+  |             styles.container,
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 11:0-45 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/switch/switch.js 47:12
+  Module parse failed: Unexpected token (47:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |             },
+  |         };
+  >     return (<NativeSwitch value={value} accessibilityState={{
+  |             checked: value,
+  |             disabled,
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 35:0-37 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/tab/Tab.js 20:12
+  Module parse failed: Unexpected token (20:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |     var _b, _c;
+  |     var { active, theme, titleStyle, containerStyle, buttonStyle, variant, iconPosition = 'top', title } = _a, props = __rest(_a, ["active", "theme", "titleStyle", "containerStyle", "buttonStyle", "variant", "iconPosition", "title"]);
+  >     return (<Button accessibilityRole="tab" accessibilityState={{ selected: active }} accessibilityValue={typeof title === 'string' ? { text: title } : undefined} buttonStyle={[styles.buttonStyle, buttonStyle]} titleStyle={[
+  |             styles.titleStyle,
+  |             {
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 36:0-28 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/tab/TabView.js 19:11
+  Module parse failed: Unexpected token (19:11)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  | const TabViewItem = (_a) => {
+  |     var { children } = _a, props = __rest(_a, ["children"]);
+  >     return <View {...props}>{React.isValidElement(children) && children}</View>;
+  | };
+  | const TabView = ({ children, onChange, value = 0, animationType = 'spring', animationConfig = {}, }) => {
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 37:0-36 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/text/Text.js 20:12
+  Module parse failed: Unexpected token (20:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |     var _a;
+  |     const { style, theme, children = '', h1, h2, h3, h4, h1Style, h2Style, h3Style, h4Style } = props, rest = __rest(props, ["style", "theme", "children", "h1", "h2", "h3", "h4", "h1Style", "h2Style", "h3Style", "h4Style"]);
+  >     return (<Text style={StyleSheet.flatten([
+  |             Object.assign(Object.assign({}, Platform.select({
+  |                 android: Object.assign({}, fonts.android.regular),
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 40:0-31 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/tile/Tile.js 40:15
+  Module parse failed: Unexpected token (40:15)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |             ImageComponent,
+  |         };
+  >         return <FeaturedTile {...featuredProps}/>;
+  |     }
+  |     return (<TouchableOpacity {...attributes} onPress={onPress} activeOpacity={activeOpacity} style={StyleSheet.flatten([
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 27:0-31 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/tooltip/Tooltip.js 48:24
+  Module parse failed: Unexpected token (48:24)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |         this.wrapWithPress = (toggleOnPress, toggleAction, children) => {
+  |             if (toggleOnPress) {
+  >                 return (<TouchableOpacity {...{ [toggleAction]: this.toggleTooltip }} delayLongPress={250} activeOpacity={1}>
+  |           {children}
+  |         </TouchableOpacity>);
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 32:0-40 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-ratings@8.0.4_react-native@0.76.9_@babel+core@7.27.4_@babel+preset-env@7.2_dd197a8c055db5a921ff6cd5d67e473e/node_modules/react-native-ratings/dist/SwipeRating.js 171:43
+  Module parse failed: Unexpected token (171:43)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |         const { imageSize, ratingCount, type, tintColor } = this.props;
+  |         const { source } = TYPES[type];
+  >         return times(ratingCount, index => <View key={index} style={styles.starContainer}>
+  |         <Image source={source} style={{ width: imageSize, height: imageSize, tintColor }}/>
+  |       </View>);
+   @ ./node_modules/.pnpm/react-native-ratings@8.0.4_react-native@0.76.9_@babel+core@7.27.4_@babel+preset-env@7.2_dd197a8c055db5a921ff6cd5d67e473e/node_modules/react-native-ratings/dist/index.js 1:0-35 3:0-32
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 38:0-95 44:31-47 45:25-35
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-ratings@8.0.4_react-native@0.76.9_@babel+core@7.27.4_@babel+preset-env@7.2_dd197a8c055db5a921ff6cd5d67e473e/node_modules/react-native-ratings/dist/TapRating.js 35:26
+  Module parse failed: Unexpected token (35:26)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |     }
+  |     _.times(count, index => {
+  >         rating_array.push(<Star key={index} position={index + 1} starSelectedInPosition={value => {
+  |                 starSelectedInPosition(value);
+  |             }} fill={position >= index + 1} {...props}/>);
+   @ ./node_modules/.pnpm/react-native-ratings@8.0.4_react-native@0.76.9_@babel+core@7.27.4_@babel+preset-env@7.2_dd197a8c055db5a921ff6cd5d67e473e/node_modules/react-native-ratings/dist/index.js 2:0-39 3:0-32
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 38:0-95 44:31-47 45:25-35
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-ratings@8.1.0_react-native@0.76.9_@babel+core@7.27.4_@babel+preset-env@7.2_43f5afca3d086f183da88bab498f18ce/node_modules/react-native-ratings/dist/SwipeRating.js 171:43
+  Module parse failed: Unexpected token (171:43)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |         const { imageSize, ratingCount, type, tintColor } = this.props;
+  |         const { source } = TYPES[type];
+  >         return times(ratingCount, index => <View key={index} style={styles.starContainer}>
+  |         <Image source={source} style={{ width: imageSize, height: imageSize, tintColor }}/>
+  |       </View>);
+   @ ./node_modules/.pnpm/react-native-ratings@8.1.0_react-native@0.76.9_@babel+core@7.27.4_@babel+preset-env@7.2_43f5afca3d086f183da88bab498f18ce/node_modules/react-native-ratings/dist/index.js 1:0-35 3:0-32
+   @ ./node_modules/.pnpm/@rneui+base@4.0.0-rc.8_react-native-safe-area-context@4.12.0_react-native@0.76.9_@babel_45a75b9c4de8cf633a9ac9eb74557e70/node_modules/@rneui/base/dist/AirbnbRating/AirbnbRating.js 2:0-66 4:31-40
+   @ ./node_modules/.pnpm/@rneui+base@4.0.0-rc.8_react-native-safe-area-context@4.12.0_react-native@0.76.9_@babel_45a75b9c4de8cf633a9ac9eb74557e70/node_modules/@rneui/base/dist/AirbnbRating/index.js 1:0-46 2:0-24
+   @ ./node_modules/.pnpm/@rneui+base@4.0.0-rc.8_react-native-safe-area-context@4.12.0_react-native@0.76.9_@babel_45a75b9c4de8cf633a9ac9eb74557e70/node_modules/@rneui/base/dist/index.js 1:0-31 1:0-31
+   @ ./src/screens/CommentScreen.js 22:0-37 346:38-44 375:39-45
+   @ ./src/App.js 9:0-55 80:15-31
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-ratings@8.1.0_react-native@0.76.9_@babel+core@7.27.4_@babel+preset-env@7.2_43f5afca3d086f183da88bab498f18ce/node_modules/react-native-ratings/dist/TapRating.js 39:26
+  Module parse failed: Unexpected token (39:26)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |     }
+  |     _.times(count, index => {
+  >         rating_array.push(<Star key={index} position={index + 1} starSelectedInPosition={value => {
+  |                 starSelectedInPosition(value);
+  |             }} fill={position >= index + 1} {...props}/>);
+   @ ./node_modules/.pnpm/react-native-ratings@8.1.0_react-native@0.76.9_@babel+core@7.27.4_@babel+preset-env@7.2_43f5afca3d086f183da88bab498f18ce/node_modules/react-native-ratings/dist/index.js 2:0-39 3:0-32
+   @ ./node_modules/.pnpm/@rneui+base@4.0.0-rc.8_react-native-safe-area-context@4.12.0_react-native@0.76.9_@babel_45a75b9c4de8cf633a9ac9eb74557e70/node_modules/@rneui/base/dist/AirbnbRating/AirbnbRating.js 2:0-66 4:31-40
+   @ ./node_modules/.pnpm/@rneui+base@4.0.0-rc.8_react-native-safe-area-context@4.12.0_react-native@0.76.9_@babel_45a75b9c4de8cf633a9ac9eb74557e70/node_modules/@rneui/base/dist/AirbnbRating/index.js 1:0-46 2:0-24
+   @ ./node_modules/.pnpm/@rneui+base@4.0.0-rc.8_react-native-safe-area-context@4.12.0_react-native@0.76.9_@babel_45a75b9c4de8cf633a9ac9eb74557e70/node_modules/@rneui/base/dist/index.js 1:0-31 1:0-31
+   @ ./src/screens/CommentScreen.js 22:0-37 346:38-44 375:39-45
+   @ ./src/App.js 9:0-55 80:15-31
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-vector-icons@10.2.0/node_modules/react-native-vector-icons/lib/create-icon-set.js 70:8
+  Module parse failed: Unexpected token (70:8)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  | 
+  |       return (
+  >         <Text selectable={false} {...props}>
+  |           {glyph}
+  |           {children}
+   @ ./node_modules/.pnpm/react-native-vector-icons@10.2.0/node_modules/react-native-vector-icons/MaterialIcons.js 6:0-50 9:16-29
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/helpers/getIconType.js 12:19-77 41:19-77
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 42:0-76 46:0-442 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-vector-icons@10.2.0/node_modules/react-native-vector-icons/lib/create-multi-style-icon-set.js 132:15
+  Module parse failed: Unexpected token (132:15)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |         const props = reduceProps(this.props);
+  | 
+  >         return <SelectedIconClass {...props} />;
+  |       }
+  |     }
+   @ ./node_modules/.pnpm/react-native-vector-icons@10.2.0/node_modules/react-native-vector-icons/lib/create-icon-set-from-fontawesome5.js 2:0-68 62:15-38
+   @ ./node_modules/.pnpm/react-native-vector-icons@10.2.0/node_modules/react-native-vector-icons/FontAwesome5.js 6:0-75 11:0-67 11:0-67 13:16-32
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/helpers/getIconType.js 27:19-76
+   @ ./node_modules/.pnpm/react-native-elements@3.4.3_react-native-safe-area-context@4.12.0_react-native@0.76.9_@_3d62d1a46cc1ac78a748b450f3e003e1/node_modules/react-native-elements/dist/index.js 42:0-76 46:0-442 46:0-442
+   @ ./src/components/ProfileModal.js 20:0-47 304:50-56
+   @ ./src/screens/ProfileSettingsScreen.js 8:0-54 25:39-51
+   @ ./src/App.js 13:0-68 62:15-36
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native-web-webview@1.0.2_file-loader@6.2.0_webpack@5.99.9__react-native-web@0.19._2bbae9ba63df6977b895c06af9360be2/node_modules/react-native-web-webview/dist/postMock.html 1:0
+  Module parse failed: Unexpected token (1:0)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  > <html>
+  |   <body>
+  |     <div id="content" style="display: none;"></div>
+   @ ./node_modules/.pnpm/react-native-web-webview@1.0.2_file-loader@6.2.0_webpack@5.99.9__react-native-web@0.19._2bbae9ba63df6977b895c06af9360be2/node_modules/react-native-web-webview/dist/index.js 1:3115-3141
+   @ ./src/components/Post.js 33:12-58
+   @ ./src/components/SuperScrollList.js 29:0-26 108:47-51
+   @ ./src/screens/FollowingScreen.js 19:0-60 38:42-57
+   @ ./src/MainNavigator.js 15:0-56 24:13-28
+   @ ./src/App.js 11:0-44 56:15-28
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native@0.76.9_@babel+core@7.27.4_@babel+preset-env@7.27.2_@babel+core@7.27.4__@ty_60cd724c3b16fbf1a874e814bd4b07ce/node_modules/react-native/Libraries/Image/resolveAssetSource.js 13:12
+  Module parse failed: Unexpected token (13:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  | // Utilities for resolving an asset into a `source` for e.g. `Image`
+  | 
+  > import type {ResolvedAssetSource} from './AssetSourceResolver';
+  | import type {ImageSource} from './ImageSource';
+  | 
+   @ ./node_modules/.pnpm/@react-native-community+slider@4.5.7/node_modules/@react-native-community/slider/dist/RNCSliderNativeComponent.js 1:1259-1317 1:1462-1520 1:1680-1738 1:1851-1909
+   @ ./node_modules/.pnpm/@react-native-community+slider@4.5.7/node_modules/@react-native-community/slider/dist/index.js 1:94-139
+   @ ./node_modules/.pnpm/@react-native-community+slider@4.5.7/node_modules/@react-native-community/slider/dist/Slider.js 1:495-513
+   @ ./src/screens/LudoScreen.js 13:0-52 272:47-53
+   @ ./src/App.js 16:0-46 44:15-25
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native@0.76.9_@babel+core@7.27.4_@babel+preset-env@7.27.2_@babel+core@7.27.4__@ty_60cd724c3b16fbf1a874e814bd4b07ce/node_modules/react-native/Libraries/NativeComponent/NativeComponentRegistry.js 11:12
+  Module parse failed: Unexpected token (11:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |  */
+  | 
+  > import type {
+  |   HostComponent,
+  |   PartialViewConfig,
+   @ ./node_modules/.pnpm/@react-native-community+slider@4.5.7/node_modules/@react-native-community/slider/dist/RNCSliderNativeComponent.js 1:341-414
+   @ ./node_modules/.pnpm/@react-native-community+slider@4.5.7/node_modules/@react-native-community/slider/dist/index.js 1:94-139
+   @ ./node_modules/.pnpm/@react-native-community+slider@4.5.7/node_modules/@react-native-community/slider/dist/Slider.js 1:495-513
+   @ ./src/screens/LudoScreen.js 13:0-52 272:47-53
+   @ ./src/App.js 16:0-46 44:15-25
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native@0.76.9_@babel+core@7.27.4_@babel+preset-env@7.27.2_@babel+core@7.27.4__@ty_60cd724c3b16fbf1a874e814bd4b07ce/node_modules/react-native/Libraries/NativeComponent/ViewConfigIgnore.js 13:47
+  Module parse failed: Unexpected token (13:47)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  | import Platform from '../Utilities/Platform';
+  | 
+  > const ignoredViewConfigProps = new WeakSet<{...}>();
+  | 
+  | /**
+   @ ./node_modules/.pnpm/@react-native-community+slider@4.5.7/node_modules/@react-native-community/slider/dist/RNCSliderNativeComponent.js 1:428-494
+   @ ./node_modules/.pnpm/@react-native-community+slider@4.5.7/node_modules/@react-native-community/slider/dist/index.js 1:94-139
+   @ ./node_modules/.pnpm/@react-native-community+slider@4.5.7/node_modules/@react-native-community/slider/dist/Slider.js 1:495-513
+   @ ./src/screens/LudoScreen.js 13:0-52 272:47-53
+   @ ./src/App.js 16:0-46 44:15-25
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native@0.76.9_@babel+core@7.27.4_@babel+preset-env@7.27.2_@babel+core@7.27.4__@ty_60cd724c3b16fbf1a874e814bd4b07ce/node_modules/react-native/Libraries/Pressability/PressabilityDebug.js 11:12
+  Module parse failed: Unexpected token (11:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |  */
+  | 
+  > import type {ColorValue} from '../StyleSheet/StyleSheet';
+  | 
+  | import View from '../Components/View/View';
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/handlers/PressabilityDebugView.js 2:0-94 2:0-94
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/handlers/createHandler.js 15:0-64 415:61-82
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/handlers/ForceTouchGestureHandler.js 6:0-44 25:142-155
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/index.js 9:0-79 9:0-79
+   @ ./src/App.js 4:0-70 22:38-60
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native@0.76.9_@babel+core@7.27.4_@babel+preset-env@7.27.2_@babel+core@7.27.4__@ty_60cd724c3b16fbf1a874e814bd4b07ce/node_modules/react-native/Libraries/ReactNative/ReactFabricPublicInstance/ReactFabricPublicInstance.js 16:12
+  Module parse failed: Unexpected token (16:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  |  */
+  | 
+  > import type ReactNativeElement from '../../../src/private/webapis/dom/nodes/ReactNativeElement';
+  | import type ReadOnlyText from '../../../src/private/webapis/dom/nodes/ReadOnlyText';
+  | import typeof * as RendererProxyT from '../../ReactNative/RendererProxy';
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/getShadowNodeFromRef.js 26:31-172
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/handlers/gestures/GestureDetector/useViewRefHandler.js 2:0-69 27:19-39
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/handlers/gestures/GestureDetector/index.js 13:0-56 75:21-38
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/index.js 16:0-70 16:0-70
+   @ ./src/App.js 4:0-70 22:38-60
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native@0.76.9_@babel+core@7.27.4_@babel+preset-env@7.27.2_@babel+core@7.27.4__@ty_60cd724c3b16fbf1a874e814bd4b07ce/node_modules/react-native/Libraries/Renderer/shims/ReactFabric.js 17:12
+  Module parse failed: Unexpected token (17:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  | import {BatchedBridge} from 'react-native/Libraries/ReactPrivate/ReactNativePrivateInterface';
+  | 
+  > import type {ReactFabricType} from './ReactNativeTypes';
+  | 
+  | let ReactFabric;
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/getShadowNodeFromRef.js 13:6-94
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/handlers/gestures/GestureDetector/useViewRefHandler.js 2:0-69 27:19-39
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/handlers/gestures/GestureDetector/index.js 13:0-56 75:21-38
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/index.js 16:0-70 16:0-70
+   @ ./src/App.js 4:0-70 22:38-60
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native@0.76.9_@babel+core@7.27.4_@babel+preset-env@7.27.2_@babel+core@7.27.4__@ty_60cd724c3b16fbf1a874e814bd4b07ce/node_modules/react-native/Libraries/Renderer/shims/ReactNative.js 14:12
+  Module parse failed: Unexpected token (14:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  | 'use strict';
+  | 
+  > import type {ReactNativeType} from './ReactNativeTypes';
+  | 
+  | let ReactNative;
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/RNRenderer.js 3:0-90 3:0-90
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/handlers/gestures/GestureDetector/utils.js 14:0-49 111:19-57
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/handlers/gestures/GestureDetector/index.js 10:0-46 59:30-49
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/index.js 16:0-70 16:0-70
+   @ ./src/App.js 4:0-70 22:38-60
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native@0.76.9_@babel+core@7.27.4_@babel+preset-env@7.27.2_@babel+core@7.27.4__@ty_60cd724c3b16fbf1a874e814bd4b07ce/node_modules/react-native/Libraries/Renderer/shims/ReactNativeViewConfigRegistry.js 15:13
+  Module parse failed: Unexpected token (15:13)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  | 'use strict';
+  | 
+  > import {type ViewConfig} from './ReactNativeTypes';
+  | import invariant from 'invariant';
+  | 
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/handlers/customDirectEventTypes.js 2:0-109 2:0-109
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/handlers/createHandler.js 7:0-66 19:0-45
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/handlers/ForceTouchGestureHandler.js 6:0-44 25:142-155
+   @ ./node_modules/.pnpm/react-native-gesture-handler@2.20.2_react-native@0.76.9_@babel+core@7.27.4_@babel+prese_aedce0715093fd1ae8f9f333578b9754/node_modules/react-native-gesture-handler/lib/module/index.js 9:0-79 9:0-79
+   @ ./src/App.js 4:0-70 22:38-60
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native@0.76.9_@babel+core@7.27.4_@babel+preset-env@7.27.2_@babel+core@7.27.4__@ty_60cd724c3b16fbf1a874e814bd4b07ce/node_modules/react-native/Libraries/StyleSheet/processColor.js 13:12
+  Module parse failed: Unexpected token (13:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  | 'use strict';
+  | 
+  > import type {ColorValue, NativeColorValue} from './StyleSheet';
+  | 
+  | const Platform = require('../Utilities/Platform');
+   @ ./node_modules/.pnpm/@react-native-community+slider@4.5.7/node_modules/@react-native-community/slider/dist/RNCSliderNativeComponent.js 1:1350-1415 1:1553-1618 1:1764-1829
+   @ ./node_modules/.pnpm/@react-native-community+slider@4.5.7/node_modules/@react-native-community/slider/dist/index.js 1:94-139
+   @ ./node_modules/.pnpm/@react-native-community+slider@4.5.7/node_modules/@react-native-community/slider/dist/Slider.js 1:495-513
+   @ ./src/screens/LudoScreen.js 13:0-52 272:47-53
+   @ ./src/App.js 16:0-46 44:15-25
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/react-native@0.76.9_@babel+core@7.27.4_@babel+preset-env@7.27.2_@babel+core@7.27.4__@ty_60cd724c3b16fbf1a874e814bd4b07ce/node_modules/react-native/Libraries/Utilities/codegenNativeComponent.js 13:12
+  Module parse failed: Unexpected token (13:12)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  | // TODO: move this file to shims/ReactNative (requires React update and sync)
+  | 
+  > import type {HostComponent} from '../../Libraries/Renderer/shims/ReactNativeTypes';
+  | 
+  | import requireNativeComponent from '../../Libraries/ReactNative/requireNativeComponent';
+   @ ./node_modules/.pnpm/@react-native-community+slider@4.5.7/node_modules/@react-native-community/slider/dist/RNCSliderNativeComponent.js 1:245-311
+   @ ./node_modules/.pnpm/@react-native-community+slider@4.5.7/node_modules/@react-native-community/slider/dist/index.js 1:94-139
+   @ ./node_modules/.pnpm/@react-native-community+slider@4.5.7/node_modules/@react-native-community/slider/dist/Slider.js 1:495-513
+   @ ./src/screens/LudoScreen.js 13:0-52 272:47-53
+   @ ./src/App.js 16:0-46 44:15-25
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./src/assets/default-avatar.png 1:0
+  Module parse failed: Unexpected character '�' (1:0)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  (Source code omitted for this binary file)
+   @ ./src/components/Post.js 315:8-47 326:8-47
+   @ ./src/components/SuperScrollList.js 29:0-26 108:47-51
+   @ ./src/screens/FollowingScreen.js 19:0-60 38:42-57
+   @ ./src/MainNavigator.js 15:0-56 24:13-28
+   @ ./src/App.js 11:0-44 56:15-28
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./src/public/logo-rb.png 1:0
+  Module parse failed: Unexpected character '�' (1:0)
+  You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+  (Source code omitted for this binary file)
+   @ ./src/screens/StaticSystemMessageScreen.js 71:12-44
+   @ ./src/App.js 15:0-76 50:15-40
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/@react-navigation+elements@2.5.0_@react-navigation+native@7.1.14_react-native@0.76.9_@b_cecdf66b7bc70540c5fb88b215c5bba1/node_modules/@react-navigation/elements/lib/module/Header/HeaderBackButton.js 8:0-43
+  Module not found: Error: Can't resolve '../MaskedView' in '/Users/deu/my-electron-app/node_modules/.pnpm/@react-navigation+elements@2.5.0_@react-navigation+native@7.1.14_react-native@0.76.9_@b_cecdf66b7bc70540c5fb88b215c5bba1/node_modules/@react-navigation/elements/lib/module/Header'
+  Did you mean 'MaskedView.js'?
+  BREAKING CHANGE: The request '../MaskedView' failed to resolve only because it was resolved as fully specified
+  (probably because the origin is strict EcmaScript Module, e. g. a module with javascript mimetype, a '*.mjs' file, or a '*.js' file where the package.json contains '"type": "module"').
+  The extension in the request is mandatory for it to be fully specified.
+  Add the extension to the request.
+   @ ./node_modules/.pnpm/@react-navigation+elements@2.5.0_@react-navigation+native@7.1.14_react-native@0.76.9_@b_cecdf66b7bc70540c5fb88b215c5bba1/node_modules/@react-navigation/elements/lib/module/index.js 14:0-64 14:0-64
+   @ ./node_modules/.pnpm/@react-navigation+stack@7.4.0_@react-navigation+native@7.1.14_react-native@0.76.9_@babe_90a1502b61df6e3d9f112c3ee7139c16/node_modules/@react-navigation/stack/lib/module/views/Stack/StackView.js 3:0-88 302:34-56 305:57-84
+   @ ./node_modules/.pnpm/@react-navigation+stack@7.4.0_@react-navigation+native@7.1.14_react-native@0.76.9_@babe_90a1502b61df6e3d9f112c3ee7139c16/node_modules/@react-navigation/stack/lib/module/index.js 17:0-55 17:0-55
+   @ ./src/App.js 3:0-63 17:12-32
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/@react-navigation+elements@2.5.0_@react-navigation+native@7.1.14_react-native@0.76.9_@b_cecdf66b7bc70540c5fb88b215c5bba1/node_modules/@react-navigation/elements/lib/module/useFrameSize.js 72:16-32
+  export 'SafeAreaListener' (imported as 'SafeAreaListener') was not found in 'react-native-safe-area-context' (possible exports: SafeAreaConsumer, SafeAreaContext, SafeAreaFrameContext, SafeAreaInsetsContext, SafeAreaProvider, SafeAreaView, initialWindowMetrics, initialWindowSafeAreaInsets, useSafeArea, useSafeAreaFrame, useSafeAreaInsets, withSafeAreaInsets)
+   @ ./node_modules/.pnpm/@react-navigation+elements@2.5.0_@react-navigation+native@7.1.14_react-native@0.76.9_@b_cecdf66b7bc70540c5fb88b215c5bba1/node_modules/@react-navigation/elements/lib/module/index.js 30:0-49 30:0-49
+   @ ./node_modules/.pnpm/@react-navigation+stack@7.4.0_@react-navigation+native@7.1.14_react-native@0.76.9_@babe_90a1502b61df6e3d9f112c3ee7139c16/node_modules/@react-navigation/stack/lib/module/views/Stack/StackView.js 3:0-88 302:34-56 305:57-84
+   @ ./node_modules/.pnpm/@react-navigation+stack@7.4.0_@react-navigation+native@7.1.14_react-native@0.76.9_@babe_90a1502b61df6e3d9f112c3ee7139c16/node_modules/@react-navigation/stack/lib/module/index.js 17:0-55 17:0-55
+   @ ./src/App.js 3:0-63 17:12-32
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/@react-navigation+elements@2.5.0_@react-navigation+native@7.1.14_react-native@0.76.9_@b_cecdf66b7bc70540c5fb88b215c5bba1/node_modules/@react-navigation/elements/lib/module/useFrameSize.js 74:27-43
+  export 'SafeAreaListener' (imported as 'SafeAreaListener') was not found in 'react-native-safe-area-context' (possible exports: SafeAreaConsumer, SafeAreaContext, SafeAreaFrameContext, SafeAreaInsetsContext, SafeAreaProvider, SafeAreaView, initialWindowMetrics, initialWindowSafeAreaInsets, useSafeArea, useSafeAreaFrame, useSafeAreaInsets, withSafeAreaInsets)
+   @ ./node_modules/.pnpm/@react-navigation+elements@2.5.0_@react-navigation+native@7.1.14_react-native@0.76.9_@b_cecdf66b7bc70540c5fb88b215c5bba1/node_modules/@react-navigation/elements/lib/module/index.js 30:0-49 30:0-49
+   @ ./node_modules/.pnpm/@react-navigation+stack@7.4.0_@react-navigation+native@7.1.14_react-native@0.76.9_@babe_90a1502b61df6e3d9f112c3ee7139c16/node_modules/@react-navigation/stack/lib/module/views/Stack/StackView.js 3:0-88 302:34-56 305:57-84
+   @ ./node_modules/.pnpm/@react-navigation+stack@7.4.0_@react-navigation+native@7.1.14_react-native@0.76.9_@babe_90a1502b61df6e3d9f112c3ee7139c16/node_modules/@react-navigation/stack/lib/module/index.js 17:0-55 17:0-55
+   @ ./src/App.js 3:0-63 17:12-32
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/@react-navigation+native@7.1.14_react-native@0.76.9_@babel+core@7.27.4_@babel+preset-en_9ec707188b5ba9887346d1686a9ea05e/node_modules/@react-navigation/native/lib/module/NavigationContainer.js 11:0-48
+  Module not found: Error: Can't resolve './useBackButton' in '/Users/deu/my-electron-app/node_modules/.pnpm/@react-navigation+native@7.1.14_react-native@0.76.9_@babel+core@7.27.4_@babel+preset-en_9ec707188b5ba9887346d1686a9ea05e/node_modules/@react-navigation/native/lib/module'
+  Did you mean 'useBackButton.js'?
+  BREAKING CHANGE: The request './useBackButton' failed to resolve only because it was resolved as fully specified
+  (probably because the origin is strict EcmaScript Module, e. g. a module with javascript mimetype, a '*.mjs' file, or a '*.js' file where the package.json contains '"type": "module"').
+  The extension in the request is mandatory for it to be fully specified.
+  Add the extension to the request.
+   @ ./node_modules/.pnpm/@react-navigation+native@7.1.14_react-native@0.76.9_@babel+core@7.27.4_@babel+preset-en_9ec707188b5ba9887346d1686a9ea05e/node_modules/@react-navigation/native/lib/module/index.js 7:0-63 7:0-63
+   @ ./src/App.js 2:0-63 26:38-57
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/@react-navigation+native@7.1.14_react-native@0.76.9_@babel+core@7.27.4_@babel+preset-en_9ec707188b5ba9887346d1686a9ea05e/node_modules/@react-navigation/native/lib/module/NavigationContainer.js 12:0-54
+  Module not found: Error: Can't resolve './useDocumentTitle' in '/Users/deu/my-electron-app/node_modules/.pnpm/@react-navigation+native@7.1.14_react-native@0.76.9_@babel+core@7.27.4_@babel+preset-en_9ec707188b5ba9887346d1686a9ea05e/node_modules/@react-navigation/native/lib/module'
+  Did you mean 'useDocumentTitle.js'?
+  BREAKING CHANGE: The request './useDocumentTitle' failed to resolve only because it was resolved as fully specified
+  (probably because the origin is strict EcmaScript Module, e. g. a module with javascript mimetype, a '*.mjs' file, or a '*.js' file where the package.json contains '"type": "module"').
+  The extension in the request is mandatory for it to be fully specified.
+  Add the extension to the request.
+   @ ./node_modules/.pnpm/@react-navigation+native@7.1.14_react-native@0.76.9_@babel+core@7.27.4_@babel+preset-en_9ec707188b5ba9887346d1686a9ea05e/node_modules/@react-navigation/native/lib/module/index.js 7:0-63 7:0-63
+   @ ./src/App.js 2:0-63 26:38-57
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/@react-navigation+native@7.1.14_react-native@0.76.9_@babel+core@7.27.4_@babel+preset-en_9ec707188b5ba9887346d1686a9ea05e/node_modules/@react-navigation/native/lib/module/NavigationContainer.js 13:0-42
+  Module not found: Error: Can't resolve './useLinking' in '/Users/deu/my-electron-app/node_modules/.pnpm/@react-navigation+native@7.1.14_react-native@0.76.9_@babel+core@7.27.4_@babel+preset-en_9ec707188b5ba9887346d1686a9ea05e/node_modules/@react-navigation/native/lib/module'
+  Did you mean 'useLinking.js'?
+  BREAKING CHANGE: The request './useLinking' failed to resolve only because it was resolved as fully specified
+  (probably because the origin is strict EcmaScript Module, e. g. a module with javascript mimetype, a '*.mjs' file, or a '*.js' file where the package.json contains '"type": "module"').
+  The extension in the request is mandatory for it to be fully specified.
+  Add the extension to the request.
+   @ ./node_modules/.pnpm/@react-navigation+native@7.1.14_react-native@0.76.9_@babel+core@7.27.4_@babel+preset-en_9ec707188b5ba9887346d1686a9ea05e/node_modules/@react-navigation/native/lib/module/index.js 7:0-63 7:0-63
+   @ ./src/App.js 2:0-63 26:38-57
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/@react-navigation+stack@7.4.0_@react-navigation+native@7.1.14_react-native@0.76.9_@babe_90a1502b61df6e3d9f112c3ee7139c16/node_modules/@react-navigation/stack/lib/module/views/Stack/Card.js 11:0-68
+  Module not found: Error: Can't resolve '../GestureHandler' in '/Users/deu/my-electron-app/node_modules/.pnpm/@react-navigation+stack@7.4.0_@react-navigation+native@7.1.14_react-native@0.76.9_@babe_90a1502b61df6e3d9f112c3ee7139c16/node_modules/@react-navigation/stack/lib/module/views/Stack'
+  Did you mean 'GestureHandler.js'?
+  BREAKING CHANGE: The request '../GestureHandler' failed to resolve only because it was resolved as fully specified
+  (probably because the origin is strict EcmaScript Module, e. g. a module with javascript mimetype, a '*.mjs' file, or a '*.js' file where the package.json contains '"type": "module"').
+  The extension in the request is mandatory for it to be fully specified.
+  Add the extension to the request.
+   @ ./node_modules/.pnpm/@react-navigation+stack@7.4.0_@react-navigation+native@7.1.14_react-native@0.76.9_@babe_90a1502b61df6e3d9f112c3ee7139c16/node_modules/@react-navigation/stack/lib/module/views/Stack/CardContainer.js 9:0-33 190:27-31
+   @ ./node_modules/.pnpm/@react-navigation+stack@7.4.0_@react-navigation+native@7.1.14_react-native@0.76.9_@babe_90a1502b61df6e3d9f112c3ee7139c16/node_modules/@react-navigation/stack/lib/module/views/Stack/CardStack.js 12:0-51 424:40-53
+   @ ./node_modules/.pnpm/@react-navigation+stack@7.4.0_@react-navigation+native@7.1.14_react-native@0.76.9_@babe_90a1502b61df6e3d9f112c3ee7139c16/node_modules/@react-navigation/stack/lib/module/views/Stack/StackView.js 11:0-43 306:65-74
+   @ ./node_modules/.pnpm/@react-navigation+stack@7.4.0_@react-navigation+native@7.1.14_react-native@0.76.9_@babe_90a1502b61df6e3d9f112c3ee7139c16/node_modules/@react-navigation/stack/lib/module/index.js 17:0-55 17:0-55
+   @ ./src/App.js 3:0-63 17:12-32
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  ERROR in ./node_modules/.pnpm/@react-navigation+stack@7.4.0_@react-navigation+native@7.1.14_react-native@0.76.9_@babe_90a1502b61df6e3d9f112c3ee7139c16/node_modules/@react-navigation/stack/lib/module/views/Stack/StackView.js 9:0-59
+  Module not found: Error: Can't resolve '../GestureHandler' in '/Users/deu/my-electron-app/node_modules/.pnpm/@react-navigation+stack@7.4.0_@react-navigation+native@7.1.14_react-native@0.76.9_@babe_90a1502b61df6e3d9f112c3ee7139c16/node_modules/@react-navigation/stack/lib/module/views/Stack'
+  Did you mean 'GestureHandler.js'?
+  BREAKING CHANGE: The request '../GestureHandler' failed to resolve only because it was resolved as fully specified
+  (probably because the origin is strict EcmaScript Module, e. g. a module with javascript mimetype, a '*.mjs' file, or a '*.js' file where the package.json contains '"type": "module"').
+  The extension in the request is mandatory for it to be fully specified.
+  Add the extension to the request.
+   @ ./node_modules/.pnpm/@react-navigation+stack@7.4.0_@react-navigation+native@7.1.14_react-native@0.76.9_@babe_90a1502b61df6e3d9f112c3ee7139c16/node_modules/@react-navigation/stack/lib/module/index.js 17:0-55 17:0-55
+   @ ./src/App.js 3:0-63 17:12-32
+   @ ./src/renderer.js 3:0-24 4:83-86
+
+  8 errors have detailed information that is not shown.
+  Use 'stats.errorDetails: true' resp. '--stats-error-details' to show it.
+
+  group_0 (webpack 5.99.9) compiled with 80 errors and 4 warnings in 3200 ms
+at /Users/deu/my-electron-app/node_modules/.pnpm/@electron-forge+plugin-webpack@7.8.0/node_modules/@electron-forge/plugin-webpack/dist/WebpackPlugin.js:225:43
+    at Hook.eval [as call] (eval at create (/Users/deu/my-electron-app/node_modules/.pnpm/tapable@2.2.2/node_modules/tapable/lib/HookCodeFactory.js:19:10), <anonymous>:7:1)
+    at Hook.CALL_DELEGATE [as _call] (/Users/deu/my-electron-app/node_modules/.pnpm/tapable@2.2.2/node_modules/tapable/lib/Hook.js:16:14)
+    at /Users/deu/my-electron-app/node_modules/.pnpm/webpack@5.99.9/node_modules/webpack/lib/MultiCompiler.js:104:22
+    at Hook.eval [as callAsync] (eval at create (/Users/deu/my-electron-app/node_modules/.pnpm/tapable@2.2.2/node_modules/tapable/lib/HookCodeFactory.js:33:10), <anonymous>:18:1)
+    at Hook.CALL_ASYNC_DELEGATE [as _callAsync] (/Users/deu/my-electron-app/node_modules/.pnpm/tapable@2.2.2/node_modules/tapable/lib/Hook.js:20:14)
+    at Watching._done (/Users/deu/my-electron-app/node_modules/.pnpm/webpack@5.99.9/node_modules/webpack/lib/Watching.js:314:28)
+    at /Users/deu/my-electron-app/node_modules/.pnpm/webpack@5.99.9/node_modules/webpack/lib/Watching.js:229:21
+    at Compiler.emitRecords (/Users/deu/my-electron-app/node_modules/.pnpm/webpack@5.99.9/node_modules/webpack/lib/Compiler.js:1043:4)
+    at /Users/deu/my-electron-app/node_modules/.pnpm/webpack@5.99.9/node_modules/webpack/lib/Watching.js:205:22
+    at /Users/deu/my-electron-app/node_modules/.pnpm/webpack@5.99.9/node_modules/webpack/lib/Compiler.js:1006:14
+    at Hook.eval [as callAsync] (eval at create (/Users/deu/my-electron-app/node_modules/.pnpm/tapable@2.2.2/node_modules/tapable/lib/HookCodeFactory.js:33:10), <anonymous>:6:1)
+    at Hook.CALL_ASYNC_DELEGATE [as _callAsync] (/Users/deu/my-electron-app/node_modules/.pnpm/tapable@2.2.2/node_modules/tapable/lib/Hook.js:20:14)
+    at /Users/deu/my-electron-app/node_modules/.pnpm/webpack@5.99.9/node_modules/webpack/lib/Compiler.js:1003:27
+    at /Users/deu/my-electron-app/node_modules/.pnpm/neo-async@2.6.2/node_modules/neo-async/async.js:2818:7
+    at done (/Users/deu/my-electron-app/node_modules/.pnpm/neo-async@2.6.2/node_modules/neo-async/async.js:3522:9)
+    at eval (eval at create (/Users/deu/my-electron-app/node_modules/.pnpm/tapable@2.2.2/node_modules/tapable/lib/HookCodeFactory.js:33:10), <anonymous>:11:1)
+    at /Users/deu/my-electron-app/node_modules/.pnpm/webpack-dev-middleware@5.3.4_webpack@5.99.9/node_modules/webpack-dev-middleware/dist/utils/setupWriteToDisk.js:101:20
+    at /Users/deu/my-electron-app/node_modules/.pnpm/graceful-fs@4.2.11/node_modules/graceful-fs/graceful-fs.js:61:14
+    at FSReqCallback.oncomplete (node:fs:178:23)

@@ -1,9 +1,7 @@
-import React, {useRef, useEffect, useState} from 'react';
+import React, {useRef} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {Provider} from 'react-redux';
-import {store} from './redux/store';
 import SettingsScreen from './screens/SettingsScreen';
 import LoginScreen from './screens/LoginScreen';
 import PostDetailScreen from './screens/CommentScreen';
@@ -13,6 +11,7 @@ import SplashScreen from "./screens/SplashScreen";
 import ProfileSettingsScreen from "./screens/ProfileSettingsScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import StaticSystemMessageScreen from "./screens/StaticSystemMessageScreen";
+import LudoScreen from "./screens/LudoScreen";
 
 const Stack = createStackNavigator();
 
@@ -20,7 +19,7 @@ const Stack = createStackNavigator();
 export default function App() {
     const navigationRef = useRef(null);
 
-    return (<Provider store={store}>
+    return (
         <GestureHandlerRootView style={{flex: 1}}>
             <NavigationContainer ref={navigationRef}>
                 <Stack.Navigator initialRouteName="Splash">
@@ -31,6 +30,11 @@ export default function App() {
                     <Stack.Screen
                         name="Login"
                         component={LoginScreen}
+                        options={{headerShown: false}}
+                    />
+                    <Stack.Screen
+                        name="Ludo"
+                        component={LudoScreen}
                         options={{headerShown: false}}
                     />
                     <Stack.Screen
@@ -69,6 +73,5 @@ export default function App() {
                     />
                 </Stack.Navigator>
             </NavigationContainer>
-        </GestureHandlerRootView>
-    </Provider>);
+        </GestureHandlerRootView>);
 }

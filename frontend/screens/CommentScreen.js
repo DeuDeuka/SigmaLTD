@@ -3,7 +3,6 @@ import {
     View,
     TextInput,
     FlatList,
-    Button,
     Text,
     Image,
     ActivityIndicator,
@@ -13,14 +12,13 @@ import {
     Switch, Dimensions,
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { useSelector } from 'react-redux';
-import Database, { BASE_URL } from '../database';
+import Database from '../database';
 import { Menu } from '../MainNavigator';
 import Comment from '../components/Comment';
 import {Avatar} from "@rneui/base";
 
 export default function PostDetailScreen({ route }) {
-    const { current, colors } = useSelector((state) => state.theme) || {
+    const { current, colors } =  {
         current: 'light',
         colors: { light: { text: '#000', background: '#FFF' } },
     };
@@ -43,8 +41,11 @@ export default function PostDetailScreen({ route }) {
                 const postData = await Database.getPost(route.params.postId);
                 const loadedComments = await Database.getPostComments(route.params.postId);
                 const currentUse = await Database.getCurrentUser();
+                
+                console.log('Loaded comments:', loadedComments);
+                
                 setPost(postData);
-                setComments(loadedComments);
+                setComments(loadedComments || []);
                 setCurrentUser(currentUse);
             } catch (err) {
                 console.error('❌ Ошибка загрузки:', err);
@@ -57,16 +58,23 @@ export default function PostDetailScreen({ route }) {
 
     // Scroll to end when comments update
     useEffect(() => {
-        if (comments.length > 0) {
-            flatListRef.current?.scrollToEnd({ animated: true });
-        }
+        // With inverted FlatList, new comments appear at the top automatically
+        // No need to scroll manually
     }, [comments.length]);
 
     // Poll for new comments
     useEffect(() => {
         const interval = setInterval(async () => {
-            const loadedComments = await Database.getPostComments(route.params.postId);
-            setComments(loadedComments);
+            try {
+                const loadedComments = await Database.getPostComments(route.params.postId);
+                if (loadedComments && Array.isArray(loadedComments)) {
+                    setComments(loadedComments);
+                } else {
+                    console.error('Invalid comments data received:', loadedComments);
+                }
+            } catch (error) {
+                console.error('Error polling comments:', error);
+            }
         }, 1000);
         return () => clearInterval(interval);
     }, [route.params.postId]);
@@ -101,7 +109,14 @@ export default function PostDetailScreen({ route }) {
                 imageBase64,
             });
 
-            setComments((prev) => [newC, ...prev]);
+            // Проверяем, что новый комментарий содержит необходимые поля
+            if (newC && typeof newC === 'object') {
+                console.log('New comment received:', newC);
+                setComments((prev) => [newC, ...prev]);
+            } else {
+                console.error('Invalid comment data received:', newC);
+            }
+            
             setNewComment('');
             setSelectedImages([]);
         } catch (err) {
@@ -152,13 +167,21 @@ export default function PostDetailScreen({ route }) {
             <FlatList
                 ref={flatListRef}
                 data={comments}
-                keyExtractor={(item, index) => `${item.idComment || index}`}
-                renderItem={({ item }) => (
-                    <Comment comment={item} currentUser={currentUser} toggleLike={toggleLike} />
-                )}
+                keyExtractor={(item, index) => `${item?.idComment || index}`}
+                renderItem={({ item }) => {
+                    // Проверяем, что item существует и имеет необходимые поля
+                    if (!item) {
+                        console.log('Invalid comment item:', item);
+                        return null;
+                    }
+                    return (
+                        <Comment comment={item} currentUser={currentUser} toggleLike={toggleLike} />
+                    );
+                }}
                 style={styles.mediaScroll}
                 contentContainerStyle={{ paddingBottom: 20, maxHeight: Dimensions.get('window').height * 0.9 }}
                 ListEmptyComponent={<Text style={styles.emptyText}>No comments yet.</Text>}
+                inverted={true}
             />
             {selectedImages.length > 0 && (
                 <View style={{ flexDirection: 'row', flexWrap: 'wrap', padding: 8 }}>

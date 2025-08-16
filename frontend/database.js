@@ -1,8 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const BASE_URL = 'https://www.sigmaltd.space';
-// export const BASE_URL = "http://localhost:3000";
-export const API_URL = BASE_URL + '/apip';
+// export const BASE_URL = 'https://www.sigmaltd.space';
+export const BASE_URL = "http://192.168.3.5:3000";
+// export const API_URL = BASE_URL + '/apip';
+export const API_URL = BASE_URL ;
+
 
 // Helper to get the token from AsyncStorage
 const getToken = async () => {
@@ -84,7 +86,7 @@ const Database = {
 		setUsername && setUsername(user.displayedName);
 		return user.idUser;
 	},
-	
+
 	changeUsername: async (username) => {
 		const response = await fetch(`${API_URL}/current-user`, {
 			method: 'POST',
@@ -257,31 +259,40 @@ const Database = {
 	},
 
 	followTag: async (tagName) => {
+		console.log('Database: Following tag:', tagName);
 		const response = await fetch(`${API_URL}/follow-tag`, {
 			method: 'POST',
 			headers: await authHeaders(),
 			body: JSON.stringify({ tagName }),
 		});
 		if (!response.ok) throw new Error(await response.text());
-		return await response.json();
+		const result = await response.json();
+		console.log('Database: Follow tag result:', result);
+		return result;
 	},
 
 	unfollowTag: async (tagName) => {
+		console.log('Database: Unfollowing tag:', tagName);
 		const response = await fetch(`${API_URL}/unfollow-tag`, {
 			method: 'POST',
 			headers: await authHeaders(),
 			body: JSON.stringify({ tagName }),
 		});
 		if (!response.ok) throw new Error(await response.text());
-		return await response.json();
+		const result = await response.json();
+		console.log('Database: Unfollow tag result:', result);
+		return result;
 	},
 
 	getFollowedTags: async () => {
+		console.log('Database: Getting followed tags');
 		const response = await fetch(`${API_URL}/followed-tags`, {
 			headers: await authHeaders(),
 		});
 		if (!response.ok) throw new Error(await response.text());
-		return await response.json();
+		const result = await response.json();
+		console.log('Database: Received followed tags:', result);
+		return result;
 	},
 
 	addCommentBase64: async ({ postId, content, isAnonymous, imageBase64 }) => {

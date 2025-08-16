@@ -5,10 +5,10 @@ import {
 import {Video} from 'react-native-video';
 import {Avatar} from 'react-native-elements';
 import {Ionicons} from '@expo/vector-icons';
-import {useSelector} from 'react-redux';
 import Database, {BASE_URL} from '../database';
 import Tag from "./Tag";
 import Modal from "react-native-modal";
+import UserProfileModal from './UserProfileModal';
 
 const {width: SCREEN_WIDTH} = Dimensions.get('window');
 
@@ -33,8 +33,11 @@ if (Platform.OS === 'web') {
 }
 
 
-const Post = ({navigation, post, refresher}) => {
-    const theme = useSelector((state) => state.theme);
+const Post = React.memo(({navigation, post, refresher}) => {
+    const theme =  {
+        current: 'light',
+        colors: { light: { text: '#000', background: '#FFF' } },
+    };
     const [liked, setLiked] = useState(post.likedByCurrentUser || false);
     const [creator, setCreator] = useState({displayedName: 'Loading...', pic: null});
     const [myPost, setMyPost] = useState(false);
@@ -45,6 +48,8 @@ const Post = ({navigation, post, refresher}) => {
     const [commentsCount, setCommentsCount] = useState(0);
     const [urls, setUrls] = useState([]);
     const [content, setContent] = useState('');
+    const [showUserModal, setShowUserModal] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(null);
 
     useEffect(() => {
         let mounted = true;
@@ -96,6 +101,21 @@ const Post = ({navigation, post, refresher}) => {
         setCommentsCount(t.count);
     }
 
+    const handleUserPress = async () => {
+        try {
+            const userData = await Database.getUser(post.createdByIdUser);
+            setSelectedUser(userData);
+            setShowUserModal(true);
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+    };
+
+    const closeUserModal = () => {
+        setShowUserModal(false);
+        setSelectedUser(null);
+    };
+
     const handleLike = async () => {
         try {
             if (liked) {
@@ -120,8 +140,18 @@ const Post = ({navigation, post, refresher}) => {
 
         try {
             const resp = await Database.deletePost(post.idPost);
-            if (resp.success) {
-                refresher();
+            console.log('Delete response:', resp);
+            
+            // Проверяем успешность удаления
+            if (resp && resp.message === 'Post deleted successfully') {
+                // Вызываем функцию обновления списка
+                if (refresher) {
+                    refresher();
+                } else {
+                    console.warn('Refresher function not provided');
+                }
+            } else {
+                alert('Failed to delete post');
             }
         } catch (error) {
             console.error('Error deleting post:', error);
@@ -171,7 +201,7 @@ const Post = ({navigation, post, refresher}) => {
                 />
                 <TouchableOpacity
                     style={styles.userInfo}
-                    onPress={() => navigation.navigate('UserProfile', {userId: post.createdByIdUser})}
+                    onPress={handleUserPress}
                 >
                     <View>
                         <Text style={styles.username}>
@@ -189,7 +219,7 @@ const Post = ({navigation, post, refresher}) => {
                 <FlatList
                     style={{flexDirection: 'row-reverse'}}
                     data={Array.isArray(post.tags) ? post.tags.slice(0, 4).reverse() : post.tags.split(',').slice(0, 4).reverse()}
-                    renderItem={({item}) => (<Tag tag={item}/>)}
+                    renderItem={({item}) => (<Tag tag={item} navigation={navigation}/>)}
                     horizontal
                     showsHorizontalScrollIndicator={false}
                     keyExtractor={(item, index) => `${item}-${index}`}
@@ -227,7 +257,7 @@ const Post = ({navigation, post, refresher}) => {
                         resizeMode="cover"
                         shouldPlay={currentIndex === index}
                         isLooping
-                        useNativeControls={false}
+                        useNativeControls={true}
                         onError={(e) => console.error('Video error:', e)}
                     />) : (<Image
                         source={{uri: `${BASE_URL}${item}`}}
@@ -298,14 +328,21 @@ const Post = ({navigation, post, refresher}) => {
             </TouchableOpacity>
         </View>
 
+        {/* User Profile Modal */}
+        <UserProfileModal
+            isVisible={showUserModal}
+            onClose={closeUserModal}
+            user={selectedUser}
+            navigation={navigation}
+        />
 
     </View>);
-};
+});
 
 const styles = StyleSheet.create({
     container: {
         maxWidth: 660,
-        width: Dimensions.get('window').width * 0.9, // height: Dimensions.get('window').height * 0.8,
+        width: Math.min(Dimensions.get('window').width * 0.95, 660), // Адаптивная ширина
         marginVertical: 8,
         borderRadius: 12,
         shadowColor: '#000',
@@ -313,47 +350,104 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 4,
         elevation: 3,
-    }, header: {
+        alignSelf: 'center', // Центрируем пост
+        backgroundColor: '#1a1a1a', // Добавляем фон для лучшей видимости
+    }, 
+    header: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: 12,
         borderBottomWidth: 1,
         borderBottomColor: 'rgba(255,255,255,0.1)',
-    }, userInfo: {
-        flexDirection: 'row', alignItems: 'center',
-    }, avatar: {
-        marginRight: 12, borderWidth: 2, borderColor: '#fff',
-    }, username: {
-        color: '#fff', fontSize: 16, fontWeight: '600',
-    }, timestamp: {
-        color: '#aaa', fontSize: 12, marginTop: 2,
-    }, mediaScroll: {
-        width: '100%', padding: 0, alignSelf: 'center', flex: 1,
-    }, mediaScrollContent: {
-        flexDirection: 'row', padding: 0,
-    }, mediaContainer: {
-        alignItems: 'center', justifyContent: 'center', width: SCREEN_WIDTH, maxWidth: 660, // height: SCREEN_WIDTH,
-    }, media: {
-        width: SCREEN_WIDTH, height: SCREEN_WIDTH, maxWidth: 660, maxHeight: 660, overflow: "hidden",
-    }, pagination: {
-        position: 'absolute', bottom: 10, flexDirection: 'row', alignSelf: 'center',
-    }, dot: {
-        height: 8, width: 8, borderRadius: 4, margin: 4,
-    }, contentContainer: {
+    }, 
+    userInfo: {
+        flexDirection: 'row', 
+        alignItems: 'center',
+        flex: 1, // Позволяет контенту занимать доступное пространство
+    }, 
+    avatar: {
+        marginRight: 12, 
+        borderWidth: 2, 
+        borderColor: '#fff',
+    }, 
+    username: {
+        color: '#fff', 
+        fontSize: 16, 
+        fontWeight: '600',
+    }, 
+    timestamp: {
+        color: '#aaa', 
+        fontSize: 12, 
+        marginTop: 2,
+    }, 
+    mediaScroll: {
+        width: '100%', 
+        padding: 0, 
+        alignSelf: 'center', 
+        flex: 1,
+    }, 
+    mediaScrollContent: {
+        flexDirection: 'row', 
+        padding: 0,
+    }, 
+    mediaContainer: {
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        width: Math.min(Dimensions.get('window').width * 0.95, 660), // Адаптивная ширина
+        maxWidth: 660,
+    }, 
+    media: {
+        width: Math.min(Dimensions.get('window').width * 0.95, 660), // Адаптивная ширина
+        height: Math.min(Dimensions.get('window').width * 0.95, 660), // Квадратное изображение
+        maxWidth: 660, 
+        maxHeight: 660, 
+        overflow: "hidden",
+    }, 
+    pagination: {
+        position: 'absolute', 
+        bottom: 10, 
+        flexDirection: 'row', 
+        alignSelf: 'center',
+    }, 
+    dot: {
+        height: 8, 
+        width: 8, 
+        borderRadius: 4, 
+        margin: 4,
+    }, 
+    contentContainer: {
         padding: 12,
-    }, content: {
-        color: '#fff', fontSize: 14, lineHeight: 20,
-    }, actions: {
-        flexDirection: 'row', padding: 12, borderTopWidth: 1, borderTopColor: 'rgba(255,255,255,0.1)',
-    }, actionButton: {
-        flexDirection: 'row', alignItems: 'center', marginRight: 20,
-    }, actionText: {
-        color: '#fff', marginLeft: 8, fontSize: 14,
-    }, tagsContainer: {
-        paddingHorizontal: 12, paddingBottom: 12,
-    }, tag: {
-        color: '#4CAF50', marginRight: 8, fontSize: 14,
+    }, 
+    content: {
+        color: '#fff', 
+        fontSize: 14, 
+        lineHeight: 20,
+    }, 
+    actions: {
+        flexDirection: 'row', 
+        padding: 12, 
+        borderTopWidth: 1, 
+        borderTopColor: 'rgba(255,255,255,0.1)',
+    }, 
+    actionButton: {
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        marginRight: 20,
+    }, 
+    actionText: {
+        color: '#fff', 
+        marginLeft: 8, 
+        fontSize: 14,
+    }, 
+    tagsContainer: {
+        paddingHorizontal: 12, 
+        paddingBottom: 12,
+    }, 
+    tag: {
+        color: '#4CAF50', 
+        marginRight: 8, 
+        fontSize: 14,
     },
 });
 
