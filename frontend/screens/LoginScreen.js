@@ -1,7 +1,7 @@
 // screens/LoginScreen.js
 
-import React, {useState, useEffect} from 'react';
-import {View, Text, TextInput, Button} from 'react-native';
+import React, {useState, useEffect, useRef} from 'react';
+import {View, Text, TextInput, Button, KeyboardAvoidingView} from 'react-native';
 import Database from '../database';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {styles} from '../styles/screens/LoginScreen';
@@ -21,6 +21,12 @@ export default function LoginScreen({navigation}) {
     const [displayedName, setDisplayedName] = useState('');
     const [error, setError] = useState(null);
     const [showPrompt, setShowPrompt] = useState(false);
+
+    const emailRef = useRef(null);
+    const passwordRef = useRef(null);
+    const realNameRef = useRef(null);
+    const groupRef = useRef(null);
+    const displayedNameRef = useRef(null);
 
     useEffect(() => {
         async function check() {
@@ -60,51 +66,78 @@ export default function LoginScreen({navigation}) {
         }
     };
 
+    const handleReset = async () => {
+        setError(null);
+        try {
+            if (!email) {
+                setError("Please enter an email");
+                return;
+            }
+            setError("Check your inbox");
+            await Database.resetPass(email);
+
+        } catch (error) {
+            setError(error.text);
+            console.error(error);
+        }
+    }
+
 
     return (
-        <View style={[styles.container, {backgroundColor: theme.background}]}>
+        <KeyboardAvoidingView style={[styles.container, {backgroundColor: theme.background}]}>
             <Text style={[styles.title, {color: theme.text}]}>
                 {isLogin ? 'Login' : 'Sign Up'}
             </Text>
             {error && <Text style={styles.error}>{error}</Text>}
             <TextInput
+                ref={emailRef}
                 style={[styles.input, {borderColor: theme.border, color: theme.text}]}
                 placeholder="Email"
                 value={email}
                 onChangeText={setEmail}
                 autoCapitalize="none"
                 placeholderTextColor={theme.text === '#000' ? '#666' : '#ccc'}
+                onSubmitEditing={() => passwordRef.current.focus()}
             />
             <TextInput
+                ref={passwordRef}
                 style={[styles.input, {borderColor: theme.border, color: theme.text}]}
                 placeholder="Password"
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry
                 placeholderTextColor={theme.text === '#000' ? '#666' : '#ccc'}
+                onSubmitEditing={() => isLogin ? handleSubmit(): realNameRef.current.focus()}
             />
+
             {!isLogin && (
                 <>
                     <TextInput
+                        ref={realNameRef}
                         style={[styles.input, {borderColor: theme.border, color: theme.text}]}
                         placeholder="Real Name"
                         value={realName}
                         onChangeText={setRealName}
                         placeholderTextColor={theme.text === '#000' ? '#666' : '#ccc'}
+                        onSubmitEditing={() => groupRef.current.focus()}
                     />
                     <TextInput
+                        ref={groupRef}
                         style={[styles.input, {borderColor: theme.border, color: theme.text}]}
                         placeholder="Group (e.g., student)"
                         value={group}
                         onChangeText={setGroup}
                         placeholderTextColor={theme.text === '#000' ? '#666' : '#ccc'}
+                        onSubmitEditing={() => displayedNameRef.current.focus()}
                     />
                     <TextInput
+                        ref={displayedNameRef}
                         style={[styles.input, {borderColor: theme.border, color: theme.text}]}
                         placeholder="Displayed Name"
                         value={displayedName}
                         onChangeText={setDisplayedName}
                         placeholderTextColor={theme.text === '#000' ? '#666' : '#ccc'}
+                        onSubmitEditing={() => handleSubmit()}
                     />
                 </>
             )}
@@ -121,6 +154,9 @@ export default function LoginScreen({navigation}) {
                     setDisplayedName('');
                 }}
             />
+            {isLogin && (
+                <Button title={"Reset password"} onPress={handleReset}/>
+            )}
             <Modal visible={showPrompt} style={{backgroundColor: "#111"}}>
                 <View style={{alignItems: 'center', alignSelf: 'center', alignContent: 'center'}}>
                     <Text style={{color: "#fff", fontSize: 20, alignSelf: 'center', alignItems: 'center', alignContent: 'center', justifyContent: 'center'}}>
@@ -130,6 +166,6 @@ export default function LoginScreen({navigation}) {
                     <Button title="Got it" onPress={() => setShowPrompt(false)} />
                 </View>
             </Modal>
-        </View>
+        </KeyboardAvoidingView>
     );
 }

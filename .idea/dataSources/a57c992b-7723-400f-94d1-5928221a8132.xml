@@ -5,27 +5,119 @@
       <DefaultCasing>mixed/mixed</DefaultCasing>
       <DefaultEngine>InnoDB</DefaultEngine>
       <DefaultTmpEngine>InnoDB</DefaultTmpEngine>
-      <Grants>|root||u3079686_sigma|localhost|CREATE|G
-|root||u3079686_sigma|localhost|DROP|G
-u3079686_dev|schema||u3079686_sigma|localhost|ALTER|G
-u3079686_dev|schema||u3079686_sigma|localhost|ALTER ROUTINE|G
-u3079686_dev|schema||u3079686_sigma|localhost|CREATE|G
-u3079686_dev|schema||u3079686_sigma|localhost|CREATE ROUTINE|G
-u3079686_dev|schema||u3079686_sigma|localhost|CREATE TEMPORARY TABLES|G
-u3079686_dev|schema||u3079686_sigma|localhost|CREATE VIEW|G
-u3079686_dev|schema||u3079686_sigma|localhost|DELETE|G
-u3079686_dev|schema||u3079686_sigma|localhost|DROP|G
-u3079686_dev|schema||u3079686_sigma|localhost|EVENT|G
-u3079686_dev|schema||u3079686_sigma|localhost|EXECUTE|G
-u3079686_dev|schema||u3079686_sigma|localhost|INDEX|G
-u3079686_dev|schema||u3079686_sigma|localhost|INSERT|G
-u3079686_dev|schema||u3079686_sigma|localhost|LOCK TABLES|G
-u3079686_dev|schema||u3079686_sigma|localhost|REFERENCES|G
-u3079686_dev|schema||u3079686_sigma|localhost|SELECT|G
-u3079686_dev|schema||u3079686_sigma|localhost|SHOW VIEW|G
-u3079686_dev|schema||u3079686_sigma|localhost|TRIGGER|G
-u3079686_dev|schema||u3079686_sigma|localhost|UPDATE|G</Grants>
-      <ServerVersion>9.3.0</ServerVersion>
+      <Grants>|root||root|localhost|ALLOW_NONEXISTENT_DEFINER|G
+|root||root|localhost|ALTER|G
+|root||root|localhost|ALTER ROUTINE|G
+|root||root|localhost|APPLICATION_PASSWORD_ADMIN|G
+|root||mysql.infoschema|localhost|AUDIT_ABORT_EXEMPT|G
+|root||mysql.session|localhost|AUDIT_ABORT_EXEMPT|G
+|root||mysql.sys|localhost|AUDIT_ABORT_EXEMPT|G
+|root||root|localhost|AUDIT_ABORT_EXEMPT|G
+|root||root|localhost|AUDIT_ADMIN|G
+|root||mysql.session|localhost|AUTHENTICATION_POLICY_ADMIN|G
+|root||root|localhost|AUTHENTICATION_POLICY_ADMIN|G
+|root||mysql.session|localhost|BACKUP_ADMIN|G
+|root||root|localhost|BACKUP_ADMIN|G
+|root||root|localhost|BINLOG_ADMIN|G
+|root||root|localhost|BINLOG_ENCRYPTION_ADMIN|G
+|root||mysql.session|localhost|CLONE_ADMIN|G
+|root||root|localhost|CLONE_ADMIN|G
+|root||mysql.session|localhost|CONNECTION_ADMIN|G
+|root||root|localhost|CONNECTION_ADMIN|G
+|root||prisma_admin|localhost|CREATE|G
+|root||root|localhost|CREATE|G
+|root||root|localhost|CREATE ROLE|G
+|root||root|localhost|CREATE ROUTINE|G
+|root||root|localhost|CREATE TABLESPACE|G
+|root||root|localhost|CREATE TEMPORARY TABLES|G
+|root||root|localhost|CREATE USER|G
+|root||root|localhost|CREATE VIEW|G
+|root||root|localhost|CREATE_SPATIAL_REFERENCE_SYSTEM|G
+|root||root|localhost|DELETE|G
+|root||root|localhost|DROP|G
+|root||root|localhost|DROP ROLE|G
+|root||root|localhost|ENCRYPTION_KEY_ADMIN|G
+|root||root|localhost|EVENT|G
+|root||root|localhost|EXECUTE|G
+|root||root|localhost|FILE|G
+|root||mysql.infoschema|localhost|FIREWALL_EXEMPT|G
+|root||mysql.session|localhost|FIREWALL_EXEMPT|G
+|root||mysql.sys|localhost|FIREWALL_EXEMPT|G
+|root||root|localhost|FIREWALL_EXEMPT|G
+|root||root|localhost|FLUSH_OPTIMIZER_COSTS|G
+|root||root|localhost|FLUSH_PRIVILEGES|G
+|root||root|localhost|FLUSH_STATUS|G
+|root||root|localhost|FLUSH_TABLES|G
+|root||root|localhost|FLUSH_USER_RESOURCES|G
+|root||root|localhost|GROUP_REPLICATION_ADMIN|G
+|root||root|localhost|GROUP_REPLICATION_STREAM|G
+|root||root|localhost|INDEX|G
+|root||root|localhost|INNODB_REDO_LOG_ARCHIVE|G
+|root||root|localhost|INNODB_REDO_LOG_ENABLE|G
+|root||root|localhost|INSERT|G
+|root||root|localhost|LOCK TABLES|G
+|root||root|localhost|OPTIMIZE_LOCAL_TABLE|G
+|root||root|localhost|PASSWORDLESS_USER_ADMIN|G
+|root||mysql.session|localhost|PERSIST_RO_VARIABLES_ADMIN|G
+|root||root|localhost|PERSIST_RO_VARIABLES_ADMIN|G
+|root||root|localhost|PROCESS|G
+|root||root|localhost|REFERENCES|G
+|root||root|localhost|RELOAD|G
+|root||root|localhost|REPLICATION CLIENT|G
+|root||root|localhost|REPLICATION SLAVE|G
+|root||root|localhost|REPLICATION_APPLIER|G
+|root||root|localhost|REPLICATION_SLAVE_ADMIN|G
+|root||root|localhost|RESOURCE_GROUP_ADMIN|G
+|root||root|localhost|RESOURCE_GROUP_USER|G
+|root||root|localhost|ROLE_ADMIN|G
+|root||mysql.infoschema|localhost|SELECT|G
+|root||root|localhost|SELECT|G
+|root||root|localhost|SENSITIVE_VARIABLES_OBSERVER|G
+|root||root|localhost|SERVICE_CONNECTION_ADMIN|G
+|root||mysql.session|localhost|SESSION_VARIABLES_ADMIN|G
+|root||root|localhost|SESSION_VARIABLES_ADMIN|G
+|root||root|localhost|SET_ANY_DEFINER|G
+|root||root|localhost|SHOW DATABASES|G
+|root||root|localhost|SHOW VIEW|G
+|root||root|localhost|SHOW_ROUTINE|G
+|root||mysql.session|localhost|SHUTDOWN|G
+|root||root|localhost|SHUTDOWN|G
+|root||mysql.session|localhost|SUPER|G
+|root||root|localhost|SUPER|G
+|root||mysql.infoschema|localhost|SYSTEM_USER|G
+|root||mysql.session|localhost|SYSTEM_USER|G
+|root||mysql.sys|localhost|SYSTEM_USER|G
+|root||root|localhost|SYSTEM_USER|G
+|root||mysql.session|localhost|SYSTEM_VARIABLES_ADMIN|G
+|root||root|localhost|SYSTEM_VARIABLES_ADMIN|G
+|root||root|localhost|TABLE_ENCRYPTION_ADMIN|G
+|root||root|localhost|TELEMETRY_LOG_ADMIN|G
+|root||root|localhost|TRANSACTION_GTID_TAG|G
+|root||root|localhost|TRIGGER|G
+|root||root|localhost|UPDATE|G
+|root||root|localhost|XA_RECOVER_ADMIN|G
+|root||root|localhost|grant option|G
+performance_schema|schema||mysql.session|localhost|SELECT|G
+sys|schema||mysql.sys|localhost|TRIGGER|G
+u3079686_dev|schema||prisma_admin|localhost|ALTER|G
+u3079686_dev|schema||prisma_admin|localhost|ALTER ROUTINE|G
+u3079686_dev|schema||prisma_admin|localhost|CREATE|G
+u3079686_dev|schema||prisma_admin|localhost|CREATE ROUTINE|G
+u3079686_dev|schema||prisma_admin|localhost|CREATE TEMPORARY TABLES|G
+u3079686_dev|schema||prisma_admin|localhost|CREATE VIEW|G
+u3079686_dev|schema||prisma_admin|localhost|DELETE|G
+u3079686_dev|schema||prisma_admin|localhost|DROP|G
+u3079686_dev|schema||prisma_admin|localhost|EVENT|G
+u3079686_dev|schema||prisma_admin|localhost|EXECUTE|G
+u3079686_dev|schema||prisma_admin|localhost|INDEX|G
+u3079686_dev|schema||prisma_admin|localhost|INSERT|G
+u3079686_dev|schema||prisma_admin|localhost|LOCK TABLES|G
+u3079686_dev|schema||prisma_admin|localhost|REFERENCES|G
+u3079686_dev|schema||prisma_admin|localhost|SELECT|G
+u3079686_dev|schema||prisma_admin|localhost|SHOW VIEW|G
+u3079686_dev|schema||prisma_admin|localhost|TRIGGER|G
+u3079686_dev|schema||prisma_admin|localhost|UPDATE|G</Grants>
+      <ServerVersion>9.2.0</ServerVersion>
     </root>
     <collation id="2" parent="1" name="armscii8_bin">
       <Charset>armscii8</Charset>
@@ -935,517 +1027,736 @@ u3079686_dev|schema||u3079686_sigma|localhost|UPDATE|G</Grants>
     <schema id="290" parent="1" name="performance_schema">
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
-    <schema id="291" parent="1" name="prisma_migrate_shadow_db_030c29b3-e32d-478e-9283-300b320675d1">
+    <schema id="291" parent="1" name="prisma_migrate_shadow_db_17895385-0f9c-4b5b-b868-b62d087aeddc">
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
-    <schema id="292" parent="1" name="prisma_migrate_shadow_db_ccc82fa0-a3f5-4ebe-8cd1-f80dc26226d6">
+    <schema id="292" parent="1" name="prisma_migrate_shadow_db_3a38816f-16b8-4f0e-8232-f07d564fb800">
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
-    <schema id="293" parent="1" name="prisma_migrate_shadow_db_e631a304-0f8b-4550-a50f-066c01a5509d">
+    <schema id="293" parent="1" name="prisma_migrate_shadow_db_6e6ae6b1-a317-4c60-bca9-f7e6b859f8a9">
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
-    <schema id="294" parent="1" name="prisma_migrate_shadow_db_e695696f-665e-45f0-af0d-9c64860bd363">
+    <schema id="294" parent="1" name="sys">
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
-    <schema id="295" parent="1" name="sys">
-      <CollationName>utf8mb4_0900_ai_ci</CollationName>
-    </schema>
-    <schema id="296" parent="1" name="u3079686_dev">
+    <schema id="295" parent="1" name="u3079686_dev">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2025-04-24.17:46:46</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2025-10-02.21:19:49</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
-    <user id="297" parent="1" name="u3079686_sigma">
+    <user id="296" parent="1" name="mysql.infoschema">
+      <CanLogin>0</CanLogin>
       <Host>localhost</Host>
+      <Plugin>caching_sha2_password</Plugin>
     </user>
-    <table id="298" parent="296" name="Comment">
+    <user id="297" parent="1" name="mysql.session">
+      <CanLogin>0</CanLogin>
+      <Host>localhost</Host>
+      <Plugin>caching_sha2_password</Plugin>
+    </user>
+    <user id="298" parent="1" name="mysql.sys">
+      <CanLogin>0</CanLogin>
+      <Host>localhost</Host>
+      <Plugin>caching_sha2_password</Plugin>
+    </user>
+    <user id="299" parent="1" name="prisma_admin">
+      <Host>localhost</Host>
+      <Plugin>caching_sha2_password</Plugin>
+    </user>
+    <user id="300" parent="1" name="root">
+      <Host>localhost</Host>
+      <Plugin>caching_sha2_password</Plugin>
+    </user>
+    <table id="301" parent="295" name="Comment">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_unicode_ci</CollationName>
     </table>
-    <table id="299" parent="296" name="Nsu">
+    <table id="302" parent="295" name="Notification">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_unicode_ci</CollationName>
     </table>
-    <table id="300" parent="296" name="Post">
+    <table id="303" parent="295" name="Nsu">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_unicode_ci</CollationName>
     </table>
-    <table id="301" parent="296" name="Tag">
+    <table id="304" parent="295" name="Post">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_unicode_ci</CollationName>
     </table>
-    <table id="302" parent="296" name="UserFollowedTag">
+    <table id="305" parent="295" name="PushSubscription">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_unicode_ci</CollationName>
     </table>
-    <table id="303" parent="296" name="UserLikedComment">
+    <table id="306" parent="295" name="Tag">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_unicode_ci</CollationName>
     </table>
-    <table id="304" parent="296" name="UserLikedPost">
+    <table id="307" parent="295" name="UserFollowedTag">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_unicode_ci</CollationName>
     </table>
-    <table id="305" parent="296" name="UserViewedPost">
+    <table id="308" parent="295" name="UserLikedComment">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_unicode_ci</CollationName>
     </table>
-    <table id="306" parent="296" name="Users">
+    <table id="309" parent="295" name="UserLikedPost">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_unicode_ci</CollationName>
     </table>
-    <table id="307" parent="296" name="_prisma_migrations">
+    <table id="310" parent="295" name="UserNotificationSettings">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_unicode_ci</CollationName>
     </table>
-    <column id="308" parent="298" name="idComment">
-      <AutoIncrement>1</AutoIncrement>
+    <table id="311" parent="295" name="UserViewedPost">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_unicode_ci</CollationName>
+    </table>
+    <table id="312" parent="295" name="Users">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_unicode_ci</CollationName>
+    </table>
+    <table id="313" parent="295" name="_prisma_migrations">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_unicode_ci</CollationName>
+    </table>
+    <column id="314" parent="301" name="idComment">
+      <AutoIncrement>41</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="309" parent="298" name="commentIdPost">
+    <column id="315" parent="301" name="commentIdPost">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="310" parent="298" name="text">
+    <column id="316" parent="301" name="text">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>text|0s</StoredType>
     </column>
-    <column id="311" parent="298" name="images">
+    <column id="317" parent="301" name="images">
       <Position>4</Position>
-      <StoredType>text|0s</StoredType>
+      <StoredType>longtext|0s</StoredType>
     </column>
-    <column id="312" parent="298" name="likes">
+    <column id="318" parent="301" name="likes">
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="313" parent="298" name="createdAt">
+    <column id="319" parent="301" name="createdAt">
       <DefaultExpression>CURRENT_TIMESTAMP(3)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>6</Position>
       <StoredType>datetime(3)|0s</StoredType>
     </column>
-    <column id="314" parent="298" name="createdByIdUser">
+    <column id="320" parent="301" name="createdByIdUser">
       <NotNull>1</NotNull>
       <Position>7</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <foreign-key id="315" parent="298" name="Comment_commentIdPost_fkey">
+    <foreign-key id="321" parent="301" name="Comment_commentIdPost_fkey">
       <ColNames>commentIdPost</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>idPost</RefColNames>
       <RefTableName>Post</RefTableName>
     </foreign-key>
-    <foreign-key id="316" parent="298" name="Comment_createdByIdUser_fkey">
+    <foreign-key id="322" parent="301" name="Comment_createdByIdUser_fkey">
       <ColNames>createdByIdUser</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>idUser</RefColNames>
       <RefTableName>Users</RefTableName>
     </foreign-key>
-    <index id="317" parent="298" name="PRIMARY">
+    <index id="323" parent="301" name="PRIMARY">
       <ColNames>idComment</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="318" parent="298" name="Comment_commentIdPost_fkey">
+    <index id="324" parent="301" name="Comment_commentIdPost_fkey">
       <ColNames>commentIdPost</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="319" parent="298" name="Comment_createdByIdUser_fkey">
+    <index id="325" parent="301" name="Comment_createdByIdUser_fkey">
       <ColNames>createdByIdUser</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="320" parent="298" name="PRIMARY">
+    <key id="326" parent="301" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="321" parent="299" name="idNsuUser">
-      <AutoIncrement>2</AutoIncrement>
+    <column id="327" parent="302" name="idNotification">
+      <AutoIncrement>12</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="322" parent="299" name="realName">
+    <column id="328" parent="302" name="userId">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="329" parent="302" name="type">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>varchar(50)|0s</StoredType>
+    </column>
+    <column id="330" parent="302" name="title">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="331" parent="302" name="message">
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="332" parent="302" name="data">
+      <Position>6</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="333" parent="302" name="isRead">
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+      <StoredType>tinyint(1)|0s</StoredType>
+    </column>
+    <column id="334" parent="302" name="createdAt">
+      <DefaultExpression>CURRENT_TIMESTAMP(3)</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+      <StoredType>datetime(3)|0s</StoredType>
+    </column>
+    <foreign-key id="335" parent="302" name="Notification_userId_fkey">
+      <ColNames>userId</ColNames>
+      <OnDelete>cascade</OnDelete>
+      <OnUpdate>cascade</OnUpdate>
+      <RefColNames>idUser</RefColNames>
+      <RefTableName>Users</RefTableName>
+    </foreign-key>
+    <index id="336" parent="302" name="PRIMARY">
+      <ColNames>idNotification</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="337" parent="302" name="Notification_userId_fkey">
+      <ColNames>userId</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="338" parent="302" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="339" parent="303" name="idNsuUser">
+      <AutoIncrement>6</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="340" parent="303" name="realName">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="323" parent="299" name="email">
+    <column id="341" parent="303" name="email">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="324" parent="299" name="group">
+    <column id="342" parent="303" name="group">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="325" parent="299" name="hasLogined">
+    <column id="343" parent="303" name="hasLogined">
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StoredType>tinyint(1)|0s</StoredType>
     </column>
-    <index id="326" parent="299" name="PRIMARY">
+    <index id="344" parent="303" name="PRIMARY">
       <ColNames>idNsuUser</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="327" parent="299" name="Nsu_email_key">
+    <index id="345" parent="303" name="Nsu_email_key">
       <ColNames>email</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="328" parent="299" name="PRIMARY">
+    <key id="346" parent="303" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="329" parent="299" name="Nsu_email_key">
+    <key id="347" parent="303" name="Nsu_email_key">
       <UnderlyingIndexName>Nsu_email_key</UnderlyingIndexName>
     </key>
-    <column id="330" parent="300" name="idPost">
-      <AutoIncrement>2</AutoIncrement>
+    <column id="348" parent="304" name="idPost">
+      <AutoIncrement>39</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="331" parent="300" name="content">
+    <column id="349" parent="304" name="content">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>text|0s</StoredType>
     </column>
-    <column id="332" parent="300" name="images">
+    <column id="350" parent="304" name="iframe">
       <Position>3</Position>
       <StoredType>text|0s</StoredType>
     </column>
-    <column id="333" parent="300" name="tags">
+    <column id="351" parent="304" name="images">
       <Position>4</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="352" parent="304" name="tags">
+      <Position>5</Position>
       <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="334" parent="300" name="createdAt">
+    <column id="353" parent="304" name="createdAt">
       <DefaultExpression>CURRENT_TIMESTAMP(3)</DefaultExpression>
       <NotNull>1</NotNull>
-      <Position>5</Position>
+      <Position>6</Position>
       <StoredType>datetime(3)|0s</StoredType>
     </column>
-    <column id="335" parent="300" name="views">
-      <DefaultExpression>0</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>6</Position>
-      <StoredType>int|0s</StoredType>
-    </column>
-    <column id="336" parent="300" name="likes">
+    <column id="354" parent="304" name="views">
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>7</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="337" parent="300" name="createdByIdUser">
+    <column id="355" parent="304" name="likes">
+      <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>8</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <foreign-key id="338" parent="300" name="Post_createdByIdUser_fkey">
+    <column id="356" parent="304" name="createdByIdUser">
+      <NotNull>1</NotNull>
+      <Position>9</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <foreign-key id="357" parent="304" name="Post_createdByIdUser_fkey">
       <ColNames>createdByIdUser</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>idUser</RefColNames>
       <RefTableName>Users</RefTableName>
     </foreign-key>
-    <index id="339" parent="300" name="PRIMARY">
+    <index id="358" parent="304" name="PRIMARY">
       <ColNames>idPost</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="340" parent="300" name="Post_createdByIdUser_fkey">
+    <index id="359" parent="304" name="Post_createdByIdUser_fkey">
       <ColNames>createdByIdUser</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="341" parent="300" name="PRIMARY">
+    <key id="360" parent="304" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="342" parent="301" name="idTag">
+    <column id="361" parent="305" name="idSubscription">
       <AutoIncrement>1</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="343" parent="301" name="name">
+    <column id="362" parent="305" name="userId">
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StoredType>varchar(50)|0s</StoredType>
+      <StoredType>int|0s</StoredType>
     </column>
-    <index id="344" parent="301" name="PRIMARY">
-      <ColNames>idTag</ColNames>
+    <column id="363" parent="305" name="endpoint">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="364" parent="305" name="p256dh">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="365" parent="305" name="auth">
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="366" parent="305" name="createdAt">
+      <DefaultExpression>CURRENT_TIMESTAMP(3)</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+      <StoredType>datetime(3)|0s</StoredType>
+    </column>
+    <foreign-key id="367" parent="305" name="PushSubscription_userId_fkey">
+      <ColNames>userId</ColNames>
+      <OnDelete>cascade</OnDelete>
+      <OnUpdate>cascade</OnUpdate>
+      <RefColNames>idUser</RefColNames>
+      <RefTableName>Users</RefTableName>
+    </foreign-key>
+    <index id="368" parent="305" name="PRIMARY">
+      <ColNames>idSubscription</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="345" parent="301" name="Tag_name_key">
-      <ColNames>name</ColNames>
+    <index id="369" parent="305" name="PushSubscription_userId_fkey">
+      <ColNames>userId</ColNames>
       <Type>btree</Type>
-      <Unique>1</Unique>
     </index>
-    <key id="346" parent="301" name="PRIMARY">
+    <key id="370" parent="305" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="347" parent="301" name="Tag_name_key">
-      <UnderlyingIndexName>Tag_name_key</UnderlyingIndexName>
-    </key>
-    <column id="348" parent="302" name="idUser">
+    <column id="371" parent="306" name="idTag">
+      <AutoIncrement>7</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="349" parent="302" name="idTag">
+    <column id="372" parent="306" name="name">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>varchar(50)|0s</StoredType>
+    </column>
+    <index id="373" parent="306" name="PRIMARY">
+      <ColNames>idTag</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="374" parent="306" name="Tag_name_key">
+      <ColNames>name</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="375" parent="306" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <key id="376" parent="306" name="Tag_name_key">
+      <UnderlyingIndexName>Tag_name_key</UnderlyingIndexName>
+    </key>
+    <column id="377" parent="307" name="idUser">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="378" parent="307" name="idTag">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <foreign-key id="350" parent="302" name="UserFollowedTag_idUser_fkey">
+    <foreign-key id="379" parent="307" name="UserFollowedTag_idUser_fkey">
       <ColNames>idUser</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>idUser</RefColNames>
       <RefTableName>Users</RefTableName>
     </foreign-key>
-    <foreign-key id="351" parent="302" name="UserFollowedTag_idTag_fkey">
+    <foreign-key id="380" parent="307" name="UserFollowedTag_idTag_fkey">
       <ColNames>idTag</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>idTag</RefColNames>
       <RefTableName>Tag</RefTableName>
     </foreign-key>
-    <index id="352" parent="302" name="PRIMARY">
+    <index id="381" parent="307" name="PRIMARY">
       <ColNames>idUser
 idTag</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="353" parent="302" name="UserFollowedTag_idTag_fkey">
+    <index id="382" parent="307" name="UserFollowedTag_idTag_fkey">
       <ColNames>idTag</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="354" parent="302" name="PRIMARY">
+    <key id="383" parent="307" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="355" parent="303" name="idUser">
+    <column id="384" parent="308" name="idUser">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="356" parent="303" name="idComment">
+    <column id="385" parent="308" name="idComment">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <foreign-key id="357" parent="303" name="UserLikedComment_idUser_fkey">
+    <foreign-key id="386" parent="308" name="UserLikedComment_idUser_fkey">
       <ColNames>idUser</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>idUser</RefColNames>
       <RefTableName>Users</RefTableName>
     </foreign-key>
-    <foreign-key id="358" parent="303" name="UserLikedComment_idComment_fkey">
+    <foreign-key id="387" parent="308" name="UserLikedComment_idComment_fkey">
       <ColNames>idComment</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>idComment</RefColNames>
       <RefTableName>Comment</RefTableName>
     </foreign-key>
-    <index id="359" parent="303" name="PRIMARY">
+    <index id="388" parent="308" name="PRIMARY">
       <ColNames>idUser
 idComment</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="360" parent="303" name="UserLikedComment_idComment_fkey">
+    <index id="389" parent="308" name="UserLikedComment_idComment_fkey">
       <ColNames>idComment</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="361" parent="303" name="PRIMARY">
+    <key id="390" parent="308" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="362" parent="304" name="idUser">
+    <column id="391" parent="309" name="idUser">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="363" parent="304" name="idPost">
+    <column id="392" parent="309" name="idPost">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <foreign-key id="364" parent="304" name="UserLikedPost_idUser_fkey">
+    <foreign-key id="393" parent="309" name="UserLikedPost_idUser_fkey">
       <ColNames>idUser</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>idUser</RefColNames>
       <RefTableName>Users</RefTableName>
     </foreign-key>
-    <foreign-key id="365" parent="304" name="UserLikedPost_idPost_fkey">
+    <foreign-key id="394" parent="309" name="UserLikedPost_idPost_fkey">
       <ColNames>idPost</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>idPost</RefColNames>
       <RefTableName>Post</RefTableName>
     </foreign-key>
-    <index id="366" parent="304" name="PRIMARY">
+    <index id="395" parent="309" name="PRIMARY">
       <ColNames>idUser
 idPost</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="367" parent="304" name="UserLikedPost_idPost_fkey">
+    <index id="396" parent="309" name="UserLikedPost_idPost_fkey">
       <ColNames>idPost</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="368" parent="304" name="PRIMARY">
+    <key id="397" parent="309" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="369" parent="305" name="idUser">
+    <column id="398" parent="310" name="idUser">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="370" parent="305" name="idPost">
+    <column id="399" parent="310" name="emailNotifications">
+      <DefaultExpression>1</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StoredType>int|0s</StoredType>
+      <StoredType>tinyint(1)|0s</StoredType>
     </column>
-    <foreign-key id="371" parent="305" name="UserViewedPost_idUser_fkey">
+    <column id="400" parent="310" name="pushNotifications">
+      <DefaultExpression>1</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>tinyint(1)|0s</StoredType>
+    </column>
+    <column id="401" parent="310" name="inAppNotifications">
+      <DefaultExpression>1</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>tinyint(1)|0s</StoredType>
+    </column>
+    <column id="402" parent="310" name="likeNotifications">
+      <DefaultExpression>1</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StoredType>tinyint(1)|0s</StoredType>
+    </column>
+    <column id="403" parent="310" name="commentNotifications">
+      <DefaultExpression>1</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+      <StoredType>tinyint(1)|0s</StoredType>
+    </column>
+    <column id="404" parent="310" name="followNotifications">
+      <DefaultExpression>1</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+      <StoredType>tinyint(1)|0s</StoredType>
+    </column>
+    <column id="405" parent="310" name="mentionNotifications">
+      <DefaultExpression>1</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+      <StoredType>tinyint(1)|0s</StoredType>
+    </column>
+    <column id="406" parent="310" name="systemNotifications">
+      <DefaultExpression>1</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>9</Position>
+      <StoredType>tinyint(1)|0s</StoredType>
+    </column>
+    <foreign-key id="407" parent="310" name="UserNotificationSettings_idUser_fkey">
       <ColNames>idUser</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>idUser</RefColNames>
       <RefTableName>Users</RefTableName>
     </foreign-key>
-    <foreign-key id="372" parent="305" name="UserViewedPost_idPost_fkey">
+    <index id="408" parent="310" name="PRIMARY">
+      <ColNames>idUser</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="409" parent="310" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="410" parent="311" name="idUser">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="411" parent="311" name="idPost">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <foreign-key id="412" parent="311" name="UserViewedPost_idUser_fkey">
+      <ColNames>idUser</ColNames>
+      <OnDelete>cascade</OnDelete>
+      <OnUpdate>cascade</OnUpdate>
+      <RefColNames>idUser</RefColNames>
+      <RefTableName>Users</RefTableName>
+    </foreign-key>
+    <foreign-key id="413" parent="311" name="UserViewedPost_idPost_fkey">
       <ColNames>idPost</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>idPost</RefColNames>
       <RefTableName>Post</RefTableName>
     </foreign-key>
-    <index id="373" parent="305" name="PRIMARY">
+    <index id="414" parent="311" name="PRIMARY">
       <ColNames>idUser
 idPost</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="374" parent="305" name="UserViewedPost_idPost_fkey">
+    <index id="415" parent="311" name="UserViewedPost_idPost_fkey">
       <ColNames>idPost</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="375" parent="305" name="PRIMARY">
+    <key id="416" parent="311" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="376" parent="306" name="idUser">
+    <column id="417" parent="312" name="idUser">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="377" parent="306" name="displayedName">
+    <column id="418" parent="312" name="displayedName">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="378" parent="306" name="pic">
+    <column id="419" parent="312" name="pic">
       <Position>3</Position>
       <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="379" parent="306" name="admin">
+    <column id="420" parent="312" name="admin">
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StoredType>tinyint(1)|0s</StoredType>
     </column>
-    <column id="380" parent="306" name="password">
+    <column id="421" parent="312" name="password">
       <Position>5</Position>
       <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <foreign-key id="381" parent="306" name="Users_idUser_fkey">
+    <foreign-key id="422" parent="312" name="Users_idUser_fkey">
       <ColNames>idUser</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>idNsuUser</RefColNames>
       <RefTableName>Nsu</RefTableName>
     </foreign-key>
-    <index id="382" parent="306" name="PRIMARY">
+    <index id="423" parent="312" name="PRIMARY">
       <ColNames>idUser</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="383" parent="306" name="PRIMARY">
+    <key id="424" parent="312" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="384" parent="307" name="id">
+    <column id="425" parent="313" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(36)|0s</StoredType>
     </column>
-    <column id="385" parent="307" name="checksum">
+    <column id="426" parent="313" name="checksum">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(64)|0s</StoredType>
     </column>
-    <column id="386" parent="307" name="finished_at">
+    <column id="427" parent="313" name="finished_at">
       <Position>3</Position>
       <StoredType>datetime(3)|0s</StoredType>
     </column>
-    <column id="387" parent="307" name="migration_name">
+    <column id="428" parent="313" name="migration_name">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="388" parent="307" name="logs">
+    <column id="429" parent="313" name="logs">
       <Position>5</Position>
       <StoredType>text|0s</StoredType>
     </column>
-    <column id="389" parent="307" name="rolled_back_at">
+    <column id="430" parent="313" name="rolled_back_at">
       <Position>6</Position>
       <StoredType>datetime(3)|0s</StoredType>
     </column>
-    <column id="390" parent="307" name="started_at">
+    <column id="431" parent="313" name="started_at">
       <DefaultExpression>CURRENT_TIMESTAMP(3)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>7</Position>
       <StoredType>datetime(3)|0s</StoredType>
     </column>
-    <column id="391" parent="307" name="applied_steps_count">
+    <column id="432" parent="313" name="applied_steps_count">
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>8</Position>
       <StoredType>int unsigned|0s</StoredType>
     </column>
-    <index id="392" parent="307" name="PRIMARY">
+    <index id="433" parent="313" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="393" parent="307" name="PRIMARY">
+    <key id="434" parent="313" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>

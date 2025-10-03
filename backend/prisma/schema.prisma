@@ -17,18 +17,21 @@ model Nsu {
 }
 
 model Users {
-  idUser        Int                @id
-  displayedName String             @db.VarChar(255)
-  pic           String?            @db.VarChar(255)
-  admin         Boolean            @default(false)
-  password      String?            @db.VarChar(255)
-  nsu           Nsu?               @relation("NsuToUsers", fields: [idUser], references: [idNsuUser], onDelete: Cascade)
-  posts         Post[]
-  comments      Comment[]
-  likedPosts    UserLikedPost[]
-  likedComments UserLikedComment[]
-  viewedPosts   UserViewedPost[]
-  followedTags  UserFollowedTag[]
+  idUser                   Int                       @id
+  displayedName            String                    @db.VarChar(255)
+  pic                      String?                   @db.LongText
+  admin                    Boolean                   @default(false)
+  password                 String?                   @db.VarChar(255)
+  nsu                      Nsu?                      @relation("NsuToUsers", fields: [idUser], references: [idNsuUser], onDelete: Cascade)
+  posts                    Post[]
+  comments                 Comment[]
+  likedPosts               UserLikedPost[]
+  likedComments            UserLikedComment[]
+  viewedPosts              UserViewedPost[]
+  followedTags             UserFollowedTag[]
+  notifications            Notification[]
+  pushSubscriptions        PushSubscription[]
+  userNotificationSettings UserNotificationSettings?
 }
 
 model Post {
@@ -100,4 +103,39 @@ model UserViewedPost {
   post   Post  @relation(fields: [idPost], references: [idPost], onDelete: Cascade)
 
   @@id([idUser, idPost])
+}
+
+model Notification {
+  idNotification Int      @id @default(autoincrement())
+  userId         Int
+  type           String   @db.VarChar(50) // 'like', 'comment', 'follow', 'mention', 'system'
+  title          String   @db.VarChar(255)
+  message        String   @db.Text
+  data           String?  @db.Text // JSON data for additional context
+  isRead         Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  user           Users    @relation(fields: [userId], references: [idUser], onDelete: Cascade)
+}
+
+model UserNotificationSettings {
+  idUser               Int     @id
+  emailNotifications   Boolean @default(true)
+  pushNotifications    Boolean @default(true)
+  inAppNotifications   Boolean @default(true)
+  likeNotifications    Boolean @default(true)
+  commentNotifications Boolean @default(true)
+  followNotifications  Boolean @default(true)
+  mentionNotifications Boolean @default(true)
+  systemNotifications  Boolean @default(true)
+  user                 Users   @relation(fields: [idUser], references: [idUser], onDelete: Cascade)
+}
+
+model PushSubscription {
+  idSubscription Int      @id @default(autoincrement())
+  userId         Int
+  endpoint       String   @db.Text
+  p256dh         String   @db.Text
+  auth           String   @db.Text
+  createdAt      DateTime @default(now())
+  user           Users    @relation(fields: [userId], references: [idUser], onDelete: Cascade)
 }

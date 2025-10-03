@@ -6,10 +6,13 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const fs = require('fs').promises;
 const path = require('path');
+const http = require('http');
+const {resetPass} = require("./resetPass");
 
 dotenv.config();
 
 const app = express();
+const server = http.createServer(app);
 const prisma = new PrismaClient();
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
@@ -19,9 +22,12 @@ fs.mkdir(uploadsDir, { recursive: true }).catch((err) => {
     console.error('Failed to create uploads directory:', err);
 });
 
+
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
+
+
 // Middleware to verify JWT token
 const authenticateToken = async (req, res, next) => {
     const authHeader = req.headers['authorization'];
@@ -44,6 +50,7 @@ const authenticateToken = async (req, res, next) => {
 };
 
 app.use('/uploads', express.static(uploadsDir));
+
 
 
 // Register a new user
@@ -120,31 +127,54 @@ app.get('/current-user', authenticateToken, async (req, res) => {
             where: { idUser: req.user.idUser },
             include: { nsu: true },
         });
-        res.json(user);
+        if (!user) return res.status(404).json({ error: 'User not found' });
+        res.json(user); // <- важно: возвращаем user как есть
     } catch (error) {
+        console.error(error);
         res.status(500).json({ error: 'Failed to fetch user' });
     }
 });
 
-// Update current user (username or image)
-app.post('/current-user', authenticateToken, async (req, res) => {
-    const { username, imageBase64 } = req.body;
+app.post('/reset', async (req, res) => {
+    const { email } = req.body;
+    const nsuuser = await prisma.nsu.findUnique(
+        { where: { email } }
+    )
+    const user = await prisma.users.update(
+        {
+            where: { idUser: nsuuser.idNsuUser },
+            data: {password: await resetPass(email) },
+        }
+    )
+    res.json({ user });
+})
 
+app.post('/current-user', authenticateToken, async (req, res) => {
     try {
-        const updateData = {};
+        const username = req.body.username; // текст
+        const pic = req.body.imageUri;
+
+        let updateData = {};
         if (username) updateData.displayedName = username;
-        if (imageBase64) updateData.pic = imageBase64;
+        if (pic) updateData.pic = pic;
+
+        console.log(updateData);
+
+        if (Object.keys(updateData).length === 0) {
+            return res.status(400).json({ error: 'No data to update' });
+        }
 
         const user = await prisma.users.update({
             where: { idUser: req.user.idUser },
             data: updateData,
         });
+
         res.json(user);
-    } catch (error) {
+    } catch (err) {
+        console.error(err);
         res.status(500).json({ error: 'Failed to update user' });
     }
 });
-
 // Get user by ID
 app.get('/user/:id', authenticateToken, async (req, res) => {
     const { id } = req.params;
@@ -318,7 +348,7 @@ app.get('/following-posts', authenticateToken, async (req, res) => {
             include: { tag: true },
         });
         const tagNames = followedTags.map((ft) => ft.tag.name);
-        
+
         console.log('User', req.user.idUser, 'followed tags:', tagNames);
 
         let posts = [];
@@ -338,7 +368,7 @@ app.get('/following-posts', authenticateToken, async (req, res) => {
                 include: { createdBy: true },
             });
         }
-        
+
         console.log(`Found ${posts.length} posts for followed tags`);
         res.json({ posts });
     } catch (error) {
@@ -364,7 +394,7 @@ app.get('/user/:userId/posts', authenticateToken, async (req, res) => {
             orderBy: { createdAt: 'desc' },
             include: { createdBy: true },
         });
-        
+
         console.log(`Found ${posts.length} posts for user ${userId}`);
         res.json({ posts });
     } catch (error) {
@@ -408,10 +438,10 @@ app.get('/user/:userId/stats', authenticateToken, async (req, res) => {
             const tagArray = Array.from(userTags);
             const followersPromises = tagArray.map(async (tag) => {
                 const followers = await prisma.userFollowedTag.findMany({
-                    where: { 
-                        tag: { 
-                            name: tag 
-                        } 
+                    where: {
+                        tag: {
+                            name: tag
+                        }
                     },
                     select: { idUser: true },
                 });
@@ -462,7 +492,7 @@ app.get('/post/:postId/comments', authenticateToken, async (req, res) => {
             orderBy: { createdAt: 'desc' },
             include: { createdBy: true },
         });
-        
+
         // Обрабатываем изображения для каждого комментария
         const processedComments = comments.map(comment => {
             let images = [];
@@ -470,13 +500,13 @@ app.get('/post/:postId/comments', authenticateToken, async (req, res) => {
                 // Разделяем строку изображений на массив
                 images = comment.images.split(',').filter(img => img.trim().length > 0);
             }
-            
+
             return {
                 ...comment,
                 images: images
             };
         });
-        
+
         res.json(processedComments);
         console.log('Processed comments:', processedComments);
     } catch (error) {
@@ -505,7 +535,7 @@ app.post('/comments', authenticateToken, async (req, res) => {
 
     try {
         let imagePaths = [];
-        
+
         // Обработка изображения, если оно есть
         if (imageBase64) {
             try {
@@ -514,16 +544,16 @@ app.post('/comments', authenticateToken, async (req, res) => {
                 const randomString = Math.random().toString(36).substring(2, 15);
                 const fileName = `comment_${timestamp}_${randomString}.jpg`;
                 const filePath = path.join(uploadsDir, fileName);
-                
+
                 // Убираем префикс data:image/jpeg;base64, из base64 строки
                 const base64Data = imageBase64.replace(/^data:image\/\w+;base64,/, '');
-                
+
                 // Сохраняем файл
                 await fs.writeFile(filePath, base64Data, 'base64');
-                
+
                 // Добавляем путь к файлу в массив
                 imagePaths.push(`/uploads/${fileName}`);
-                
+
                 console.log('Comment image saved:', `/uploads/${fileName}`);
             } catch (imageError) {
                 console.error('Error saving comment image:', imageError);
@@ -539,24 +569,56 @@ app.post('/comments', authenticateToken, async (req, res) => {
                 createdByIdUser: isAnonymous ? 2 : req.user.idUser,
             },
         });
-        
+
         // Включаем информацию о создателе комментария
         const commentWithUser = await prisma.comment.findUnique({
             where: { idComment: comment.idComment },
             include: { createdBy: true }
         });
-        
+
         // Обрабатываем изображения для возвращаемого комментария
         let images = [];
         if (commentWithUser.images) {
             images = commentWithUser.images.split(',').filter(img => img.trim().length > 0);
         }
-        
+
         const processedComment = {
             ...commentWithUser,
             images: images
         };
-        
+
+        // Send notification to post creator if comment is not anonymous
+        if (!isAnonymous) {
+            try {
+                const post = await prisma.post.findUnique({
+                    where: { idPost: parseInt(postId) },
+                    select: { createdByIdUser: true }
+                });
+
+                if (post && post.createdByIdUser !== req.user.idUser) {
+                    await notificationService.createCommentNotification(
+                        post.createdByIdUser,
+                        parseInt(postId),
+                        comment.idComment,
+                        req.user.idUser
+                    );
+
+                    // Send real-time notification via WebSocket
+                    websocketService.sendNotificationToUser(
+                        post.createdByIdUser,
+                        {
+                            type: 'comment',
+                            title: 'New Comment',
+                            message: `${req.user.displayedName} commented on your post`,
+                            data: { postId: parseInt(postId), commentId: comment.idComment }
+                        }
+                    );
+                }
+            } catch (notificationError) {
+                console.error('Error sending comment notification:', notificationError);
+            }
+        }
+
         res.json(processedComment);
     } catch (error) {
         console.error('Error creating comment:', error);
@@ -579,6 +641,35 @@ app.post('/like-post', authenticateToken, async (req, res) => {
             where: { idPost: parseInt(postId) },
             data: { likes: { increment: 1 } },
         });
+
+        // Send notification to post creator
+        try {
+            const post = await prisma.post.findUnique({
+                where: { idPost: parseInt(postId) },
+                select: { createdByIdUser: true }
+            });
+
+            if (post && post.createdByIdUser !== req.user.idUser) {
+                await notificationService.createLikeNotification(
+                    post.createdByIdUser,
+                    parseInt(postId),
+                    req.user.idUser
+                );
+
+                // Send real-time notification via WebSocket
+                websocketService.sendNotificationToUser(
+                    post.createdByIdUser,
+                    {
+                        type: 'like',
+                        title: 'New Like',
+                        message: `${req.user.displayedName} liked your post`,
+                        data: { postId: parseInt(postId) }
+                    }
+                );
+            }
+        } catch (notificationError) {
+            console.error('Error sending like notification:', notificationError);
+        }
 
         res.json(like);
     } catch (error) {
@@ -742,6 +833,8 @@ app.get('/followed-tags', authenticateToken, async (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
+
+server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
+    console.log(`WebSocket service initialized`);
 });

@@ -1,11 +1,12 @@
 import React from 'react';
-import {SafeAreaView, View} from 'react-native';
-import { styles } from '../styles/screens/FeedScreen';
+import {Text, TouchableOpacity, View} from 'react-native';
+import {styles} from '../styles/screens/FeedScreen';
 import Database from '../database';
 import SuperScrollList from "../components/SuperScrollList";
 
 export default class FollowingScreen extends React.Component {
     navigation = null;
+
     constructor(props) {
         super(props);
         this.navigation = props.navigation;
@@ -14,7 +15,6 @@ export default class FollowingScreen extends React.Component {
     }
 
     componentDidMount() {
-        // Слушаем изменения в навигации для обновления при изменении подписок
         this.unsubscribe = this.navigation.addListener('focus', () => {
             this.refreshPosts();
         });
@@ -32,15 +32,34 @@ export default class FollowingScreen extends React.Component {
         }
     };
 
+    onPress = () => {
+        console.log('Press');
+
+    }
+
     render() {
         return (
-            <SafeAreaView style={[styles.container, {backgroundColor: "#000"}]}>
-                <SuperScrollList 
+            <View style={[styles.container, {backgroundColor: "#000"}]}>
+                <TouchableOpacity
+                    style={{
+                        backgroundColor: '#000',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: 10,
+                        borderRadius: 50,
+                        width: 250,
+                        height: 60,
+                    }}
+                    onPress={this.onPress}
+                >
+                    <Text style={{fontSize: 20, color: '#FFF'}}>View posts by tag</Text>
+                </TouchableOpacity>
+                <SuperScrollList
                     ref={this.superScrollListRef}
-                    navigation={this.navigation} 
+                    navigation={this.navigation}
                     loader={Database.getFollowingPosts}
                 />
-            </SafeAreaView>
+            </View>
         );
     }
 }

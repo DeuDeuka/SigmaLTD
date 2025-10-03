@@ -8,6 +8,16 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#000',
+        width: '100%',
+        // alignItems: 'center', // Центрируем содержимое
+    },
+    mediaScroll: {
+        flex: 1,
+        width: '100%', // ✅ ensures FlatList fills horizontally
+    },
+    postsSection: {
+        flex: 1,
+        // ❌ remove minHeight & zIndex if not needed
     },
     header: {
         fontSize: 24,
@@ -79,9 +89,6 @@ export const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: 'bold',
     },
-    postsSection: {
-        flex: 1,
-    },
     sectionTitle: {
         fontSize: 18,
         fontWeight: 'bold',
@@ -109,5 +116,5 @@ export const styles = StyleSheet.create({
     },
     statLabel: {
         fontSize: 12,
-    },
+    }
 });

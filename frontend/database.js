@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // export const BASE_URL = 'https://www.sigmaltd.space';
-export const BASE_URL = "http://192.168.3.5:3000";
+export const BASE_URL = "http://192.168.3.74:3000";
 // export const API_URL = BASE_URL + '/apip';
 export const API_URL = BASE_URL ;
 
@@ -28,8 +28,12 @@ const authHeaders = async () => {
 
 const Database = {
 	init: async () => {
-		console.log('Database initialized (API mode with JWT)');
+		// console.log('Database initialized (API mode with JWT)');
 	},
+
+	authHeaders: authHeaders,
+	API_URL: API_URL,
+	BASE_URL: BASE_URL,
 
 	register: async ({ email, password, realName, group, displayedName }) => {
 		const response = await fetch(`${API_URL}/register`, {
@@ -87,33 +91,40 @@ const Database = {
 		return user.idUser;
 	},
 
-	changeUsername: async (username) => {
+	changeUsername: async (newName) => {
 		const response = await fetch(`${API_URL}/current-user`, {
 			method: 'POST',
-			headers: await authHeaders(),
-			body: JSON.stringify({ username }),
+			headers: {
+				...(await authHeaders()),
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ username: newName }),
 		});
+
 		if (!response.ok) throw new Error(await response.text());
-		return await response.json();
+		return await response.json(); // user
 	},
 
-	changeImage: async (payload) => {
+	changeImage: async (imageUri) => {
+		const tokenHeaders = await authHeaders();
+
 		const response = await fetch(`${API_URL}/current-user`, {
 			method: 'POST',
-			headers: await authHeaders(),
-			body: JSON.stringify(payload),
-		})
+			headers: tokenHeaders, // только Authorization
+			body: JSON.stringify({ imageUri: imageUri }),
+		});
+
 		if (!response.ok) throw new Error(await response.text());
-		return await response.json();
+		return await response.json(); // user
 	},
 
 	addPost: async (payload) => {
 		try {
+			console.log(payload);
 			const response = await fetch(`${API_URL}/posts`, {
 				method: 'POST',
 				headers: await authHeaders(),
 				body: JSON.stringify(payload),
-
 			});
 
 			const responseText = await response.text();
@@ -127,6 +138,16 @@ const Database = {
 			console.error('Network error:', error);
 			throw error;
 		}
+	},
+
+	resetPass: async (email) => {
+		const response = await fetch(`${API_URL}/reset`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ email}),
+		});
+		if (!response.ok) throw new Error(await response.text());
+		return await response.json();
 	},
 
 	getAllPosts: async (page) => {
@@ -185,6 +206,7 @@ const Database = {
 		const response = await fetch(`${API_URL}/post/${postId}/comments-count`, {
 			headers: await authHeaders(),
 		});
+		if (response.error && response.error.json.error === "Access token required") return;
 		if (!response.ok) throw new Error(await response.text());
 		return await response.json();
 	},
@@ -259,7 +281,7 @@ const Database = {
 	},
 
 	followTag: async (tagName) => {
-		console.log('Database: Following tag:', tagName);
+		// console.log('Database: Following tag:', tagName);
 		const response = await fetch(`${API_URL}/follow-tag`, {
 			method: 'POST',
 			headers: await authHeaders(),
@@ -267,12 +289,12 @@ const Database = {
 		});
 		if (!response.ok) throw new Error(await response.text());
 		const result = await response.json();
-		console.log('Database: Follow tag result:', result);
+		// console.log('Database: Follow tag result:', result);
 		return result;
 	},
 
 	unfollowTag: async (tagName) => {
-		console.log('Database: Unfollowing tag:', tagName);
+		// console.log('Database: Unfollowing tag:', tagName);
 		const response = await fetch(`${API_URL}/unfollow-tag`, {
 			method: 'POST',
 			headers: await authHeaders(),
@@ -280,18 +302,18 @@ const Database = {
 		});
 		if (!response.ok) throw new Error(await response.text());
 		const result = await response.json();
-		console.log('Database: Unfollow tag result:', result);
+		// console.log('Database: Unfollow tag result:', result);
 		return result;
 	},
 
 	getFollowedTags: async () => {
-		console.log('Database: Getting followed tags');
+		// console.log('Database: Getting followed tags');
 		const response = await fetch(`${API_URL}/followed-tags`, {
 			headers: await authHeaders(),
 		});
 		if (!response.ok) throw new Error(await response.text());
 		const result = await response.json();
-		console.log('Database: Received followed tags:', result);
+		// console.log('Database: Received followed tags:', result);
 		return result;
 	},
 

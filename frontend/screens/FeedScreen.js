@@ -1,27 +1,19 @@
-import React from 'react';
-import {SafeAreaView} from 'react-native';
+import React, { useState } from 'react';
 import { styles } from '../styles/screens/FeedScreen';
 import { FloatingButton } from '../components/FloatingButton';
 import Database from '../database';
 import SuperScrollList from "../components/SuperScrollList";
+import {View} from "react-native";
 
-export default class FeedScreen extends React.Component {
-    navigation = null;
-    constructor(props) {
-        super(props);
-        this.navigation = props.navigation;
-        this.flatListRef = React.createRef();
-    }
+export default function FeedScreen({ navigation }) {
 
-    render() {
-        return (
-            <SafeAreaView style={[styles.container, {backgroundColor: "#000"}]}>
-                <SuperScrollList navigation={this.navigation} loader={Database.getAllPosts}/>
-                <FloatingButton
-                    onPress={() => this.navigation.navigate('CreatePost')}
-                    visible={true}
-                />
-            </SafeAreaView>
-        );
-    }
+  return (
+    <View style={[styles.container, { backgroundColor: "#000" }]}>
+      <SuperScrollList navigation={navigation} loader={Database.getAllPosts} />
+      <FloatingButton
+        onPress={() => navigation.navigate('CreatePost')}
+        visible={true}
+      />
+    </View>
+  );
 }

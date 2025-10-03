@@ -10,6 +10,7 @@ export default class SuperScrollList extends React.Component {
     loader = null;
     constructor(props) {
         super(props);
+        this.renderHeader = props.renderHeader || <></>;
         this.navigation = props.navigation;
         this.loader = props.loader;
         this.state = {
@@ -26,10 +27,10 @@ export default class SuperScrollList extends React.Component {
 
     componentDidMount() {
         (this.loader && this.fetchData().then(() => console.log("Fetched data!")));
-        
+
         // Добавляем слушатель изменения размера экрана
         this.dimensionsSubscription = Dimensions.addEventListener('change', this.handleDimensionsChange);
-        
+
         // Check for new posts every 30 seconds
         this.newPostsChecker = setInterval(this.checkForNewPosts, 30000);
     }
@@ -39,7 +40,7 @@ export default class SuperScrollList extends React.Component {
         if (this.dimensionsSubscription) {
             this.dimensionsSubscription.remove();
         }
-        
+
         // Clear the interval when component unmounts
         if (this.newPostsChecker) {
             clearInterval(this.newPostsChecker);
@@ -66,17 +67,17 @@ export default class SuperScrollList extends React.Component {
                 isLoading: false,
                 hasMore: newPosts.length > 0
             }));
-            
+
             console.log('SuperScrollList: Updated state, total posts:', this.state.data.length);
         } catch (error) {
             console.error('Error fetching posts:', error);
-            
+
             // Проверяем, является ли ошибка связанной с авторизацией
             if (error.message && error.message.includes('401')) {
                 this.navigation.replace('Login');
                 await AsyncStorage.removeItem('token');
             }
-            
+
             this.setState({isLoading: false});
         }
     };
@@ -105,9 +106,9 @@ export default class SuperScrollList extends React.Component {
                 alignItems: 'center',
                 paddingHorizontal: 5,
             }}>
-                <Post 
-                    post={item} 
-                    navigation={this.navigation} 
+                <Post
+                    post={item}
+                    navigation={this.navigation}
                     refresher={this.refresh}
                 />
             </View>
@@ -117,16 +118,16 @@ export default class SuperScrollList extends React.Component {
     // Check if there are new posts on the server
     checkForNewPosts = async () => {
         if (this.state.isLoading || this.state.refreshing) return;
-        
+
         try {
             const res = await this.loader(1);
             const newPosts = res.posts || [];
-            
+
             // If we're at the top of the list and there are new posts
             if (newPosts.length > 0 && this.state.data.length > 0) {
                 const latestPostId = this.state.data[0].idPost;
                 const hasNewPosts = newPosts.some(post => post.idPost > latestPostId);
-                
+
                 if (hasNewPosts) {
                     this.setState({ newPostsAvailable: true });
                 }
@@ -135,14 +136,15 @@ export default class SuperScrollList extends React.Component {
             console.error('Error checking for new posts:', error);
         }
     };
-    
+
     // Handle new posts button press
     handleNewPostsButtonPress = () => {
         this.setState({ newPostsAvailable: false });
         this.flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
         this.refresh();
+
     };
-    
+
     // Метод для обновления извне
     refresh = () => {
         this.setState({
@@ -160,7 +162,7 @@ export default class SuperScrollList extends React.Component {
 
     renderNewPostsButton = () => {
         if (!this.state.newPostsAvailable) return null;
-        
+
         return (
             <View style={{
                 position: 'absolute',
@@ -184,7 +186,7 @@ export default class SuperScrollList extends React.Component {
             </View>
         );
     };
-    
+
     renderList = () => {
         return (
             <>
@@ -201,8 +203,10 @@ export default class SuperScrollList extends React.Component {
                         paddingHorizontal: 10,
                         paddingBottom: 100, // Добавляем отступ снизу для лучшей прокрутки
                         alignItems: 'center', // Центрируем контент
+                        flexGrow: 1,
                     }}
                     onScroll={this.handleScroll}
+                    ListHeaderComponent={this.renderHeader}
                     ListFooterComponent={this.renderFooter}
                     showsVerticalScrollIndicator={true}
                     extraData={this.state.page}
@@ -236,8 +240,8 @@ export default class SuperScrollList extends React.Component {
         if (this.state.isLoading) return null;
         return (
             <View style={{
-                flex: 1, 
-                justifyContent: 'center', 
+                flex: 1,
+                justifyContent: 'center',
                 alignItems: 'center',
                 paddingHorizontal: 20,
             }}>
@@ -248,9 +252,9 @@ export default class SuperScrollList extends React.Component {
 
     render() {
         return (
-            <SafeAreaView style={[styles.container, {backgroundColor: "#000"}]}>
+            <View style={{ flex: 1, backgroundColor: "#000" }}>
                 {this.state.data.length === 0 ? this.renderEmpty() : this.renderList()}
-            </SafeAreaView>
+            </View>
         );
     }
 }

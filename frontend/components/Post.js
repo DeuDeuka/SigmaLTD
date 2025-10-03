@@ -141,7 +141,7 @@ const Post = React.memo(({navigation, post, refresher}) => {
         try {
             const resp = await Database.deletePost(post.idPost);
             console.log('Delete response:', resp);
-            
+
             // Проверяем успешность удаления
             if (resp && resp.message === 'Post deleted successfully') {
                 // Вызываем функцию обновления списка
@@ -180,12 +180,11 @@ const Post = React.memo(({navigation, post, refresher}) => {
     }
 
     const mediaItems = Array.isArray(post.images) ? post.images : post.images?.split(',').filter(Boolean) || [];
-
     return (<View style={[styles.container, {backgroundColor: theme.colors.background}]}>
         <Modal isVisible={open}>
             <Image
                 style={{width: "100%", height: "100%", resizeMode: "center"}}
-                source={creator.pic ? {uri: creator.pic} : require('../assets/default-avatar.png')}/>
+                source={creator.pic ? {uri: `${creator.pic}`} : require('../assets/default-avatar.png')}/>
 
         </Modal>
         {/* Header */}
@@ -352,7 +351,7 @@ const styles = StyleSheet.create({
         elevation: 3,
         alignSelf: 'center', // Центрируем пост
         backgroundColor: '#1a1a1a', // Добавляем фон для лучшей видимости
-    }, 
+    },
     header: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -360,93 +359,93 @@ const styles = StyleSheet.create({
         padding: 12,
         borderBottomWidth: 1,
         borderBottomColor: 'rgba(255,255,255,0.1)',
-    }, 
+    },
     userInfo: {
-        flexDirection: 'row', 
+        flexDirection: 'row',
         alignItems: 'center',
         flex: 1, // Позволяет контенту занимать доступное пространство
-    }, 
+    },
     avatar: {
-        marginRight: 12, 
-        borderWidth: 2, 
+        marginRight: 12,
+        borderWidth: 2,
         borderColor: '#fff',
-    }, 
+    },
     username: {
-        color: '#fff', 
-        fontSize: 16, 
+        color: '#fff',
+        fontSize: 16,
         fontWeight: '600',
-    }, 
+    },
     timestamp: {
-        color: '#aaa', 
-        fontSize: 12, 
+        color: '#aaa',
+        fontSize: 12,
         marginTop: 2,
-    }, 
+    },
     mediaScroll: {
-        width: '100%', 
-        padding: 0, 
-        alignSelf: 'center', 
-        flex: 1,
-    }, 
-    mediaScrollContent: {
-        flexDirection: 'row', 
+        width: '100%',
         padding: 0,
-    }, 
+        alignSelf: 'center',
+        flex: 1,
+    },
+    mediaScrollContent: {
+        flexDirection: 'row',
+        padding: 0,
+    },
     mediaContainer: {
-        alignItems: 'center', 
-        justifyContent: 'center', 
+        alignItems: 'center',
+        justifyContent: 'center',
         width: Math.min(Dimensions.get('window').width * 0.95, 660), // Адаптивная ширина
         maxWidth: 660,
-    }, 
+    },
     media: {
         width: Math.min(Dimensions.get('window').width * 0.95, 660), // Адаптивная ширина
         height: Math.min(Dimensions.get('window').width * 0.95, 660), // Квадратное изображение
-        maxWidth: 660, 
-        maxHeight: 660, 
+        maxWidth: 660,
+        maxHeight: 660,
         overflow: "hidden",
-    }, 
+    },
     pagination: {
-        position: 'absolute', 
-        bottom: 10, 
-        flexDirection: 'row', 
+        position: 'absolute',
+        bottom: 10,
+        flexDirection: 'row',
         alignSelf: 'center',
-    }, 
+    },
     dot: {
-        height: 8, 
-        width: 8, 
-        borderRadius: 4, 
+        height: 8,
+        width: 8,
+        borderRadius: 4,
         margin: 4,
-    }, 
+    },
     contentContainer: {
         padding: 12,
-    }, 
+    },
     content: {
-        color: '#fff', 
-        fontSize: 14, 
-        lineHeight: 20,
-    }, 
-    actions: {
-        flexDirection: 'row', 
-        padding: 12, 
-        borderTopWidth: 1, 
-        borderTopColor: 'rgba(255,255,255,0.1)',
-    }, 
-    actionButton: {
-        flexDirection: 'row', 
-        alignItems: 'center', 
-        marginRight: 20,
-    }, 
-    actionText: {
-        color: '#fff', 
-        marginLeft: 8, 
+        color: '#fff',
         fontSize: 14,
-    }, 
+        lineHeight: 20,
+    },
+    actions: {
+        flexDirection: 'row',
+        padding: 12,
+        borderTopWidth: 1,
+        borderTopColor: 'rgba(255,255,255,0.1)',
+    },
+    actionButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginRight: 20,
+    },
+    actionText: {
+        color: '#fff',
+        marginLeft: 8,
+        fontSize: 14,
+    },
     tagsContainer: {
-        paddingHorizontal: 12, 
+        paddingHorizontal: 12,
         paddingBottom: 12,
-    }, 
+    },
     tag: {
-        color: '#4CAF50', 
-        marginRight: 8, 
+        color: '#4CAF50',
+        marginRight: 8,
         fontSize: 14,
     },
 });

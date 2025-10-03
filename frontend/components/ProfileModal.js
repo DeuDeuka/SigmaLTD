@@ -1,7 +1,7 @@
 // components/ProfileModal.js
 
 import React, {useEffect, useState} from 'react';
-import {Text, TouchableOpacity, SafeAreaView, TextInput, Alert, Platform,} from 'react-native';
+import {Text, TouchableOpacity, SafeAreaView, TextInput, Alert, Platform, View,} from 'react-native';
 import Database from '../database';
 import {styles} from '../styles/components/ProfileModal';
 import * as ImagePicker from "expo-image-picker";
@@ -77,41 +77,17 @@ export default function ProfileModal({navigation}) {
         }
     };
 
-    const handleImageChange = async () => {
-        console.log(media);
-        if (imageEditMode) {
-            const mediaWithBase64 = await Promise.all(
-                media.map(async (item, index) => {
-                    const response = await fetch(item.uri);
-                    const blob = await response.blob();
-                    const base64 = await new Promise((resolve) => {
-                        const reader = new FileReader();
-                        reader.onloadend = () => resolve(reader.result.split(',')[1]);
-                        reader.readAsDataURL(blob);
-                    });
-                    const extension = item.mimeType?.split('/')[1] || 'jpg';
-                    const fileName = `${item.type}-${Date.now()}-${index}.${extension}`;
-                    return {
-                        name: fileName,
-                        type: 'image/jpeg',
-                        base64: base64,
-                    };
-                })
-            );
-            const payload = {
-                image: mediaWithBase64,
-            }
-            const res = await Database.changeImage(payload);
-            console.log(res);
-            setImageEditMode(false);
-        } else {
-            await pickMedia();
+    const handleImageChange = async (newMedia) => {
+        if (newMedia.length === 0) return;
+        try {
+            console.log(newMedia);
+            (Database.changeImage(newMedia[0].uri)).then(el => setMedia([{ uri: el.pic }]))
+        } catch (err) {
+            console.error("Upload failed", err);
         }
-
-    }
+    };
 
     const pickMedia = async () => {
-        setImageEditMode(true);
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsMultipleSelection: false,
@@ -125,18 +101,16 @@ export default function ProfileModal({navigation}) {
                 type: 'image',
                 mimeType: asset.mimeType || (asset.type === 'image/jpeg'),
             }));
-            console.log(newMedia);
-            setMedia(newMedia);
+            await handleImageChange(newMedia);
         }
     };
-
     return (
-        <SafeAreaView style={[styles.container, {backgroundColor: theme.colors.background}]}>
+        <View style={[styles.container, {backgroundColor: theme.colors.background}]}>
             <Text style={[styles.header, {color: '#fff', fontSize: 18}]}>
                 Profile
             </Text>
             <Avatar rounded
-                    source={{uri: media.length > 0 ? media[0].uri : media.uri}}
+                    source={{uri: media.length > 0 ? media[0].uri : null}}
                     style={styles.image}/>
 
             {editMode ? (
@@ -162,9 +136,9 @@ export default function ProfileModal({navigation}) {
                     {editMode ? 'Save Profile' : 'Edit Profile'}
                 </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleImageChange} style={styles.menuItem}>
+            <TouchableOpacity onPress={pickMedia} style={styles.menuItem}>
                 <Text style={{color: "#fff"}}>
-                    {imageEditMode ? "Upload Picture" : "Choose Profile Pic"}
+                     Choose Profile Pic
                 </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -179,6 +153,6 @@ export default function ProfileModal({navigation}) {
             <TouchableOpacity style={styles.menuItem} onPress={handleLogout}>
                 <Text style={{color: '#fff'}}>Logout</Text>
             </TouchableOpacity>
-        </SafeAreaView>
+        </View>
     );
 }

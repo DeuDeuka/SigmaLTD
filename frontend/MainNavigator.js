@@ -1,4 +1,4 @@
-import React, {useRef, useState, useCallback, useEffect} from 'react';
+import React, { useRef, useState, useCallback, useEffect } from 'react';
 import {
     View, Dimensions, Button, TouchableOpacity, FlatList, Text, Pressable, SafeAreaView,
 } from 'react-native';
@@ -7,15 +7,16 @@ import FeedScreen from './screens/FeedScreen';
 import FollowingScreen from './screens/FollowingScreen';
 import Database from "./database";
 
-const screens = [{key: 'Feed', component: FeedScreen, title: 'Feed'}, {
+const screens = [{ key: 'Feed', component: FeedScreen, title: 'Feed' }, {
     key: 'Following', component: FollowingScreen, title: 'Following'
 }];
 
-export function Menu({navigation, header, scrollToPage, activeScreen, setActiveScreen}) {
+export function Menu({ navigation, header, scrollToPage, activeScreen, setActiveScreen }) {
     const [showMenu, setShowMenu] = useState(false);
 
     const openMenu = () => setShowMenu(true);
     const closeMenu = () => setShowMenu(false);
+
 
     const handleNavigation = useCallback((screenName, index) => {
         setActiveScreen(screenName);
@@ -39,7 +40,7 @@ export function Menu({navigation, header, scrollToPage, activeScreen, setActiveS
                 margin: 0,
             }}
         >
-            <SafeAreaView
+            <View
                 style={{
                     backgroundColor: '#000',
                     width: Dimensions.get('window').width * 0.3,
@@ -47,7 +48,7 @@ export function Menu({navigation, header, scrollToPage, activeScreen, setActiveS
                     flexDirection: 'column',
                 }}
             >
-                <View style={{flex: 3}}>
+                <View style={{ flex: 3 }}>
                     <TouchableOpacity
                         onPress={() => {
                             closeMenu();
@@ -64,7 +65,7 @@ export function Menu({navigation, header, scrollToPage, activeScreen, setActiveS
                             alignSelf: 'center',
                         }}
                     >
-                        <Text style={{color: '#FFF'}}>
+                        <Text style={{ color: '#FFF' }}>
                             Close
                         </Text>
                     </TouchableOpacity>
@@ -86,8 +87,10 @@ export function Menu({navigation, header, scrollToPage, activeScreen, setActiveS
                             maxWidth: 200
                         }}
                     >
-                        <Text style={{color: '#fff'}}>Settings</Text>
+                        <Text style={{ color: '#fff' }}>Settings</Text>
                     </TouchableOpacity>
+
+
 
                     <TouchableOpacity
                         onPress={() => {
@@ -107,20 +110,24 @@ export function Menu({navigation, header, scrollToPage, activeScreen, setActiveS
                             maxWidth: 200
                         }}
                     >
-                        <Text style={{color: '#fff'}}>Profile</Text>
+                        <Text style={{ color: '#fff' }}>Profile</Text>
                     </TouchableOpacity>
+
+
+
+
                 </View>
-                <View style={{flex: 10}}></View>
-                <View style={{flex: 1, alignSelf: 'center', alignItems: 'center'}}>
-                    <Text style={{color: '#FFF'}}>
+                <View style={{ flex: 10 }}></View>
+                <View style={{ flex: 1, alignSelf: 'center', alignItems: 'center' }}>
+                    <Text style={{ color: '#FFF' }}>
                         SigmaLTD community
                     </Text>
-                    <Text style={{color: '#555'}}>
+                    <Text style={{ color: '#555' }}>
                         We trust in you
                     </Text>
                 </View>
 
-            </SafeAreaView>
+            </View>
             <TouchableOpacity
                 style={{
                     width: Dimensions.get('window').width * 0.7, height: Dimensions.get('window').height,
@@ -128,7 +135,7 @@ export function Menu({navigation, header, scrollToPage, activeScreen, setActiveS
                 onPress={closeMenu}
             />
         </Modal>
-        <View style={{flexDirection: 'row', backgroundColor: '#000', width: Dimensions.get('window').width}}>
+        <View style={{ flexDirection: 'row', backgroundColor: '#000', width: Dimensions.get('window').width }}>
 
             {header ? <>
                 <Pressable
@@ -137,15 +144,15 @@ export function Menu({navigation, header, scrollToPage, activeScreen, setActiveS
                     }}
                     onPress={openMenu}
                 >
-                    <Text style={{fontSize: 30, color: "#FFF", fontWeight: "bold"}}>Σ</Text>
+                    <Text style={{ fontSize: 30, color: "#FFF", fontWeight: "bold" }}>Σ</Text>
                 </Pressable>
                 <View
                     style={{
                         flex: 20, alignItems: 'center', alignSelf: 'center', justifyContent: 'center',
-                    }}/>
+                    }} />
                 <TouchableOpacity onPress={navigation.goBack}
-                                  style={{flex: 2, justifyContent: 'center', alignItems: 'center', marginRight: 5}}>
-                    <Text style={{color: "#FFF"}}>Close</Text>
+                    style={{ flex: 2, justifyContent: 'center', alignItems: 'center', marginRight: 5 }}>
+                    <Text style={{ color: "#FFF" }}>Close</Text>
                 </TouchableOpacity>
 
             </> : <>
@@ -155,7 +162,7 @@ export function Menu({navigation, header, scrollToPage, activeScreen, setActiveS
                     }}
                     onPress={openMenu}
                 >
-                    <Text style={{fontSize: 30, color: "#FFF", fontWeight: "bold"}}>Σ</Text>
+                    <Text style={{ fontSize: 30, color: "#FFF", fontWeight: "bold" }}>Σ</Text>
                 </Pressable>
                 <TouchableOpacity
                     style={{
@@ -173,30 +180,32 @@ export function Menu({navigation, header, scrollToPage, activeScreen, setActiveS
                         Feed
                     </Text>
                 </TouchableOpacity><TouchableOpacity
-                style={{
-                    flex: 10, alignItems: 'center', justifyContent: 'center',
-                }}
-                onPress={() => handleNavigation('Following', 1)}
-            >
-                <Text
                     style={{
-                        fontSize: activeScreen === 'Following' ? 20 : 16,
-                        fontWeight: activeScreen === 'Following' ? 'bold' : 'normal',
-                        color: "#FFF"
+                        flex: 10, alignItems: 'center', justifyContent: 'center',
                     }}
+                    onPress={() => handleNavigation('Following', 1)}
                 >
-                    Following
-                </Text>
-            </TouchableOpacity>
+                    <Text
+                        style={{
+                            fontSize: activeScreen === 'Following' ? 20 : 16,
+                            fontWeight: activeScreen === 'Following' ? 'bold' : 'normal',
+                            color: "#FFF"
+                        }}
+                    >
+                        Following
+                    </Text>
+                </TouchableOpacity>
                 <View
                     style={{
                         flex: 2, alignItems: 'center', alignSelf: 'center', justifyContent: 'center',
-                    }}/></>}
+                    }}>
+                </View>
+            </>}
         </View>
     </View>);
 }
 
-function MainNavigator({navigation}) {
+function MainNavigator({ navigation }) {
     const flatListRef = useRef(null);
     const [activeScreen, setActiveScreen] = useState('Feed');
     const refList = [];
@@ -240,7 +249,7 @@ function MainNavigator({navigation}) {
     const setActiveScreenRef = useRef(setActiveScreen);
     setActiveScreenRef.current = setActiveScreen;
 
-    const onViewableItemsChanged = useRef(({viewableItems}) => {
+    const onViewableItemsChanged = useRef(({ viewableItems }) => {
         if (viewableItems.length > 0) {
             const visibleScreen = viewableItems[0].item;
             setActiveScreenRef.current(visibleScreen.key);
@@ -252,7 +261,7 @@ function MainNavigator({navigation}) {
     }).current;
 
 
-    return (<SafeAreaView style={{flex: 1}}>
+    return (<View style={{ flex: 1 }}>
         <Menu
             navigation={navigation}
             scrollToPage={scrollToPage}
@@ -265,7 +274,7 @@ function MainNavigator({navigation}) {
             horizontal
             pagingEnabled
             showsHorizontalScrollIndicator={false}
-            renderItem={({item}) => (<View
+            renderItem={({ item }) => (<View
                 style={{
                     width: Dimensions.get('window').width, height: Dimensions.get('window').height,
                 }}
@@ -285,7 +294,7 @@ function MainNavigator({navigation}) {
             onViewableItemsChanged={onViewableItemsChanged}
             viewabilityConfig={viewabilityConfig}
         />
-    </SafeAreaView>);
+    </View>);
 }
 
 export default MainNavigator;

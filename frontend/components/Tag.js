@@ -94,8 +94,13 @@ export default function Tag({ tag, onRefresh, navigation }) {
         alignSelf: 'center',
         alignItems: 'center',
       }}>
-        #{tag.substring(0, 20) || 'unknown'}
+        {tag.substring(0, 20) || 'unknown'}
       </Text>
     </TouchableOpacity>
   );
 }
+
+
+
+
+//+79960728223 малолетки (трабла с подиком)
