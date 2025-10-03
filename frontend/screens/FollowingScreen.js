@@ -33,7 +33,7 @@ export default class FollowingScreen extends React.Component {
     };
 
     onPress = () => {
-        console.log('Press');
+        // console.log('Press');
 
     }
 

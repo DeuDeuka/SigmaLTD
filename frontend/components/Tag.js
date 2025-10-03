@@ -18,9 +18,9 @@ export default function Tag({ tag, onRefresh, navigation }) {
   const checkFollowStatus = async () => {
     try {
       const followedTags = await Database.getFollowedTags();
-      console.log('Tag component: Received followed tags:', followedTags);
-      console.log('Tag component: Current tag:', tag);
-      console.log('Tag component: Is followed:', followedTags.includes(tag));
+      // console.log('Tag component: Received followed tags:', followedTags);
+      // console.log('Tag component: Current tag:', tag);
+      // console.log('Tag component: Is followed:', followedTags.includes(tag));
       setIsFollowed(followedTags.includes(tag));
     } catch (error) {
       console.error('Error checking follow status:', error);
@@ -28,27 +28,27 @@ export default function Tag({ tag, onRefresh, navigation }) {
   };
 
   const handleTagPress = async () => {
-    console.log('Tag component: Pressed tag:', tag, 'Current follow status:', isFollowed);
-    
+    // console.log('Tag component: Pressed tag:', tag, 'Current follow status:', isFollowed);
+
     try {
       if (isFollowed) {
-        console.log('Tag component: Unfollowing tag:', tag);
+        // console.log('Tag component: Unfollowing tag:', tag);
         await Database.unfollowTag(tag);
         Alert.alert('Unfollowed', `You unfollowed #${tag}`);
       } else {
-        console.log('Tag component: Following tag:', tag);
+        // console.log('Tag component: Following tag:', tag);
         await Database.followTag(tag);
         Alert.alert('Followed', `You are now following #${tag}`);
       }
-      
+
       setIsFollowed(!isFollowed);
-      console.log('Tag component: Updated follow status to:', !isFollowed);
-      
+      // console.log('Tag component: Updated follow status to:', !isFollowed);
+
       // Обновляем ленту Following если мы находимся на ней
       if (onRefresh) {
         onRefresh();
       }
-      
+
       // Если мы находимся на экране Following, обновляем его
       if (navigation) {
         // Находим экран Following и обновляем его
@@ -56,13 +56,13 @@ export default function Tag({ tag, onRefresh, navigation }) {
         if (followingScreen) {
           // Обновляем состояние экрана Following
           navigation.setParams({ refresh: Date.now() });
-          
+
           // Если отписываемся от тега, явно обновляем экран Following
           if (isFollowed) {
             const followingScreenComponent = navigation.getParent()?.getState()?.routes?.find(
               route => route.name === 'Following'
             )?.state?.routeNames?.includes('FollowingScreen');
-            
+
             if (followingScreenComponent && navigation.getParent().navigate) {
               // Force refresh the Following screen
               navigation.getParent().navigate('Following', { refresh: Date.now() });

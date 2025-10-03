@@ -26,7 +26,7 @@ export default class SuperScrollList extends React.Component {
     }
 
     componentDidMount() {
-        (this.loader && this.fetchData().then(() => console.log("Fetched data!")));
+        (this.loader && this.fetchData().then(() =>  console.log("Fetched data!")));
 
         // Добавляем слушатель изменения размера экрана
         this.dimensionsSubscription = Dimensions.addEventListener('change', this.handleDimensionsChange);
@@ -54,13 +54,13 @@ export default class SuperScrollList extends React.Component {
     fetchData = async () => {
         if (this.state.isLoading || !this.state.hasMore) return;
 
-        console.log('SuperScrollList: Fetching data for page:', this.state.page);
+        // console.log('SuperScrollList: Fetching data for page:', this.state.page);
         this.setState({isLoading: true});
         try {
             const res = await this.loader(this.state.page);
-            console.log('SuperScrollList: Received response:', res);
+            // console.log('SuperScrollList: Received response:', res);
             const newPosts = res.posts || [];
-            console.log('SuperScrollList: Extracted posts:', newPosts.length);
+            // console.log('SuperScrollList: Extracted posts:', newPosts.length);
 
             this.setState(prevState => ({
                 data: prevState.page === 1 ? newPosts : [...prevState.data, ...newPosts],
@@ -68,7 +68,7 @@ export default class SuperScrollList extends React.Component {
                 hasMore: newPosts.length > 0
             }));
 
-            console.log('SuperScrollList: Updated state, total posts:', this.state.data.length);
+            // console.log('SuperScrollList: Updated state, total posts:', this.state.data.length);
         } catch (error) {
             console.error('Error fetching posts:', error);
 
@@ -98,7 +98,7 @@ export default class SuperScrollList extends React.Component {
     };
 
     renderRow = ({item}) => {
-        console.log('SuperScrollList: Rendering post:', item.idPost, item.content?.substring(0, 50));
+        // console.log('SuperScrollList: Rendering post:', item.idPost, item.content?.substring(0, 50));
         return (
             <View style={{
                 minHeight: 50,

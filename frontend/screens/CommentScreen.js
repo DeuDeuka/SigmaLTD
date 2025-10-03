@@ -41,9 +41,9 @@ export default function PostDetailScreen({ route }) {
                 const postData = await Database.getPost(route.params.postId);
                 const loadedComments = await Database.getPostComments(route.params.postId);
                 const currentUse = await Database.getCurrentUser();
-                
-                console.log('Loaded comments:', loadedComments);
-                
+
+                // console.log('Loaded comments:', loadedComments);
+
                 setPost(postData);
                 setComments(loadedComments || []);
                 setCurrentUser(currentUse);
@@ -111,12 +111,12 @@ export default function PostDetailScreen({ route }) {
 
             // Проверяем, что новый комментарий содержит необходимые поля
             if (newC && typeof newC === 'object') {
-                console.log('New comment received:', newC);
+                // console.log('New comment received:', newC);
                 setComments((prev) => [newC, ...prev]);
             } else {
                 console.error('Invalid comment data received:', newC);
             }
-            
+
             setNewComment('');
             setSelectedImages([]);
         } catch (err) {
@@ -171,7 +171,7 @@ export default function PostDetailScreen({ route }) {
                 renderItem={({ item }) => {
                     // Проверяем, что item существует и имеет необходимые поля
                     if (!item) {
-                        console.log('Invalid comment item:', item);
+                        // console.log('Invalid comment item:', item);
                         return null;
                     }
                     return (

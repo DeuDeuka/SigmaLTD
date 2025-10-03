@@ -58,7 +58,7 @@ const Post = React.memo(({navigation, post, refresher}) => {
             try {
                 setIsLoading(true);
                 const [user, me] = await Promise.all([Database.getUser(post.createdByIdUser), Database.getCurrentUser(),]);
-                console.log(user);
+                // console.log(user);
                 const likeStatus = await Database.getLikePost(Number(post.idPost));
                 setLiked(likeStatus);
                 if (mounted) {
@@ -140,7 +140,7 @@ const Post = React.memo(({navigation, post, refresher}) => {
 
         try {
             const resp = await Database.deletePost(post.idPost);
-            console.log('Delete response:', resp);
+            // console.log('Delete response:', resp);
 
             // Проверяем успешность удаления
             if (resp && resp.message === 'Post deleted successfully') {

@@ -28,7 +28,7 @@ export default function ProfileModal({navigation}) {
         const use = await database.getUser(userid);
         setUser(use);
         setMedia([{uri: use.pic}]);
-        console.log(use);
+        // console.log(use);
     }
 
     const handleEditProfile = async () => {
@@ -80,7 +80,7 @@ export default function ProfileModal({navigation}) {
     const handleImageChange = async (newMedia) => {
         if (newMedia.length === 0) return;
         try {
-            console.log(newMedia);
+            // console.log(newMedia);
             (Database.changeImage(newMedia[0].uri)).then(el => setMedia([{ uri: el.pic }]))
         } catch (err) {
             console.error("Upload failed", err);

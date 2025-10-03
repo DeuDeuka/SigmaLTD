@@ -35,26 +35,26 @@ export default function ProfileScreen({navigation, route}) {
         const fetchUserData = async () => {
             try {
                 setIsLoading(true);
-                console.log('ProfileScreen: Starting to fetch user data, userId:', userId);
+                // console.log('ProfileScreen: Starting to fetch user data, userId:', userId);
 
                 // Получаем текущего пользователя
                 const currentUserData = await Database.getCurrentUser();
-                console.log('ProfileScreen: Current user data:', currentUserData);
+                // console.log('ProfileScreen: Current user data:', currentUserData);
                 setCurrentUser(currentUserData);
 
                 // Определяем, чей профиль показывать
                 const targetUserId = userId || currentUserData?.idUser;
-                console.log('ProfileScreen: Target user ID:', targetUserId);
+                // console.log('ProfileScreen: Target user ID:', targetUserId);
 
                 if (targetUserId) {
                     // Получаем данные пользователя
                     const userData = await Database.getUser(targetUserId);
-                    console.log('ProfileScreen: User data:', userData);
+                    // console.log('ProfileScreen: User data:', userData);
                     setUser(userData);
 
                     // Проверяем, является ли это профилем текущего пользователя
                     const isOwn = currentUserData?.idUser === targetUserId;
-                    console.log('ProfileScreen: Is own profile:', isOwn);
+                    // console.log('ProfileScreen: Is own profile:', isOwn);
                     setIsOwnProfile(isOwn);
 
                     // Загружаем статистику пользователя
@@ -118,7 +118,7 @@ export default function ProfileScreen({navigation, route}) {
     const getUserPosts = async (pageParam, explicitUserId) => {
         try {
             const targetUserId = explicitUserId || userId || currentUser?.idUser;
-            console.log('Fetching posts for user:', targetUserId, 'page:', pageParam);
+            // console.log('Fetching posts for user:', targetUserId, 'page:', pageParam);
             if (!targetUserId) {
                 return { posts: [] };
             }

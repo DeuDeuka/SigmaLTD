@@ -14,7 +14,7 @@ const CommentError = ({ error }) => (
 export default function Comment({ comment, currentUser, toggleLike }) {
 	// Проверяем, что comment и currentUser существуют
 	if (!comment || !currentUser) {
-		console.log('Comment or currentUser is missing:', { comment, currentUser });
+		// console.log('Comment or currentUser is missing:', { comment, currentUser });
 		return <CommentError error={{ message: 'Отсутствуют данные комментария или пользователя' }} />;
 	}
 
@@ -23,18 +23,18 @@ export default function Comment({ comment, currentUser, toggleLike }) {
 	const [likedByMe , setLikedByMe] = useState(false);
 	const [hasError, setHasError] = useState(false);
 	const [error, setError] = useState(null);
-	
+
 	// Debug logs
-	console.log('Comment data:', {
-		id: comment.idComment,
-		text: comment.text,
-		displayedName: comment.displayedName,
-		username: comment.username,
-		images: comment.images,
-		createdByIdUser: comment.createdByIdUser,
-		currentUserId: currentUser.idUser
-	});
-	
+	// console.log('Comment data:', {
+	// 	id: comment.idComment,
+	// 	text: comment.text,
+	// 	displayedName: comment.displayedName,
+	// 	username: comment.username,
+	// 	images: comment.images,
+	// 	createdByIdUser: comment.createdByIdUser,
+	// 	currentUserId: currentUser.idUser
+	// });
+
 	useEffect(() => {
 		if (comment.idComment) {
 			getLikes();
@@ -73,7 +73,7 @@ export default function Comment({ comment, currentUser, toggleLike }) {
 			}
 
 			// Фильтруем только валидные строки
-			const validImages = comment.images.filter(img => 
+			const validImages = comment.images.filter(img =>
 				img && typeof img === 'string' && img.trim().length > 0
 			);
 
@@ -83,8 +83,8 @@ export default function Comment({ comment, currentUser, toggleLike }) {
 
 			return validImages.map((src, i) => {
 				const imageUrl = BASE_URL + src;
-				console.log('Rendering image:', imageUrl);
-				
+				// console.log('Rendering image:', imageUrl);
+
 				return (
 					<Image
 						key={`image-${comment.idComment}-${i}`}
@@ -92,7 +92,7 @@ export default function Comment({ comment, currentUser, toggleLike }) {
 						style={{width: 200, height: 200, marginTop: 6, borderRadius: 8}}
 						resizeMode="cover"
 						onError={(error) => {
-							console.log('Image load error:', error.nativeEvent.error, 'URL:', imageUrl);
+							// console.log('Image load error:', error.nativeEvent.error, 'URL:', imageUrl);
 							setError({ message: `Ошибка загрузки изображения: ${imageUrl}` });
 						}}
 						onLoad={() => console.log('Image loaded successfully:', imageUrl)}
